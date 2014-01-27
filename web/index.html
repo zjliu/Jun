@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Index</title>
+</head>
+<body>
+
+<p>hello world</p>
+<img src="http://img1.bdstatic.com/img/image/694f9dcd100baa1cd110f5b0146bb12c8fcc2ce2de2.jpg">
+
+</body>
+</html>
+<script src="index.js"></script>
+<script>
+	
+</script>
+<script>
+function ajax(o) {
+	var b = /POST/i.test(o.type),
+		p = o.data || '',
+		t = o.dataType,
+		url = o.url || location.href,
+		q = /\?/.test(url) ? '&' : '?',
+		x = window.XMLHttpRequest ? new XMLHttpRequest() : (new ActiveXObject('Msxml2.XMLHTTP') || new ActiveXObject('Microsoft.XMLHTTP')),
+		z = function (s) {
+			if (x.readyState == 4) {
+				if (x.status == 200) {
+					s = x.responseText;
+					if (t == 'json')
+						s = json(s);
+					if (b = o.success)
+						b(s)
+				} else if (o.error) {
+					o.error(x.status, x)
+				}
+			}
+		};
+	x.onreadystatechange = z;
+	if (typeof p == 'object') {
+		var r = [];
+		for (var k in p)
+			r.push(encodeURIComponent(k) + '=' + encodeURIComponent(p[k]));
+		p = r.join('&')
+	}
+	x.open(b ? 'POST' : 'GET', url + (b ? '' : ((p ? q : '') + p + (o.cache ? '' : (((!p && q == '?') ? '?' : '&') + '_=' + new Date().getTime())))),
+			o.async === false ? false : true);
+	if (b) x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	x.send(p);
+	return x;
+}
+
+	ajax({
+		url:"/user/name",
+		data:{id:23},
+		type:"post",
+		success:function(data){
+			console.log(data);
+		}
+	});
+
+</script>

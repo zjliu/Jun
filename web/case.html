@@ -1,0 +1,394 @@
+<html>
+<head>
+	<title>case</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style>
+		.stageTable{
+			width:1500px;
+		}
+		.stageTable td{border:1px solid rgba(255,0,0,.4);}
+		.stageTable tr td:nth-child(2n){
+			width:1000px;
+			border-bottom-width:0px;
+		}
+		.stageTable tr td:nth-child(2n+1){
+			width:500px;
+			border-right-width:0px;
+			border-bottom-width:0px;
+		}
+		td.infoTd{
+			text-align:center;	
+			background-color:rgba(0,0,0,.4);
+		}
+	</style>
+</head>
+<body>
+</body>
+</html>
+<script>
+var a1=["404.php","about.php","access_table_util.php","access_table_util_test.php","account.php","ads.php","ajax_response.php","analytics_campaign.php","analytics_individual.php","analytics.php","anidetail_manager.php","anidetail.php","aniedit.php","anilist_manager.php","anilist.php","api_add_group.php","api_billing_action.php","api_comment_action.php","api_delete_image.php","api_delete.php","api_edit.php","api_folder_action.php","api_game_app.php","api_getcreativeattr.php","api_get_status.php","api_get_version.php","api_list.php","api_login.php","api_logout.php","api_new.php","api_preview.php","api_profile_photo_action.php","api_public_folder_action.php","api_publish.php","api_remove_group.php","api_setcreativeattr.php","api_set_folder.php","api_set_status.php","api_show_group.php","api_thumbnail.php","api_unpublish.php","api_unsetcreativeattr.php","api_utils.php","api_video_upload.php","appedit.php","application_notice.php","application_ok.php","application.php","application_table.php","application_table_util.php","article_table.php","asset_get.php","asset_list.php","billing_table.php","campdetail.php","camplist.php","captcha.php","choose_server.php","circle_table.php","client_report.php","comment_table.php","companies_table.php","contact_manager.php","contact.php","create.php","creatives.php","creative_table.php","creative_table_util.php","creative_table_util_test.php","creditcard_list.php","del_personal_apply.php","export_manager.php","export.php","export_table.php","export_utils.php","fast_entrance_manager.php","fast_entrance.php","feature.php","feedback_table.php","findpsw.php","folder_table.php","game_app_table.php","global.css.php","google_client_token.php","help_index.php","help_manager.php","help.php","ide_export_manager.php","ide_export.php","ide_load_creative.php","ide_myworks.php","ide_publish.php","ide_sandbox.php","ide_save_audio.php","ide_save_campaign.php","ide_save_creative.php","ide_save_image.php","ide_save_publish_creative.php","import_bundle.php","index.php","invite_manager.php","json.php","kids_share_creative.php","local_cache.php","login.php","log_monitoring.php","logout.php","logs_table.php","logs_table_util.php","low_level_utilities.php","manage_json.php","map_exporter.php","map_publish.php","materlist.php","member.php","message_page.php","mock_export.php","mock_preview.php","mongodb.php","mongo_util.php","multi_account.php","news.php","pagedit.php","pagelist.php","pages_exporter.php","pages_publish.php","paginator.php","payment.php","payment_status.php","permission_table.php","phpThumb.php","preview.php","pricing_cn.php","pricing.php","process_personal_apply.php","product.php","publish.php","publish_utils.php","quick_start.php","refund.php","reg_ok.php","sandbox.php","sdk_info.php","service.php","session_handler.php","session.php","sharecode.php","share_manager.php","share.php","signin.php","signup_corporate.php","signup_manager.php","signup.php","sizes_table.php","smarty_utilities.php","statistics_table.php","sys_config.php","team.php","template_detail.php","template_manage.php","template_new.php","templist.php","test_api.php","thumb.php","tmpfile.php","udata_list.php","udata.php","udata_public_list.php","UploadHandler.php","upload.php","user_buy.php","user_edit.php","user_flags.php","user_manager.php","user_stats_table_util.php","user_table.php","user_table_test.php","user_table_util.php","user_temp_table.php","user_upgrade.php","utilities.php","verify_email.php","version.php"];
+
+	function cp(a1,a2){
+		var p1=arrayToObj(a1);
+		var p2=arrayToObj(a2);
+		var a1Toa2=[];
+		for(var key in p1){
+			if(!p2[key]){
+				a1Toa2.push(key);
+			}
+		}
+		return a1Toa2;
+	}
+	function arrayToObj(arr){
+		var newArr={};
+		for(var i=0,l=arr.length;i<l;i++){
+			newArr[arr[i]]=arr[i];
+		}
+		return newArr;
+	}
+
+</script>
+<script src="regression/stage1.js"></script>
+<script src="regression/stage2.js"></script>
+<script src="regression/stage3.js"></script>
+<script src="regression/stage4.js"></script>
+<script src="regression/stage5.js"></script>
+<script src="rewrite2.js"></script>
+<script src="currentInterface.js"></script>
+<script>
+
+	var reg=/([a-zA-Z0-9\_]+\.php)/;
+
+	var regHtmlJs=/([a-zA-Z0-9\_]+\.(html|htm|js))/;
+	
+	var uriReg = /((\/[a-zA-Z0-9\_]+)+\/?)/;
+
+	var testReg=/[a-z0-9]{24}\/?/g;
+
+	var caseData = s1.cases
+				   .concat(s2.cases)
+				   .concat(s3.cases)
+				   .concat(s4.cases)
+				   .concat(s5.cases);
+
+	var caseUriDataObj=[];
+	var caseDataRewriteObj={};
+	var caseDataPhpObj={};
+	function getCaseDataArr(isTest){
+		caseUriDataObj=[];
+		caseDataRewriteObj={};
+		caseDataPhpObj={};
+		for(var i=0,l=caseData.length;i<l;i++){
+			var item = caseData[i];
+			var url = item.uri;
+			var value = item.description;
+			if(url){
+				caseUriDataObj.push(url+"->"+value);
+				var phps = reg.exec(url);
+				var htmlJs = regHtmlJs.exec(url);
+				if(htmlJs && htmlJs.length) continue;
+				if(phps && phps.length){
+					var php = phps[0];
+					if(!caseDataPhpObj[php]){
+						caseDataPhpObj[php]=value;
+					}
+				}
+				else{
+					var res = uriReg.exec(url);
+					if(res && res.length){
+						var re=res[0];
+						if(!isTest){
+							re=re.replace(testReg,"");
+						}
+						if(!caseDataRewriteObj[re]){
+							caseDataRewriteObj[re]=value;
+						}
+					}
+					else{
+						//caseDataRewriteObj[url]=value;
+					}
+				}
+			}
+		}
+	}
+
+	getCaseDataArr();
+
+	var caseDataRewriteArr=ObjToArr(caseDataRewriteObj);
+	var caseDataPhpArr=ObjToArr(caseDataPhpObj);
+
+	function ObjToArr(obj){
+		var arr=[];
+		for(var key in obj){
+			arr.push(key);
+		}
+		return arr;
+	}
+
+	var phpDataObj={};
+	var phpDataArr=[];
+
+	function getPhpData(){
+		for(var i=0,l=a1.length;i<l;i++){
+			var item=a1[i];
+			if(item.indexOf("table")>0){
+				continue;
+			}
+			phpDataObj[item]=item;
+			phpDataArr.push(item);
+		}
+	}
+	
+	getPhpData();
+
+	var webRewriteDataObj={};
+
+	(function getWebRewriteData(){
+		for(var i=0,l=rewrite.length;i<l;i++){
+			var item = rewrite[i];
+			var rs = reg.exec(item);
+			var ps = uriReg.exec(item);
+			if(rs && rs.length && ps && ps.length){
+				var r=rs[0];
+				var p=ps[0];
+				if(!webRewriteDataObj[p]){
+					webRewriteDataObj[p]=r;
+				}
+			}
+		}
+	}).call(this);
+
+	var webRewriteDataArr=ObjToArr(webRewriteDataObj);
+
+	var caseRewriteLoseDataObj={};
+	var caseRewriteLoseDataArr=[];
+	function getCaseRewriteLose(){
+		for(var key in webRewriteDataObj){
+			if(!caseDataRewriteObj[key]){
+				caseRewriteLoseDataObj[key]=key;
+				caseRewriteLoseDataArr.push(key);
+			}
+		}
+	}
+
+	var webRewriteLoseDataObj={};
+	var webRewriteLoseDataArr=[];
+
+	function getWebRewriteLose(){
+		for(var key in caseDataRewriteObj){
+			if(!webRewriteDataObj[key]){
+				var value = caseDataRewriteObj[key];
+				webRewriteLoseDataObj[key]=value;
+				webRewriteLoseDataArr.push(key);
+			}
+		}
+	}
+
+	getCaseRewriteLose();
+
+	getWebRewriteLose();
+
+	var currentInterfacePhpObj={};
+	var currentInterfaceRewriteObj={};
+
+	var currentInterfacePhpArr=[];
+	var currentInterfaceRewriteArr=[];
+
+	function getCurrentInterfaceData(isTest){
+		for(var i=0,l=currentInterface.length;i<l;i++){
+			var item = currentInterface[i];
+			if(item){
+				var phps = reg.exec(item);
+				if(phps && phps.length){
+					var php = phps[0];
+					if(!currentInterfacePhpObj[php]){
+						currentInterfacePhpObj[php]=php;
+						currentInterfacePhpArr.push(php);
+					}
+				}
+				else{
+					var res = uriReg.exec(item);
+					if(res && res.length){
+						var re=res[0];
+						if(!isTest){
+							re=re.replace(testReg,"");
+						}
+						if(!currentInterfaceRewriteObj[re]){
+							currentInterfaceRewriteObj[re]=re;
+							currentInterfaceRewriteArr.push(re);
+						}
+					}
+					else{
+						//caseDataRewriteObj[url]=value;
+						console.log("目前已写接口中："+item);
+					}
+				}
+			}
+		}
+	}
+
+	getCurrentInterfaceData();
+
+	
+	var webThenCurrentObj={};
+	var webThenCurrentArr=[];
+
+	var wcRe = AThenB(webRewriteDataObj,currentInterfaceRewriteObj);
+	webThenCurrentObj=wcRe.obj;
+	webThenCurrentArr=wcRe.arr;
+
+	var cwRe = AThenB(currentInterfaceRewriteObj,webRewriteDataObj);
+	currentThenWebObj=cwRe.obj;
+	currentThenWebArr=cwRe.arr;
+
+	function AThenB(objA,objB){
+		var re={};
+		var obj={};
+		var arr=[];
+		for(var key in objA){
+			if(!objB[key]){
+				obj[key]=objA[key];
+				arr.push(key);
+			}
+		}
+		re.obj=obj;
+		re.arr=arr;
+		return re;
+	}
+
+	console.log({
+		"测试用例原始数据":caseData,
+		"测试用例uri数据:":caseUriDataObj,
+		"测试用例php接口Obj":caseDataPhpObj,
+		"测试用例rewrite接口Obj":caseDataRewriteObj,
+		"测试用例php接口数组":caseDataPhpArr,
+		"测试用例rewrite接口数组":caseDataRewriteArr,
+		"Php页面Obj":phpDataObj,
+		"Php页面Arr":phpDataArr,
+		"网站rewrite原始数据":rewrite,
+		"网站rewrite数组":webRewriteDataArr,
+		"网站rewrite数据Obj":webRewriteDataObj,
+		"网站Rewrite比测试用例多的数据Obj":caseRewriteLoseDataObj,
+		"网站Rewrite比测试用例多的数据Arr":caseRewriteLoseDataArr,
+		"测试用例比网比站Rewrite多的数据Obj":webRewriteLoseDataObj,
+		"测试用例比网比站Rewrite多的数据Arr":webRewriteLoseDataArr,
+		"目前已写php接口Obj":currentInterfacePhpObj,
+		"目前已写php接口Arr":currentInterfacePhpArr,
+		"目前已写rewrite接口Obj":currentInterfaceRewriteObj,
+		"目前已写rewrite接口Arr":currentInterfaceRewriteArr,
+		"网站rewrite比目前已写多的接口Obj":webThenCurrentObj,
+		"网站rewrite比目前已写多的接口Arr":webThenCurrentArr,
+		"目前已写的比网站rewrite多的接口Obj":currentThenWebObj,
+		"目前已写的比网站rewrite多的接口Arr":currentThenWebArr
+	});
+
+
+	function showData(type,data){
+		var table = document.createElement("table");
+		table.classList.add("stageTable");
+		table.setAttribute("cellSpacing",0);
+		table.setAttribute("cellPadding",0);
+		var caption = document.createElement("caption");
+		caption.innerHTML=type;
+		table.appendChild(caption);
+		for(var i=0,l=data.length;i<l;i++){
+			var item = data[i];
+			var tr=document.createElement("tr");
+			var isuri=!!item.uri;
+			if(isuri){
+			tr.innerHTML="<td>"+item.description+"</td>"
+						+"<td>"+item.uri+"</td>";
+			}
+			else{
+				tr.innerHTML='<td class="infoTd" colspan="2">'+item.description+'</td>';
+			}
+			table.appendChild(tr);
+		}
+		document.body.appendChild(table);
+	}
+
+	showData("stage1",s1.cases);
+	showData("stage2",s2.cases);
+	showData("stage3",s3.cases);
+	showData("stage4",s4.cases);
+	showData("stage5",s5.cases);
+
+	/*
+
+	function getRewriteData(){
+		var RewriteObj={};
+		for(var i=0,l=rewrite.length;i<l;i++){
+			var item=rewrite[i];
+			var php = reg.exec(item);
+			var uri = uriReg.exec(item);
+			if(php && php[0] && uri && uri[0]){
+				RewriteObj[php[0]]=uri[0];
+			}
+			else{
+			}
+		}
+		return RewriteObj;
+	}
+
+	var RewriteObj=getRewriteData();
+
+	function getNoneUsedPhp(){
+		var data = s1.cases.concat(s2.cases).concat(s3.cases).concat(s4.cases).concat(s5.cases);
+		var phpData={};
+		var usedPhp=[];
+		var noneUsedPhp=[];
+		var lastNoneUsedPhp=[];
+		for(var i=0,l=data.length;i<l;i++){
+			var item=data[i];
+			var des=item.description;
+			var uri=item.uri;
+			var re = reg.exec(uri);
+			if(re && re.length){
+				var s = re[0];
+				phpData[s]=s;
+			}
+		}
+		for(var i=0,l=a1.length;i<l;i++){
+			var php = a1[i];
+			if(php.indexOf("table")>0) continue;
+			if(phpData[php]){
+				usedPhp.push(php);
+			}else{
+				noneUsedPhp.push(php);	
+			}
+		}
+		
+		for(var i=0,l=noneUsedPhp.length;i<l;i++){
+			var php=noneUsedPhp[i];
+			if(RewriteObj[php]){
+						
+			}else{
+				lastNoneUsedPhp.push(php);
+			}
+		}
+
+	}
+
+	function getLeavePhp(){
+		var re=[];
+		
+	}
+
+	getNoneUsedPhp();
+
+	*/
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

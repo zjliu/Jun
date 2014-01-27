@@ -1,0 +1,208 @@
+<html>
+<head>
+<title>InterfaceTest</title>
+<style>
+	*{margin:0px;padding:0px;}
+	body{background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAATCAIAAAHIduKaAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAABh0lEQVR42mL8f82A4f8fKGKTY2D4y/D/L0AAMTFgAwABhF0UIIAY/1/VA+ll+MPAKgvRzsDwDyCAsKsFCCCsov8BAogR7IZ/QF1QEsJgkwfKgbn/weJA9n+AAMJuLFYAEEBAd+kjDIOQ7PIM/9GM/AcQQMQaCRBAxKoDCCBi1QEEEC51/9H4AAEECZ3/EP9DEVYuuwKYwYAkxQCTRREECCASAhE3QHEmQABRxUQUABBAVDfxP0AAMVHgwf9YVQAEECSFYQY2aswAowUhjho5/1H0AgQQlb0MEEBM+JMVqQAggDBc958iEwECiIl6iQ8EAAKIiShVRMcvQAARmzeJBAABxERJKsMEAAHERFrYEAIAAcREamDjVwoQQPDyigEpxSMb8x8p9eAg4bLsiqgiGOYwYIj/J6AAIICoHHpUS8IwABBATAyDGwAEEBHu+/9/AN0HEEBMlEcB+XqJMBIggJiolVBoBAACiImqyfk/1X0LEEBMtMh01Avs/wABxESzkoE6egACDADspa2gmkp4hgAAAABJRU5ErkJggg==);}
+	#tb {width:1000px;height:500px;border-width:0px 1px 1px 0px;margin:auto;box-shadow:rgba(0,0,0,.4) 8px;border-radius:4px;}
+	#tb input{background-color:rgba(0,0,0,0);border-width:1px;border-color:rgba(0,0,0,.4);}
+	#tb input:hover{border-color:rgba(255,0,0,.9);}
+	#tb td{border:solid gray 1px;border-width:1px 0px 0px 1px;border-color:rgba(0,0,0,.4);}
+	#tb tr>td:nth-child(2n){width:350px; padding-left:20px;}
+	#tb tr>td:nth-child(2n+1){width:150px;text-align:center;}
+	#tb tr:last-child td{border-bottom-width:1px;}
+	#tb tr>td:last-child {border-right-width:1px;}
+	#tb input{width:200px;}
+	#tb input[type="text"]{width:90%;height:30px;border-width:1px;font-size:16px;padding-left:5px;}
+	#tb textarea{width:99%;height:300px;overflow-y:auto;background-color:rgba(0,0,0,.8);color:rgba(255,255,255,1)}
+	#tb input[type="button"],input[type="reset"]{width:100px;height:50px;text-align:center;}
+	.mainDiv{position:absolute;left:0;right:0;top:0;bottom:0;}
+	.mainDiv .centerDiv{position:absolute;left:128px;top:64px;right:128px;bottom:100px;overflow:auto;}
+	table.allTb{width:100%;height:100%;}
+	/*
+		table{border-width:0px 1px 1px 0px;}
+		table td{border-width:1px 0px 0px 1px;}
+		table tr:last-child td{border-bottom-width:1px;}
+		table tr>td:last-child{border-right-width:1px;}
+	*/
+</style>
+</head>
+<body>
+<div class="mainDiv">
+	<div class="centerDiv">
+		<table class="allTb">
+			<tr>
+				<td>
+					<div style="text-align:center;">
+						<table id="tb" cellpadding="0"cellspacing="0">
+							<tr>
+								<td>Url</td>
+								<td><input spellcheck="false" type="text" id="url" /></td>
+							</tr>
+							<tr>
+								<td>Type</td>
+							<td>
+								<input type="radio" name="type" value="GET" checked="checked">GET
+								<input type="radio" name="type" value="POST">POST
+							</tr>
+							<tr>
+								<td>Data</td>
+								<td><input spellcheck="false" type="text" id="data" />
+								<input type="button" style="width:50px; margin-left:10px;height:30px;" id="checkJson" onclick="checkJson(this)" value="Test" /></td>
+							</tr>
+							<tr>
+								<td>Return Data</td>
+								<td><textarea spellcheck="false" id="result" ></textarea></td>
+							</tr>
+							<tr>
+								<td><input id="ok" onclick="jsonRequest()" type="button" value="Request" /></td>
+								<td style="text-align:center"><input onclick="resetRequest()"  id="reset" type="reset" value="Reset" /></td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>
+<script>
+
+var urlEl = document.getElementById("url");
+var dataEl = document.getElementById("data");
+var resultEl = document.getElementById("result");
+
+function loadData(){
+	var vData=localStorage["vData"];
+	if(vData){
+		vData = JSON.parse(vData);
+		urlEl.value = vData.url;
+		setCheckedValue("type",vData.type);
+		dataEl.value=vData.data;
+	}
+}
+
+loadData();
+
+function setData(){
+	var vData={};
+	vData.url=urlEl.value;
+	vData.type=getRadioValue("type");
+	vData.data = dataEl.value;
+	localStorage["vData"]=JSON.stringify(vData);
+}
+
+function checkJson(el){
+	var dataEl = el.previousElementSibling;
+	var value = dataEl.value;
+	try{
+		var jsonValue = JSON.parse(value);
+		dataEl.value = JSON.stringify(jsonValue);	
+		alert("json ok");
+	}catch(e){
+		alert("json error!");
+	}
+}
+
+function jsonRequest(){
+	var url = urlEl.value;
+	var type = getRadioValue("type");
+	var data = dataEl.value || "{}";
+
+	resultEl.value="";
+
+	if(url && type && data){
+		try{
+			var tData = JSON.parse(data);
+			ajax({
+				"url":url,
+				"type":type,
+				"data":tData,
+				"success":function(info){
+					if(typeof info==="object"){
+						info = JSON.stringify(info);
+						console.log(info);
+					}
+					resultEl.value=info;
+					setData();
+				},
+				error:function(info){
+					if(typeof info==="object"){
+						info = JSON.stringify(info);
+						console.log(info);
+					}
+					resultEl.value=info;
+					setData();
+				}
+			});
+		}
+		catch(e){
+			alert("JSON格式错误");
+		}
+	}
+
+}
+
+function resetRequest(){
+	urlEl.value="";
+	document.getElementsByName("type")[0].checked="checked";
+	dataEl.value="";
+	resultEl.value="";
+}
+
+function setCheckedValue(radioName, newValue) {  
+    if(!radioName) return;  
+    var radios = document.getElementsByName(radioName);     
+        for(var i=0; i<radios.length; i++) {  
+			var item = radios[i];
+			item.checked = false;  
+			if(item.value == newValue.toString()) {  
+				item.checked = true;  
+			} 
+	} 
+} 
+
+function getRadioValue(radioName){
+	var els= document.getElementsByName(radioName);
+	for(var i=0,l=els.length;i<l;i++){
+		var item = els[i];
+		if(item.checked) return item.value;
+	}
+}
+
+function ajax(o) {
+	var b = /POST/i.test(o.type),
+		p = o.data || '',
+		t = o.dataType,
+		url = o.url || location.href,
+		q = /\?/.test(url) ? '&' : '?',
+		x = window.XMLHttpRequest ? new XMLHttpRequest() : (new ActiveXObject('Msxml2.XMLHTTP') || new ActiveXObject('Microsoft.XMLHTTP')),
+		z = function (s) {
+			if (x.readyState == 4) {
+				if (x.status == 200) {
+					s = x.responseText;
+					if (t == 'json')
+						s = json(s);
+					if (b = o.success)
+						b(s)
+				} else if (o.error) {
+					o.error(x.status, x)
+				}
+			}
+		};
+	x.onreadystatechange = z;
+	if (typeof p == 'object') {
+		var r = [];
+		for (var k in p)
+			r.push(encodeURIComponent(k) + '=' + encodeURIComponent(p[k]));
+		p = r.join('&')
+	}
+	x.open(b ? 'POST' : 'GET', url + (b ? '' : ((p ? q : '') + p + (o.cache ? '' : (((!p && q == '?') ? '?' : '&') + '_=' + new Date().getTime())))),
+			o.async === false ? false : true);
+	if (b) x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	x.send(p);
+	return x;
+}
+
+</script>
