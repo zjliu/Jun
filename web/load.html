@@ -1,0 +1,172 @@
+<html>
+<head>
+<title>load</title>
+<style>
+	*{margin:0px;padding:0px;}
+	body{background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAATCAIAAAHIduKaAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAABh0lEQVR42mL8f82A4f8fKGKTY2D4y/D/L0AAMTFgAwABhF0UIIAY/1/VA+ll+MPAKgvRzsDwDyCAsKsFCCCsov8BAogR7IZ/QF1QEsJgkwfKgbn/weJA9n+AAMJuLFYAEEBAd+kjDIOQ7PIM/9GM/AcQQMQaCRBAxKoDCCBi1QEEEC51/9H4AAEECZ3/EP9DEVYuuwKYwYAkxQCTRREECCASAhE3QHEmQABRxUQUABBAVDfxP0AAMVHgwf9YVQAEECSFYQY2aswAowUhjho5/1H0AgQQlb0MEEBM+JMVqQAggDBc958iEwECiIl6iQ8EAAKIiShVRMcvQAARmzeJBAABxERJKsMEAAHERFrYEAIAAcREamDjVwoQQPDyigEpxSMb8x8p9eAg4bLsiqgiGOYwYIj/J6AAIICoHHpUS8IwABBATAyDGwAEEBHu+/9/AN0HEEBMlEcB+XqJMBIggJiolVBoBAACiImqyfk/1X0LEEBMtMh01Avs/wABxESzkoE6egACDADspa2gmkp4hgAAAABJRU5ErkJggg==);}
+	.mainDiv{position:absolute;left:0;right:0;top:0;bottom:0;}
+	.mainDiv .centerDiv{position:absolute;left:128px;top:64px;right:128px;bottom:100px;overflow:auto;}
+	table.allTb{width:100%;height:100%;}
+	canvas{box-shadow:rgba(0,0,0,.4) 0 0 8px;}
+	/*
+		table{border-width:0px 1px 1px 0px;}
+		table td{border-width:1px 0px 0px 1px;}
+		table tr:last-child td{border-bottom-width:1px;}
+		table tr>td:last-child{border-right-width:1px;}
+	*/
+</style>
+<style>
+	@-webkit-keyframes myfirst{
+		from{background-color:red;width:300px;height:300px;}
+		to{background-color:yellow;width:100px;height:100px;}
+	}
+
+	@-webkit-keyframes mysecond{
+		0%   {background: red;}
+		25%  {background: yellow;}
+		50%  {background: blue;}
+		75%  {background: black;}
+		100% {background: green;}
+	}
+	
+	@-webkit-keyframes roll{
+		from{margin-left:0px;margin-top:0px;}
+		to{margin-left:500px;margin-top:500px;}
+	}
+	
+	/*
+	canvas{
+		border-top-left-radius:150px;
+		border-top-right-radius:150px;
+	}
+	
+	*/
+
+	#c1{border-top-left-radius:150px;-webkit-transform-origin:0px;}
+	#c2{border-top-right-radius:150px;-webkit-transform-origin:100%;}
+
+	
+
+</style>
+<script>
+
+	function change(className,time){
+		time = time || 5;
+		canvas.style.webkitAnimation = className + " " + time + "s";
+	}
+
+	function rotate(){
+		var c1=$("#c1");
+		var c2=$("#c2");
+
+	}
+
+
+	function openDoor(value){
+		
+		console.log(value);
+
+		value = parseInt(value);
+
+		var cv2=value>0?value:-value;
+		var cv1=-cv2;
+
+		c1.style.webkitTransform="skewY("+cv1+"deg";
+		c2.style.webkitTransform="skewY("+cv2+"deg";
+
+		var angle = 0.9*cv2*Math.PI/180;
+
+		var orgWidth = c1.width;
+
+		var width = Math.cos(angle)*orgWidth;
+
+		var marginWidth = 150*2 - 2*width;
+
+		c1.style.width=width+"px";
+		c2.style.width=width+"px";
+
+		c1.style.marginRight=marginWidth+"px";
+		c1.style.marginTop=marginWidth+"px"
+
+	}
+
+
+</script>
+</head>
+<body>
+<div class="mainDiv">
+	<div class="centerDiv">
+		<table class="allTb">
+			<tr>
+				<td>
+					<div>
+						<canvas id="c1" width="150" height="300"></canvas>
+						<canvas id="c2" width="150" height="300"></canvas>
+						<br>
+						<input type="range" value="0" onchange="openDoor(this.value)"  id="ro">
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>
+<script>
+/*
+var canvas = document.getElementById("canvas"),
+	W = canvas.width,
+	H = canvas.height;
+*/
+
+
+</script>
+<script>
+var loadCircle=(function(){
+	var defalultOpts={
+		radius:20		
+	};
+	var LC= function(opts){
+		
+	}
+	LC.property={
+
+	}
+	return LC;
+})();
+</script>
+<script>
+function ajax(o) {
+	var b = /POST/i.test(o.type),
+		p = o.data || '',
+		t = o.dataType,
+		url = o.url || location.href,
+		q = /\?/.test(url) ? '&' : '?',
+		x = window.XMLHttpRequest ? new XMLHttpRequest() : (new ActiveXObject('Msxml2.XMLHTTP') || new ActiveXObject('Microsoft.XMLHTTP')),
+		z = function (s) {
+			if (x.readyState == 4) {
+				if (x.status == 200) {
+					s = x.responseText;
+					if (t == 'json')
+						s = json(s);
+					if (b = o.success)
+						b(s)
+				} else if (o.error) {
+					o.error(x.status, x)
+				}
+			}
+		};
+	x.onreadystatechange = z;
+	if (typeof p == 'object') {
+		var r = [];
+		for (var k in p)
+			r.push(encodeURIComponent(k) + '=' + encodeURIComponent(p[k]));
+		p = r.join('&')
+	}
+	x.open(b ? 'POST' : 'GET', url + (b ? '' : ((p ? q : '') + p + (o.cache ? '' : (((!p && q == '?') ? '?' : '&') + '_=' + new Date().getTime())))),
+			o.async === false ? false : true);
+	if (b) x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	x.send(p);
+	return x;
+}
+</script>

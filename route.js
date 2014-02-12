@@ -5,6 +5,7 @@ var home = Config.getConfig("home");
 var isRightHome = pathReg.test(home);
 
 function route(handle,pathname,response){
+	console.log([pathname,fileReg.test(pathname),isRightHome]);
 	if(fileReg.test(pathname)){
 		if(isRightHome){
 			pathname = home + pathname;
