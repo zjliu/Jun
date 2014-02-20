@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8">
+	<style>
+	html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;}
+	body{
+		/*background-image:-webkit-radial-gradient(#ffffff 0%,#000011 100%);*/
+		background-image:-webkit-radial-gradient(#ffffff 0%,#000011 100%);
+	}
+
+	.branch{
+		position:absolute;
+        left: 30px;
+        top: 500px;
+        width: 400px;
+        height: 10px;
+		
+        background-image: -webkit-linear-gradient(top, #884400 0%, #884400 40%, #997700 50%, #884400 100%);
+		-webkit-transform:rotate(-30deg);
+	}
+
+	.line{
+		top:200px;
+		left:100px;
+		width:250px;
+		height:1px;
+		position:absolute;
+		-webkit-transform-origin:0 0;
+		-webkit-transform:rotate(30deg);
+		-webkit-box-shadow:1px 0 7px rgb(153, 255, 153), -1px 0 7px rgb(51, 119, 51);
+	}
+
+	.leaf{
+		position:absolute;
+		top:200px;
+		left:300px;
+		width:200px;
+		height:80px;
+		background-color:rgb(0,153,0);
+		border-radius:200px 0/100px 0;
+        box-shadow: inset 0 1px 1px green, inset 0 2px white, inset 0 3px 2px white, inset 0 -1px #007700, inset 0 -2px 3px #007700, inset 0 -7px 15px rgba(0, 50, 0, 0.3);
+		-webkit-transform:rotate(-30deg);
+        background-image: -webkit-linear-gradient(290deg, #009900 0%, #55aa00 60%, #008800 80%);
+	}
+
+	</style>
+</head>
+<body>
+	<div class="branch"></div>
+
+	<div class="line"></div>
+
+	<div class="leaf"></div>
+
+</body>
+</html>
+

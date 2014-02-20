@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>
+</title>
+<link rel="stylesheet" href="components/picker/picker.css">
+<script src="components/picker/picker.js"></script>
+</head>
+<body>
+<div id="mDiv" style="width:100px;height:100px;background-color:red;"></div>
+</body>
+</html>
+<script>
+	var mDiv = document.getElementById("mDiv");
+	ColorPicker.init();
+	ColorPicker.show('red',function(color){
+		mDiv.style.backgroundColor=color;
+	},mDiv);
+</script>

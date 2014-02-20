@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>load</title>
+<style>
+	*{margin:0px;padding:0px;}
+	body{background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAATCAIAAAHIduKaAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAABh0lEQVR42mL8f82A4f8fKGKTY2D4y/D/L0AAMTFgAwABhF0UIIAY/1/VA+ll+MPAKgvRzsDwDyCAsKsFCCCsov8BAogR7IZ/QF1QEsJgkwfKgbn/weJA9n+AAMJuLFYAEEBAd+kjDIOQ7PIM/9GM/AcQQMQaCRBAxKoDCCBi1QEEEC51/9H4AAEECZ3/EP9DEVYuuwKYwYAkxQCTRREECCASAhE3QHEmQABRxUQUABBAVDfxP0AAMVHgwf9YVQAEECSFYQY2aswAowUhjho5/1H0AgQQlb0MEEBM+JMVqQAggDBc958iEwECiIl6iQ8EAAKIiShVRMcvQAARmzeJBAABxERJKsMEAAHERFrYEAIAAcREamDjVwoQQPDyigEpxSMb8x8p9eAg4bLsiqgiGOYwYIj/J6AAIICoHHpUS8IwABBATAyDGwAEEBHu+/9/AN0HEEBMlEcB+XqJMBIggJiolVBoBAACiImqyfk/1X0LEEBMtMh01Avs/wABxESzkoE6egACDADspa2gmkp4hgAAAABJRU5ErkJggg==);}
+	.mainDiv{position:absolute;left:0;right:0;top:0;bottom:0;}
+	.mainDiv .centerDiv{position:absolute;left:128px;top:64px;right:128px;bottom:100px;overflow:auto;}
+	table.allTb{width:100%;height:100%;}
+	canvas{box-shadow:rgba(0,0,0,.4) 0 0 8px;}
+	/*
+		table{border-width:0px 1px 1px 0px;}
+		table td{border-width:1px 0px 0px 1px;}
+		table tr:last-child td{border-bottom-width:1px;}
+		table tr>td:last-child{border-right-width:1px;}
+	*/
+</style>
+<style>
+
+</style>
+</head>
+<body>
+<div class="mainDiv">
+	<div class="centerDiv">
+		<table class="allTb">
+			<tr>
+				<td>
+					<div style="text-align:center;">
+						<canvas id="canvas" width="640" height="480"></canvas>
+						<input type="file" id="btn_file" name="files[]" />
+						<ul id="list">
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>
+<script>
+var canvas = document.getElementById("canvas"),
+	context= canvas.getContext('2d'),
+	W = canvas.width,
+	H = canvas.height;
+
+function E(f, e, o) {
+    if (!e) e = 'load';
+    if (!o) o = window;
+    if(o.attachEvent) {
+        o.attachEvent('on' + e, f)
+    } else {
+		o.addEventListener(e, f, false)
+	}
+}
+
+if(window.File && window.FileList && window.FileReader && window.Blob){
+	E(function(e){
+		loadLocalImage(e.target,function(image){
+			if(image){
+				context.drawImage(image,0,0,image.width,image.height,0,0,W,H);	
+			}
+		});
+	},"change",document.getElementById("btn_file"));
+}
+
+function loadLocalImage(element,callback){
+	if(!window.FileReader){
+		console.log('not support');		
+		return;
+	}
+	var files = element.files;
+	if(files && files.length>0){
+		var file = files[0];
+		var ireg = /image\/.*/i;
+		if(!ireg.test(file.type)){
+			return;	
+		}
+		var reader = new FileReader();
+		reader.onload =(function(file){
+			return function(e){
+				var image = new Image();
+				image.onload=function(){
+					callback(image);	
+				}
+				image.src=this.result;
+			};
+		})(file);
+		reader.readAsDataURL(file);
+	}
+}
+</script>
