@@ -138,7 +138,9 @@ var contentType={
 "movie":"video/x-sgi-movie",
 "ice":"x-conference/x-cooltalk",
 "form":"application/x-www-form-urlencoded",
-"ico":"image/x-icon"
+"ico":"image/x-icon",
+
+"less":"text/css"
 };
 
 function getValue(key){

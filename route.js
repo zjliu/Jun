@@ -1,5 +1,5 @@
 //var fileReg=/^(\/[a-zA-Z0-9\_\-]+)+(\.[a-zA-Z0-9\_\-])*(\.[a-zA-Z0-9\_\-]+)+$/;
-var fileReg=/^(?:\/[a-zA-Z0-9\_\.\-]+)*(?:\/[a-zA-Z0-9\_]+\.[a-zA-Z]+)$/;
+var fileReg=/^(?:\/[a-zA-Z0-9\_\.\-]+)*(?:\/[a-zA-Z0-9\_\-\.]+\.[a-zA-Z]+)$/;
 var pathReg=/^(\/[a-zA-Z0-9\_]+)+\/?$/;
 var Config = require("./.config");
 var home = Config.getConfig("home");

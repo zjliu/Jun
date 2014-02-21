@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+</title>
+ <meta charset="UTF-8">
+<link rel="stylesheet/less" href="lesscssDemo.less"></link>
+<script src="less-1.5.0.min.js" ></script>
+</head>
+<body>
+	<header>
+		<nav class="toolbar">
+			<li><a href="http://www.baidu.com">Baidu</a></li><li><a href="http://www.google.com.hk">Google</a></li><li><a href="https://www.mugeda.com">Mugeda</a></li>
+		</nav>
+	</header>
+	<div class="content">
+	</div>
+	<footer>
+	</footer>
+</body>
+</html>
+<script>
+function E(f, e, o) {
+    if (!e) e = 'load';
+    if (!o) o = window;
+    if(o.attachEvent) {
+        o.attachEvent('on' + e, f)
+    } else {
+		o.addEventListener(e, f, false)
+	}
+}
+E(function(){
+	return false;
+},"onselectstart",document);
+</script>
