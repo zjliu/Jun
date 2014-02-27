@@ -1,28 +1,77 @@
 var MugedaCardSignature=(function(){
-	var Signature=function(option){
-		for(var key in option){
-			this[key]=option[key];
-		}
+	var Signature=function(){
+		this.defaultOption={
+			parent:null,
+			left:0,
+			top:0,
+			width:320,
+			height:240,
+			backgroundColor:'#fff',
+			color:'rgb(224, 0, 57)',
+			lineWidth:4,
+			linecap:'round',
+			linejoin:'round',
+			smooth:3,
+			globalAlpha:1,
+			showTool:true,
+			callback:function(data){}
+		};
 		this.data=[];
 	}
 	Signature.prototype={
-		init:function(){
+		 create:function(option){
+		   this.options = extend({},this.defaultOption,option);
 		   var self=this;
+		   var options = self.options;
+		   var signDiv = document.createElement("div"); 
+		   signDiv.setAttribute("class","signDiv");
+		   signDiv.innerHTML=
+							'<div class="signTool">'
+							+'<input class="toolbtn signToolClear" type="button" value="clear" />'
+							+'<style>.signDiv{position:relative;}.signTool{position:absolute;bottom:0px;width:130px;height:26px;right:5px;text-align:right;}'
+							+'.signTool .signToolClear{margin-right:5px;width:55px;}'
+							+'.signTool .signToolOk{margin-right:5px;width:55px;}'
+							+'.signTool .toolbtn{border:0.5px solid rgba(0,0,0,.4);height:90%;line-height:26px;background-color:rgba(0,0,0,0.1)}'
+							+'.signTool .toolbtn:hover{box-shadow:rgba(0,0,0,.4) 0 0 8px;-webkit-box-shadow:rgba(0,0,0,.4) 0 0 8px;}'
+							+'</style>'
+							+'<input class="toolbtn signToolOk" type="button" value="ok" />'
+							+'</div>'
 		   this.canvas = document.createElement("canvas");
-		   this.canvas.width = getStyle(this.parent,"width",true);
-		   this.canvas.height = getStyle(this.parent,"height",true);
-		   this.parent.innerHTML="";
-		   this.parent.appendChild(this.canvas);
+		   this.canvas.style.position='relative';
+		   this.canvas.style.backgroundColor=options.backgroundColor;
+		   this.canvas.style.strokeStyle=options.color;
+		   if(options.parent){
+				var width = getStyle(options.parent,"width",true);
+				var height = getStyle(options.parent,"height",true);
+				this.canvas.width = width;
+				this.canvas.height = height;
+				signDiv.style.width = width +'px';
+				signDiv.style.height = height + 'px';
+				options.parent.innerHTML="";
+				signDiv.insertBefore(this.canvas,signDiv.firstChild);
+				options.parent.appendChild(signDiv);
+		   }else{
+			    var width = options.width;
+				var height = options.height;
+				this.canvas.width = width;
+				this.canvas.height = height;
+				signDiv.style.width = width +'px';
+				signDiv.style.height = height + 'px';
+			    signDiv.style.position='absolute';
+				signDiv.style.top = options.top + 'px';
+				signDiv.style.left = options.left + 'px';
+				signDiv.insertBefore(this.canvas,signDiv.firstChild);
+				document.body.appendChild(signDiv);
+		   }
+		   this.dealSignDiv(signDiv);
 		   this.context = this.canvas.getContext("2d");
-
+			self.setStyle();
 			E(function(e){
 				e.stopPropagation();
 				e.preventDefault();
-				return false;
-			},"touchstart",document);
-
-			E(function(e){
+				if(!options.showTool) return false;	
 				var pencil = new Pencil();
+				pencil.curve.smooth=self.options.smooth;
 				self.pencil = pencil;
 				pencil.curve.points=[];
 				pencil.lastPoint=null;
@@ -30,7 +79,6 @@ var MugedaCardSignature=(function(){
 				pencil.setStartPoint(position.x,position.y);
 				pencil.setEndPoint(position.x,position.y);
 			},isM?"touchstart":"mousedown",self.canvas);
-
 			E(function(e){
 				if(!self.pencil) return;
 				var position = getPointOnCanvas(self.canvas,e);	
@@ -38,7 +86,6 @@ var MugedaCardSignature=(function(){
 				self.clear();
 				self.draw();
 			},isM?"touchmove":"mousemove",self.canvas);
-
 			E(function(e){
 				self.data.push(self.pencil);
 				self.pencil=null;
@@ -47,13 +94,24 @@ var MugedaCardSignature=(function(){
 		clear:function(){
 			this.context.clearRect(0,0,this.canvas.width,this.canvas.height);
 		},
-		create:function(){
-		},
-		render:function(data){
-
-		},
-		deal:function(){
-
+		render:function(data,option){
+			if(this.canvas){
+				var signDiv = this.canvas.parentNode;
+				if(signDiv){
+					signDiv.parentNode.removeChild(signDiv);
+				}
+			}
+			this.create(option);
+			if(typeof data === "string"){
+				data = JSON.parse(data);
+			}
+			var pencilData=[];
+			for(var index in data){
+				var item = data[index];
+				pencilData.push(new Pencil(item));
+			}
+			this.data=pencilData;
+			this.draw();
 		},
 		draw:function(){
 			for(var i=0,l=this.data.length;i<l;i++){
@@ -62,6 +120,55 @@ var MugedaCardSignature=(function(){
 			}
 			if(this.pencil){
 				this.pencil.draw(this.context);
+			}
+		},
+		setStyle:function(){
+			var ctx = this.context;
+			var options = this.options;
+			ctx.lineWidth = options.lineWidth;
+			ctx.lineCap = options.lineCap;
+			ctx.lineJoin = options.linejoin;
+			ctx.globalAlpha = options.globalAlpha;
+			ctx.strokeStyle = options.color;
+		},
+		dealSignDiv:function(el){
+			var self = this;
+			var canvas = el.firstChild;
+			var toolDiv = el.lastChild;
+			if(toolDiv){
+				toolDiv.style.display=self.options.showTool?"block":"none";
+				var clearBtn = toolDiv.firstChild;
+				var okBtn = toolDiv.lastChild;
+				E(function(){
+					self.clearStart=true;
+				},isM?"touchstart":"mousedown",clearBtn);
+				E(function(){
+					if(!self.clearStart) return false;
+					self.clear();	
+					self.data=[];
+				},isM?"touchend":"mouseup",clearBtn);
+
+				E(function(){
+					self.okStart=true;
+				},isM?"touchstart":"mousedown",okBtn);
+				E(function(){
+					if(!self.okStart) return false;
+					self.options.callback(JSON.stringify(self.data));
+				},isM?"touchend":"mouseup",okBtn);
+			}
+		},
+		hide:function(){
+			if(this.options.parent){
+				this.options.parent.style.display="none";
+			}else{
+				this.canvas.parentNode.style.display="none";
+			}
+		},
+		show:function(){
+			if(this.options.parent){
+				this.options.parent.style.display="block";
+			}else{
+				this.canvas.parentNode.style.display="block";
 			}
 		}
 	}
@@ -113,19 +220,6 @@ function isMobile(){
     return isMobile ? true : false;
 }
 
-var createTriPoint = function(x0, y0, x1, y1, x2, y2) {
-    var triPoint = {
-        nodeX: x0 ? x0: 0,
-        nodeY: y0 ? y0: 0,
-        forwardX: x1 ? x1: 0,
-        forwardY: y1 ? y1: 0,
-        backwardX: x2 ? x2: 0,
-        backwardY: y2 ? y2: 0
-    };
-
-    return triPoint;
-};
-
 /*********************************************************************
  * Pencil 
  *********************************************************************/
@@ -135,15 +229,6 @@ var Pencil = function(data) {
 		'curve':{
 			'points':[],
 			'smooth':3
-		},
-		'drawInfo':{
-			lineWidth:4,
-			sX:1,
-			sY:1,
-			lineCap:'round',
-			lineJoin:'round',
-			globalAlpha:1,
-			strokeStyle:'#E00039'
 		}
 	}
 	this.data=extend({},defaultData,data);
@@ -153,16 +238,6 @@ var Pencil = function(data) {
 }
 
 Pencil.prototype = {
-	setStyle:function(ctx){
-		var drawInfo = this.drawInfo;
-		var sX = drawInfo.sX;
-		var sY = drawInfo.sY;
-		ctx.lineWidth = drawInfo.lineWidth;
-		ctx.lineCap = drawInfo.lineCap;
-		ctx.lineJoin = drawInfo.lineJoin;
-		ctx.globalAlpha = drawInfo.globalAlpha;
-		ctx.strokeStyle = drawInfo.strokeStyle;
-	},
 	addPoint:function(e,t){
 		if (!this.lastPoint)
 			return;
@@ -170,7 +245,7 @@ Pencil.prototype = {
 		var r = .2;
 		var i = r * (e - this.lastPoint.x);
 		var s = r * (t - this.lastPoint.y);
-		var o = createTriPoint((e + this.lastPoint.x) / 2, (t + this.lastPoint.y) / 2, e - i, t - s, this.lastPoint.x + i, this.lastPoint.y + s);
+		var o = this.createTriPoint((e + this.lastPoint.x) / 2, (t + this.lastPoint.y) / 2, e - i, t - s, this.lastPoint.x + i, this.lastPoint.y + s);
 		n.push(o)
 	},
 	updatePoints:function(e,t,n,r,i){
@@ -199,20 +274,28 @@ Pencil.prototype = {
 		this.editEndY = t
 		this.updatePoints(this.editStartX, this.editStartY, this.editEndX, this.editEndY, n)
 	},
+	createTriPoint:function(x0, y0, x1, y1, x2, y2) {
+		var triPoint = {
+			nodeX: x0 ? x0: 0,
+			nodeY: y0 ? y0: 0,
+			forwardX: x1 ? x1: 0,
+			forwardY: y1 ? y1: 0,
+			backwardX: x2 ? x2: 0,
+			backwardY: y2 ? y2: 0
+		};
+		return triPoint;
+	},
 	draw:function(ctx){
 		ctx.save();
 		ctx.beginPath();
-		this.setStyle(ctx);
-		var sX = this.drawInfo.sX;
-		var sY = this.drawInfo.sY;
 		for(var i=0,points = this.curve.points,drawLen=points.length;i<drawLen-1;i++)
 		{
 			point1 = points[i];
 			ctx.arc(point1.nodex,point1.nodeY,5,0,Math.PI*2);
 			point2 = points[i+1];
 			if(i == 0)
-				ctx.moveTo(point1.nodeX*sX, point1.nodeY*sY); 	
-			ctx.bezierCurveTo(point1.forwardX*sX, point1.forwardY*sY, point2.backwardX*sX, point2.backwardY*sY, point2.nodeX*sX, point2.nodeY*sY);
+				ctx.moveTo(point1.nodeX, point1.nodeY); 	
+			ctx.bezierCurveTo(point1.forwardX, point1.forwardY, point2.backwardX, point2.backwardY, point2.nodeX, point2.nodeY);
 		}
 		ctx.stroke();
 		ctx.restore();
