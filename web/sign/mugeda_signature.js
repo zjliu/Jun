@@ -232,8 +232,8 @@ var MugedaSignature = (function() {
 			signDiv.innerHTML = '<div class="signTool">' 
 			+ '<img src="'+options.clearImgSrc+'" class="toolbtn signToolClear" />'
 			+ '<img src="'+options.backImgSrc+'" class="toolbtn signToolBack" />'
-			+ '<style>.signDiv{position:relative;}.signTool{position:absolute;bottom:0px;width:230px;height:32px;right:5px;text-align:right;}' 
-			+ '.signTool .toolbtn{margin-left:10px;}' 
+			+ '<style>.signDiv{position:relative;}.signTool{position:absolute;bottom:0px;width:125px;height:32px;right:5px;text-align:right;}' 
+			+ '.signTool .toolbtn{margin-left:5px;}' 
 			+ '.signTool .toolbtn:hover{box-shadow:rgba(0,0,0,.4) 0 0 8px;-webkit-box-shadow:rgba(0,0,0,.4) 0 0 8px;}' 
 			+ '</style>' 
 			+ '<img src="'+options.okImgSrc+'" class="toolbtn signToolOk" />'
@@ -308,15 +308,46 @@ var MugedaSignature = (function() {
 					signDiv.parentNode.removeChild(signDiv);
 				}
 			}
-			this.create(option);
-			if(!data) return;
+			if(!data){
+				this.create(option);
+				return;
+			}
 			if (typeof data === "string") {
 				data = this.unzip(data);
 				if(!data) return;
 			}
 			var pencilData = {width:data.width,height:data.height,pencils:[]};
+			var ow=option.width;
+			var oh=option.height;
+			var nw=pencilData.width;
+			var nh=pencilData.height;
+			var newW=ow;
+			var newH=oh;
+			if(nw>ow || nh>oh){
+				if(nw/nh>ow/oh){
+					newW = ow;
+					newH = ow*(nh/nw);
+				}
+				else{
+					newH = oh;
+					newW = oh*(nw/nh);
+				}
+			}
+			var vs = nw/newW;
+			this.create(option);
 			for (var index in data.pencils) {
 				var item = data.pencils[index];
+				if(vs>1){
+					for(var i=0,points=item.curve.points,l=points.length;i<l;i++){
+						var point = points[i];
+						point.backwardX/=vs;
+						point.backwardY/=vs;
+						point.forwardX/=vs;
+						point.forwardY/=vs;
+						point.nodeX/=vs;
+						point.nodeY/=vs;
+					}
+				}
 				pencilData.pencils.push(new Pencil(item));
 			}
 			this.data = pencilData;
