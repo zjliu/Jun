@@ -1,0 +1,99 @@
+<!DOCTYPE htmle>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html" charset="utf-8">
+<style>
+	body{background-color:#d4d4d4;}
+	/*
+	.demo{width:400px;height:400px;}
+	.box{position:relative;width:566px;height:566px;}
+	.box .leaf{position:absolute;}
+	.leaf{
+		margin-top:300px;
+		width:200px;
+		height:200px;
+		border-radius:200px 0px;
+		background-image:-webkit-linear-gradient(45deg,rgba(188,190,192,1) 8%,rgba(158,31,99,1) 30%,rgba(158,31,99,1) 100%);
+		opacity:0.5;
+		-webkit-transform:rotate(45deg);
+		-webkit-transform-origin:top right;
+	}
+	*/
+</style>
+<link rel="stylesheet/less" href="common.less"></link>
+<link rel="stylesheet/less" href="lotus.less"></link>
+<script src="less-1.5.0.min.js"></script>
+<script src="JunDraw/common.js"></script>
+</head>
+<body>
+	<section class="demo">
+		<div class="lotus">
+			<div class="lotus_leaf"></div>
+			<div class="lotus_leaf"></div>
+			<div class="lotus_leaf"></div>
+			<div class="lotus_leaf"></div>
+			<div class="lotus_leaf"></div>
+			<div class="lotus_leaf"></div>
+			<div class="lotus_leaf"></div>
+			<div class="lotus_leaf"></div>
+		</div>
+	</section>
+</body>
+</html>
+<script>
+	var leafs=document.querySelectorAll(".box .leaf");
+	for(var index=0,l=leafs.length;index<l;index++){
+		var item = leafs[index];
+		var deg = 45 + index*15 +"deg";
+		item.style.webkitTransform="rotate("+deg+")";
+	}
+
+	var JunLotus=(function(){
+		var defaultOptions={
+			parent:document.querySelector(".demo"),
+			edge:200,
+			top:50,
+			left:60,
+			leafCount:8
+		};
+		var Lotus=function(option){
+			var options = extend({},defaultOptions,option);		
+			this.initProperty(options);		
+		}
+		Lotus.prototype={
+			initProperty:function(options){
+				for(var key in options){
+					this[key]=options[key];
+				}
+			},
+			create:function(){
+				if(this.parent){
+					var width = getStyle(this.parent,"width",true)	
+					var height = getStyle(this.parent,"height",true);
+					this.edge=width>height?height:width;	
+				}
+				this.leafEdge = this.edge/Math.sqrt(2)/2;
+				var angle = 360/this.leafCount;
+
+			},
+			createLeaf:function(angle){
+				var leaf = document.createElement("div");
+				leaf.classList.add("lotus_leaf");
+				leaf.width = this.leafEdge+"px";
+				leaf.height = this.leafEdge+"px";
+
+			}
+		}
+		
+		return Lotus;
+	})();
+	
+	var lotus = new JunLotus({
+
+	});
+
+	//lotus.create();
+
+
+</script>

@@ -1,0 +1,91 @@
+@import "common.less";
+
+@lotusWidth : 400px;
+@lotusHeight : 400px;
+@lotusLeafCount : 8;
+@lotusLeafEdge : @lotusWidth/sqrt(2)/2;
+@lotusLeafAngle : 180deg/(@lotusLeafCount - 1);
+@newline: `"\n"`;
+
+body{
+	background-color:black;
+}
+.lotus{
+	width:@lotusWidth;
+	height:@lotusHeight;
+	position:relative;
+	margin-left:100px;
+	margin-top:50px;
+	//box-shadow:rgba(255,255,255,0.1) 0 0 0 8px;	
+	.border-radius(5px);
+
+	.lotus_leaf{
+		position:absolute;
+		width:@lotusLeafEdge;
+		height:@lotusLeafEdge;
+		top:@lotusHeight/2;
+		left:@lotusWidth/2 - @lotusLeafEdge;
+		opacity:0.5;
+		.border-radius(@lotusLeafEdge,"0px",@lotusLeafEdge,"0px");	
+		.transform-origin(top right);
+		background-image:-webkit-linear-gradient(@lotusLeafAngle,rgba(188,190,192,1) 8%,rgba(158,31,99,1) 30%,rgba(158,31,99,1) 100%);
+		background-image:-moz-linear-gradient(@lotusLeafAngle,rgba(188,190,192,1) 8%,rgba(158,31,99,1) 30%,rgba(158,31,99,1) 100%);
+		background-image:-o-linear-gradient(@lotusLeafAngle,rgba(188,190,192,1) 8%,rgba(158,31,99,1) 30%,rgba(158,31,99,1) 100%);
+		background-image:-ms-linear-gradient(@lotusLeafAngle,rgba(188,190,192,1) 8%,rgba(158,31,99,1) 30%,rgba(158,31,99,1) 100%);
+		background-image:linear-gradient(@lotusLeafAngle,rgba(188,190,192,1) 8%,rgba(158,31,99,1) 30%,rgba(158,31,99,1) 100%);
+		.leaf_rotate(1);
+	}
+
+	:nth-child(2){
+		.animation(show-2 5s ease-in-out infinite);
+	}
+	:nth-child(3){
+		.animation(show-3 5s ease-in-out infinite);
+	}
+	:nth-child(4){
+		.animation(show-4 5s ease-in-out infinite);
+	}
+	:nth-child(5){
+		.animation(show-5 5s ease-in-out infinite);
+	}
+	:nth-child(6){
+		.animation(show-6 5s ease-in-out infinite);
+	}
+	:nth-child(7){
+		.animation(show-7 5s ease-in-out infinite);
+	}
+	:nth-child(8){
+		.animation(show-8 5s ease-in-out infinite);
+	}
+
+}
+
+.leaf_rotate(@n){
+	.rotate(45deg + (@n - 1) * @lotusLeafAngle);
+}
+
+.keyframe(@name,@n){
+	.keyframe("-moz-",@name,@n);
+	.keyframe("-webkit-",@name,@n);
+	.keyframe("-o-",@name,@n);
+	.keyframe("-ms-",@name,@n);
+	.keyframe("",@name,@n);
+}
+
+.keyframe(@vendor,@name,@n){
+	@keyframe: ~"}@{newline}@@{vendor}keyframes @{name} {@{newline}0%";
+	@{keyframe} {
+		.rotate(45deg);
+	}
+	100%{
+		.rotate(45deg + (@n - 1) * @lotusLeafAngle);
+	}
+}
+
+.keyframe(show-2,2);
+.keyframe(show-3,3);
+.keyframe(show-4,4);
+.keyframe(show-5,5);
+.keyframe(show-6,6);
+.keyframe(show-7,7);
+.keyframe(show-8,8);
