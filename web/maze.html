@@ -13,6 +13,7 @@
 		margin-left:100px;
 	}
 </style>
+<script src="common.js"></script>
 </head>
 <body>
 </body>
@@ -26,31 +27,108 @@
 		canvas.width = wgradCount*gradLength;	
 		canvas.height = hgradCount*gradLength; 
 
+	canvas.style.backgroundColor="rgba(0,0,0,1)";
 	var context = canvas.getContext("2d");
 
 	document.body.appendChild(canvas);
 	
-	context.fillStyle="rgba(0,0,0,1)";
+	context.fillStyle="rgba(255,255,255,1)";
 
-	var grads = [];
+	var grads = new Array();
 	
 	var flag = true;
-	for(var i=0;i<wgradCount;i++){
-		for(var j=0;j<hgradCount;j++){
-			if(i*j%3===0)
-			grads.push(new grad(i,j,gradLength));
+	
+	var tObj = {"head":eRandom(0,wgradCount-1,true),"tail":eRandom(0,wgradCount-1,true)};
+	var hgrad,tgrad;
+	for(var j=0;j<hgradCount;j++){
+		grads[j]=new Array();
+		for(var i=0;i<wgradCount;i++){
+			//if(i*j%3===0)
+			var g = new grad(i,j,gradLength);
+			if(i===tObj.head && j===0){
+				g.isWay=true;
+				g.isHead=true;
+				hgrad=g;
+			}
+			if(j=== hgradCount-1 && i===tObj.tail){
+				g.isWay=true;
+				g.isTail=true;
+				tgrad=g;
+			}
+			grads[j][i]=g;
 		}
 	}
 
-	for(var i=0,l=grads.length;i<l;i++){
-		var grad = grads[i];
-		grad.draw(context);
+	var pathList = new Array();
+	var currentIndex = -1;
+
+	function getOKPoint(lastGrad,dirArr){
+		if(dirArr.length>0){
+			var r=eRandom(0,dirArr.length-1,true);
+			randomGrad = dirArr[r];
+			if(randomGrad===tgrad){
+				return randomGrad;
+			}
+			var tryArr=randomGrad.getDirGrad(grads,lastGrad);	
+			if(tryArr && tryArr.length===3){
+				return randomGrad;
+			}
+			else{
+				dirArr.splice(r,1);
+				return getOKPoint(lastGrad,dirArr);
+			}		
+		}
 	}
 
-	function grad(x,y,w){
+	function getPath(grad){
+		if(currentIndex===-1){
+			grad.isWay=true;
+			pathList.push(grad);
+			currentIndex++;
+			getPath(pathList[currentIndex]);
+			return;
+		}
+		var currentGrad = pathList[currentIndex];
+		var dirArr=currentGrad.getDirGrad(grads,pathList[currentIndex-1]);			
+		
+		if(!dirArr){
+			pathList.pop();
+			currentIndex--;
+			getPath(pathList[currentIndex]);
+		}
+
+		var rightGrad = getOKPoint(currentGrad,dirArr);
+		if(rightGrad === tgrad){
+			return;
+		}
+		if(rightGrad){
+			pathList.push(rightGrad);
+			currentIndex++;
+			getPath(pathList[currentIndex]);
+		}
+		else{
+			pathList.pop();
+			currentIndex--;
+			getPath(pathList[currentIndex]);
+		}
+	}
+	
+	getPath(hgrad);
+
+	var index=0;
+	var rt = setInterval(function(){
+		if(index===pathList.length-1) clearInterval(rt);
+		pathList[index].draw(context);
+		index++;
+	},500);
+
+	function grad(x,y,w,isWay,isHead,isTail){
 		this.x=x;
 		this.y=y;
 		this.w=w;
+		this.isWay = !!isWay;
+		this.isHead = !!isHead;
+		this.isTail = !!isTail;
 		this.draw=function(context){
 			var x= this.x*this.w;
 			var y= this.y*this.w;
@@ -59,6 +137,47 @@
 			context.fill();
 			context.closePath();
 		}
+		this.getDirGrad=function(grads,lastGrad){
+			if(!lastGrad) lastGrad=this;
+			var arr=[];
+			if(this.y!==0){
+				var grad1 = grads[this.y-1][this.x];
+				if(!grad1.isWay){	
+					arr.push(grad1);
+				}
+				else{
+					return false;
+				}
+			}
+			if(this.y!==hgradCount-1) {
+				var grad2 = grads[this.y+1][this.x];
+				if(!grad2.isWay){	
+					arr.push(grad2);
+				}
+				else{
+					return false;
+				}
+			}
+			if(this.x!==0){ 
+				var grad3 = grads[this.y][this.x-1];
+				if(!grad3.isWay){	
+					arr.push(grad3);
+				}
+				else{
+					return false;
+				}
+			}
+			if(this.x!==wgradCount-1){
+				var grad4 = grads[this.y][this.x+1];
+				if(!grad4.isWay){	
+					arr.push(grad4);
+				}
+				else{
+					return false;
+				}
+			}
+		return arr;
 	}
+}
 
 </script>

@@ -213,11 +213,12 @@ var MugedaSignature = (function() {
 			smooth: 3,
 			globalAlpha: 1,
 			showTool: true,
-			renderTime:50,
-			clearImgSrc:'clear.png',
-			okImgSrc:'confirm.png',
-			backImgSrc:'goback.png',
-			callback: function(data) {}
+			renderTime:2000,
+			clearImgSrc:getClearImage(),
+			okImgSrc:getOkImage(),
+			backImgSrc:getBackImage(),
+			okCallback: function(data) {},
+			cancelCallback:function(el){}
 		};
 		this.data = {width:0,height:0,pencils:[]};
 	}
@@ -237,6 +238,7 @@ var MugedaSignature = (function() {
 			+ '.signTool .toolbtn:hover{box-shadow:rgba(0,0,0,.4) 0 0 8px;-webkit-box-shadow:rgba(0,0,0,.4) 0 0 8px;}' 
 			+ '</style>' 
 			+ '<img src="'+options.okImgSrc+'" class="toolbtn signToolOk" />'
+			+ '</div>'
 			+ '</div>'
 			this.canvas = document.createElement("canvas");
 			this.canvas.style.position = 'relative';
@@ -301,13 +303,14 @@ var MugedaSignature = (function() {
 		clear: function() {
 			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		},
-		render: function(option,data) {
+		render: function(option) {
 			if (this.canvas) {
 				var signDiv = this.canvas.parentNode;
 				if (signDiv) {
 					signDiv.parentNode.removeChild(signDiv);
 				}
 			}
+			var data = option.data;
 			if(!data){
 				this.create(option);
 				return;
@@ -373,6 +376,7 @@ var MugedaSignature = (function() {
 			var pointIndex = 0;
 			var pencilLength = this.data.pencils.length;
 			if(pencilLength===0) return;
+			var realTime = Math.floor(self.options.renderTime/this.getPointsLength());
 			var re = setInterval(function() {
 				self.clear();
 				for (var i = 0; i < pencilIndex; i++) {
@@ -393,7 +397,14 @@ var MugedaSignature = (function() {
 				else {
 					pointIndex++;
 				}
-			},self.options.renderTime);
+			},realTime);
+		},
+		getPointsLength:function(){
+			var len =0;
+			for(var i=0,l=this.data.pencils.length;i<l;i++){
+				len += this.data.pencils[i].curve.points.length;
+			}
+			return len;
 		},
 		setStyle: function() {
 			var ctx = this.context;
@@ -432,7 +443,7 @@ var MugedaSignature = (function() {
 					if (!self.okStart) return false;
 					self.okStart = false;
 					var zipData = self.zip();
-					self.options.callback(JSON.stringify(zipData));
+					self.options.okCallback(JSON.stringify(zipData));
 				},isM ? "touchend": "mouseup", okBtn);
 				
 				if(!backBtn) return;
@@ -441,10 +452,13 @@ var MugedaSignature = (function() {
 				},isM ? "touchstart": "mousedown", backBtn);
 				E(function(e) {
 					if (!self.backStart) return false;
+					/*
 					self.backStart = false;
 					self.data.pencils.splice(-1,1);
 					self.clear();
 					self.draw();
+					*/
+					self.options.cancelCallback(self);
 				},isM ? "touchend": "mouseup", backBtn);
 			}
 		},
@@ -540,5 +554,18 @@ var MugedaSignature = (function() {
 			object.curve.points = points;
 		}
 	}
+
+	function getClearImage(){
+		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAARVBMVEX///9mZmZmZmZmZmZmZmZmZmZycnJsbGxmZmanp6eTk5OEhIR9fX1ycnLMzMzExMS8vLy2traqqqqnp6fe3t7X1tfMzMx4+DUiAAAAF3RSTlMAEURmd4i7u7vMzMzMzN3d3d3d3e7u7jbX52QAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDIvMjcvMTRwI2jIAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M1cbXjNgAAALpJREFUOI2tk1kOwyAMRIGE4CY0Swvc/6hFLGGz5Krq/CVvMN5g7I/iQkKQFBzDM1SaB4uATqLlU88BJoI3jiF+dwvHOUDOtMkfVrs/cy1YgM0Zc6omRJOBtsbrUHUWsj4fuI+hw6cMBoT7GPFHZyjcWMyw7Dd3K2JYznJ+g9FQcadhNOir8Hw+GWKZKJdVo153gYWnRsVWq0fklyo8TysN6x1aWPP523GTC0OvHL209NrTD4eRT+9nfQByhxkiEToxhQAAAABJRU5ErkJggg==';
+	}
+	
+	function getOkImage(){
+		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAASFBMVEX///9mZmZmZmZmZmZmZmZmZmZycnJra2tmZmaZmZmVlZWMjIyGhoZ8fHxycnLMzMzIyMi+vb61tbWtra2lpaXe3t7W1tbMzMzUMzqRAAAAGHRSTlMAEURmd4i7u7vMzMzMzMzd3d3d3d3u7u71q+/NAAAACXBIWXMAAAsSAAALEgHS3X78AAAAFnRFWHRDcmVhdGlvbiBUaW1lADAyLzI3LzE0cCNoyAAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAADFSURBVDiNrZPhDoMgDIQFQW86pqDV93/TIUFngYRlWf/BfRxtKU3zxxBSI4SWoiQr3EJliEQSkuttqgNtRWdE5p/cIso6cGaqkv2nNbGWssG408IskgweRORYFprpg9fJxoUOQFz04WKzHQCNcfMGvCwNnpqCvq05sBJNPZagO4Mc6J03Noe8n/4cQLfRPB/HO5QBjMF+BVLgKtNmuuaN8iU6psdGfVq9TB0HRPmxrlDfPnd1YOojVx/a+tjXP05T/Xo/xxsHfRcudKF2fgAAAABJRU5ErkJggg==';
+	}
+
+	function getBackImage(){
+		return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAASFBMVEX///9mZmZmZmZmZmZmZmZmZmZxcXFra2tmZmajo6OVlZWMjIyEhIR7fHxxcXHMzMzFxcW+vr6zs7OsrKze3t7W1tbR0tLMzMxVCj1wAAAAGHRSTlMAEURmd4i7u7vMzMzMzMzd3d3d3e7u7u4XNbiCAAAACXBIWXMAAAsSAAALEgHS3X78AAAAFnRFWHRDcmVhdGlvbiBUaW1lADAyLzI3LzE0cCNoyAAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAADgSURBVDiNrVNbDoQgDBTkUR8sqEXvf9MVBS1oQrLZ+TCGmU5LW5rmj2BcwgHJ2RstgEA8JBwK8JxvSx6grfCZgvqbST2yMBqnrRvTf6o0qx8GxCWaiBcD+Iwr4tZTC1KB6aadDpjNXYW868MbPpzIQ5D4jtC4nkmooI+Rq9+/m4FSoEJyP/ejXhBt5KlgCXFHByZ0V6+IIBgfvEGn4V3gzkbNV3wUyJTCQQlJGqVtTEHBaav3GWyqELBsWMMar3FBFONWnfOLeRqQcenBkjuStaytXH1p62tffzhN9en9jC9rfBio5Pj6fgAAAABJRU5ErkJggg=='
+	}
+
 	return Signature;
 })();
