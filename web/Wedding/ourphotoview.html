@@ -1,0 +1,171 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新娘街我们的相册</title>
+<meta http-equiv="Cache-Control" content="max-age=300" />
+<meta name="author" content="MangLiuGuo" />
+<meta name="viewport" content="width=480,target-densitydpi=high-dpi,user-scalable=no" />
+<style type="text/css">
+*{ padding:0; margin:0;}
+a{ text-decoration:none;}
+body{ font-family:"Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体";background:url(images/bgpoint.png);}
+img{ max-width:100%; border:none;}
+/*top\footer*/
+header{ width:480px; clear:both; background:url(images/qiandaotop.png) no-repeat; height:100px;}
+header .back{ display:inline-block; width:40px; height:50px; margin:10px 0 0 20px; float:left; cursor:pointer}
+header .qiandao{display:inline-block; width:200px; height:50px; line-height:50px; float:left; margin:10px 0 0 50px; text-align:center; color:#6C9; font-size:20px;}
+header .refresh{display:inline-block; width:40px; height:50px; float:right; margin:10px 20px 0 0; cursor:pointer;}
+/*body*/
+.main{ width:480px; height:auto;}
+/*无缝滚动*/
+.con{ width:400px; height:450px; margin:0 auto; padding-top:60px;}
+.win{ width:400px; height:450px; position:relative; cursor:pointer;
+	-webkit-perspective: 2000px;
+	-moz-perspective: 2000px;
+	perspective: 2000px;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-webkit-transform:rotateX(0deg);
+	-moz-transform:rotateX(0deg);
+	}
+.win img{ width:400px; height:450px;}
+.pscroll{
+width:400px;
+height:450px;
+position:absolute;
+left:0;
+-webkit-transform-style: preserve-3d;
+-moz-transform-style: preserve-3d;
+transform-style: preserve-3d;
+-webkit-transition: all 1s;
+-moz-transition: all 1s;
+transition: all 1s;
+text-align:center;
+color:#396;
+}
+.like{width:440px; margin-top:70px; text-align:right;}
+.like img{ cursor:pointer}
+/*弹出遮罩层*/
+.mask{ position:absolute; z-index:100; width:100%; height:100%; background:#000; opacity:0.6; display:none;}
+.vote_success{ width:400px; height:800px;position:absolute; z-index:101; display:none;}
+.vote_success .console{background:url(images/kongzhiqi.png) no-repeat; width:236px; height:249px;}
+.console p{ width:100%; height:20px; padding:20px 0;}
+.console .p1 a{ display:inline-block; width:110px; height:50px; cursor:pointer}
+.console .p2 a{ display:inline-block; width:70px; height:50px; cursor:pointer}
+.console .p3 span{ display:inline-block; width:50px; height:50px; float:right; cursor:pointer}
+</style>
+<script src="js/jQuery-1.7.1.js"></script>
+<script>
+    //全局变量，触摸开始位置
+    var startX = 0, startY = 0;
+    $(document).ready(function () {
+        _w = window.screen.width;
+        _h = $(".like").position().top;
+        _popw = 480;
+        _poph = _h + 150;
+        _left = 0;
+        _top = 0;
+        $(".like img").click(function () {
+            $(".mask").fadeIn(200);
+            $(".mask").css({ height: _poph + "px" });
+            $(".vote_success").css({ width: _popw + "px", height: _poph + "px", left: _left + "px", top: _top + "px" });
+            $(".console").css({ "margin-top": _h - 124 + "px", "margin-left": "210px" });
+            $(".vote_success").fadeIn(400);
+            clrevent();
+        });
+        $("#exit").click(function () {
+            $(".mask").fadeOut(400);
+            $(".vote_success").fadeOut(200);
+            addevent();
+        });
+        if (document.documentElement.scrollHeight <= document.documentElement.clientHeight) {
+            bodyTag = document.getElementsByTagName('body')[0];
+            bodyTag.style.height = document.documentElement.clientWidth / screen.width * screen.height + 'px';
+        }
+        setTimeout(function () {
+            window.scrollTo(0, 1)
+        }, 0);
+        var len = $(".pscroll").length;
+        var degree = 360 / len;
+        var halfdeg = degree / 2;
+        zdegree = 200 / (Math.tan(2 * Math.PI / 360 * halfdeg));
+        $(".pscroll").each(function (i) {
+            $(this).attr("style", "-webkit-transform:rotateY(" + degree * i + "deg) translateZ(" + zdegree + "px); -moz-transform:rotateY(" + degree * i + "deg) translateZ(" + zdegree + "px)");
+            $(this).append((i + 1) + "/" + len)
+        });
+        var n = 0, to = 1;
+        function moveimg(to) {
+            n = to == 'left' ? n + degree : n - degree;
+            $(".win div").each(function (i) {
+                $(this).attr("style", "-webkit-transform:rotateY(" + (degree * i + n) + "deg) translateZ(" + zdegree + "px); -moz-transform:rotateY(" + (degree * i + n) + "deg) translateZ(" + zdegree + "px)");
+            });
+        }
+        //var mimg = setInterval(moveimg,1400);
+        function touchSatrtFunc(evt) {
+            try {
+                var touch = evt.touches[0]; //获取第一个触点
+                var x = Number(touch.pageX); //页面触点X坐标
+                startX = x;
+            } catch (e) { }
+        }
+        function touchMoveFunc(evt) {
+            try {
+                var touch = evt.touches[0]; //获取第一个触点
+                var x = Number(touch.pageX); //页面触点X坐标
+                //alert(Math.abs(x-startX));
+                if (Math.abs(x - startX) > 100) {//防止误操作，参数100可调
+                    if (x - startX > 0) {
+                        to = 1;
+                    } else {
+                        to = 0;
+                    }
+                }
+            } catch (e) { }
+        }
+        function touchEndFunc(evt) {
+            try {
+                to ? moveimg('left') : moveimg('right');
+            } catch (e) { }
+        }
+        var addevent = function () {
+            document.getElementById("win").addEventListener('touchstart', touchSatrtFunc, false);
+            document.getElementById("win").addEventListener('touchmove', touchMoveFunc, false);
+            document.getElementById("win").addEventListener('touchend', touchEndFunc, false);
+        };
+        var clrevent = function () {
+            document.getElementById("win").removeEventListener('touchstart', touchSatrtFunc, false);
+            document.getElementById("win").removeEventListener('touchmove', touchMoveFunc, false);
+            document.getElementById("win").removeEventListener('touchend', touchEndFunc, false);
+        }
+        addevent();
+    });
+</script>
+</head>
+<body>
+<div class="mask"></div>
+<div class="vote_success">
+<div class="console">
+<p class="p1"><a href="zhufuqiandao.html"></a><a href="qingtie.html"></a></p>
+<p class="p2"><a href="zhufuqiandao.html"></a><a href="index.html"></a><a href="songzhufu.html"></a></p>
+<p class="p1"><a href="ourvideo.html"></a><a href="ourphoto.html"></a></p>
+<p class="p3"><span id="exit"></span></p>
+</div></div>
+<header><span class="back" onClick="javascript:history.go(-1);"></span><span class="qiandao">我们的相册</span><span class="refresh" onClick="javascript:window.location.reload();"></span></header>
+<div class="main">
+<div class="con">
+	<div class="win" id="win">
+    <!--此处调用4~7张图最好-->
+		<div class="pscroll"><img src="img/c01.jpg" /></div>
+		<div class="pscroll"><img src="img/c02.jpg" /></div>
+		<div class="pscroll"><img src="img/c03.jpg" /></div>
+		<div class="pscroll"><img src="img/c04.jpg" /></div>
+		<div class="pscroll"><img src="img/c05.jpg" /></div>
+        <div class="pscroll"><img src="img/c06.jpg" /></div>
+	</div>
+</div>
+</div>
+<div class="like"><img src="images/like.png"></div>
+</body>
+</html>

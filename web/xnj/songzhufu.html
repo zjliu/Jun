@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新娘街送祝福</title>
+<meta http-equiv="Cache-Control" content="max-age=300" />
+<meta name="author" content="MangLiuGuo" />
+<meta name="viewport" content="width=480,target-densitydpi=high-dpi,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<style type="text/css">
+*{ padding:0; margin:0;}
+a{ text-decoration:none;}
+body{ font-family:"Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体";background:url(images/skin1/bgpoint.png);}
+img{ max-width:100%; border:none;}
+/*top\footer*/
+header{ width:480px; clear:both; background:url(images/skin1/qiandaotop.png) no-repeat; height:100px;left:0; position: fixed; top: 0; z-index: 109;}
+header .back{ display:inline-block; width:40px; height:50px; margin:10px 0 0 20px; float:left; cursor:pointer}
+header .qiandao{display:inline-block; width:200px; height:50px; line-height:50px; float:left; margin:10px 0 0 80px; text-align:center; color:#6C9; font-size:20px;}
+header .refresh{display:inline-block; width:40px; height:50px; float:right; margin:10px 20px 0 0; cursor:pointer;}
+footer{ width:480px; height:20px; margin:20px 0 0 0; clear:both; text-align:center;}
+/*body*/
+.main{ width:480px; height:auto; margin:100px 0 0 0;}
+.main .name{ width:100%; height:50px;}
+.name span{ display:inline-block; float:left; height:48px; line-height:48px; width:200px;font-size:18px; color:#F66;}
+.name .lang{ text-align:right;}
+.name .niang{ text-align:left;}
+.name .xin{ float:left; margin:0 10px;}
+.main p{ width:400px; margin:0 auto; font-size:20px; color:#666;}
+.main p .txt{ width:400px; height:40px; line-height:40px; font-size:18px; margin:5px 0; text-indent:10px;}
+.main p .ho1{ background:url(images/skin1/anniu1.png) no-repeat; width:400px; height:50px; display:inline-block; margin:5px 0;}
+.main p .ho2{ background:url(images/skin1/anniu1.png) no-repeat; background-position:0 -50px; width:400px; height:50px; display:inline-block; margin:5px 0;}
+.main p .sa2{ display:inline-block; width:200px;height:50px; line-height:50px; text-align:center; text-decoration:none; color:#FFF;}
+.main p .gx1{ background:url(images/skin1/anniu2.png) no-repeat; width:400px; height:50px; display:inline-block; margin:5px 0;}
+.main p .gx2{ background:url(images/skin1/anniu2.png) no-repeat; background-position:0 -50px; width:400px; height:50px; display:inline-block; margin:5px 0;}
+.main p .gx3{ background:url(images/skin1/anniu2.png) no-repeat; background-position:0 -100px; width:400px; height:50px; display:inline-block; margin:5px 0;}
+.main p .gx4{ background:url(images/skin1/anniu2.png) no-repeat; background-position:0 -150px; width:400px; height:50px; display:inline-block; margin:5px 0;}
+.main p .sa4{ width:100px; height:50px; display:inline-block; line-height:50px; text-align:center; text-decoration:none; color:#FFF;}
+.main p textarea{ width:390px; height:150px; margin:5px auto; padding:5px;}
+.main p .sub{ background:url(images/skin1/sendmsg.png) no-repeat; width:400px; height:50px; border:0px; margin:5px auto; cursor:pointer;}
+.like{ cursor:pointer;}
+/*弹出遮罩层*/
+.mask{ position:absolute; z-index:100; width:100%; height:100%; background:#000; opacity:0.6; display:none;}
+.vote_success{ width:100%; height:auto;position:absolute; z-index:101; display:none;}
+.vote_success .console{background:url(images/skin1/kongzhiqi1.png) no-repeat; width:236px; height:249px;}
+.console p{ width:100%; height:20px; padding:20px 0;}
+.console .p1 a{ display:inline-block; width:110px; height:50px; cursor:pointer}
+.console .p2 a{ display:inline-block; width:70px; height:50px; cursor:pointer}
+.console .p3 span{ display:inline-block; width:50px; height:50px; float:right; cursor:pointer}
+</style>
+<script src="js/jQuery-1.7.1.js"></script>
+<script>
+$(document).ready(function(){
+	_w=window.screen.width;
+	_h=$("footer").position().top;
+	_popw=480;
+	_poph=$("footer").position().top+150;
+	_left=0;
+	_top=0;
+	$(".like").click(function(){
+		$(".mask").fadeIn(200);
+		$(".mask").css({height:_poph+"px"});
+		$(".vote_success").css({width:_popw+"px",height:_poph+"px",left:_left+"px",top:_top+"px"});
+		$(".console").css({"margin-top":_h-176+"px","margin-left":"230px"});
+		$(".vote_success").fadeIn(400);
+	});
+	$("#exit").click(function(){
+		$(".mask").fadeOut(400);
+		$(".vote_success").fadeOut(200);
+	});
+	$(".sa2").click(function(){
+		$(this).parent().attr("class",$(this).attr("id"))
+		$("input[name=zhufuduixiang]").val($(this).html());
+	});
+	$(".sa4").click(function(){
+		$(this).parent().attr("class",$(this).attr("id"))
+		$("input[name=duixiangguanxi]").val($(this).html());
+	});
+});
+</script>
+</head>
+<body>
+<div class="mask"></div>
+<div class="vote_success">
+<div class="console">
+<p class="p1">
+	<a href="javascript:;" onClick="window.location.href='fenxiang.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='qingtie.html'"></a>
+</p>
+<p class="p2">
+	<a href="javascript:;" onClick="window.location.href='zhufuqiandao.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='index.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='songzhufu.html'"></a>
+</p>
+<p class="p1">
+	<a href="javascript:;" onClick="window.location.href='ourvideo.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='ourphoto.html'"></a>
+</p>
+<p class="p3"><span id="exit"></span></p>
+</div></div>
+<header><span class="back" onClick="javascript:history.go(-1);"></span><span class="qiandao">送祝福</span><span class="refresh" onClick="javascript:window.location.reload();"></span></header>
+<div class="main">
+<form name="form1" method="post" action="">
+<div class="name"><span class="lang">曾小贤</span><img src="images/skin1/xin.png" class="xin" /><span class="niang">胡一菲</span></div>
+<p>您的姓名<Br><input type="text" name="myname" class="txt" value="" /></p>
+<p>祝福对象<Br><span class="ho2"><a href="javascript:void(0);" class="sa2" id="ho1">新郎</a><a id="ho2" href="javascript:void(0);" class="sa2">新娘</a></span></p>
+<p>您与对象的关系<Br><span class="gx3"><a href="javascript:void(0);" class="sa4" id="gx4">亲属</a><a href="javascript:void(0);" class="sa4" id="gx3">朋友</a><a href="javascript:void(0);" class="sa4" id="gx2">同事</a><a href="javascript:void(0);" class="sa4" id="gx1">其他</a></span></p>
+<p>祝福语言<Br><textarea name="msg"></textarea></p>
+<p><input type="hidden" name="zhufuduixiang" value="新郎"><input type="hidden" name="duixiangguanxi" value="其他"><input type="submit" name="submit" class="sub" value=" "></p>
+</form>
+</div>
+<footer><img src="images/skin1/buttom.png" /><img src="images/skin1/like.png" class="like"></footer>
+</body>
+</html>

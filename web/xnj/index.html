@@ -1,0 +1,88 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>新娘街首页</title>
+    <meta http-equiv="Cache-Control" content="max-age=300" />
+    <meta name="author" content="MangLiuGuo" />
+    <meta name="viewport" content="width=480,target-densitydpi=high-dpi,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <style type="text/css">
+        * { padding: 0; margin: 0; }
+        a { text-decoration: none; }
+        body { font-family: "Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体"; background: url(images/skin1/bgpoint.png); }
+        img { max-width: 100%; border: none; }
+        /*top\footer*/
+        header { width: 480px; clear: both; }
+            header span { display: inline-block; height: 50px; line-height: 50px; }
+        .countdown { color: #F99; width: 60%; float: left; margin: 10px 14px 0 14px; }
+        #num { color: #699; margin: 0 3px; }
+        .refresh { float: right; margin: 11px 16px 0 0; cursor: pointer; }
+        footer { width: 480px; height: 20px; margin: 20px 0 0 0; clear: both; text-align: center; }
+        /*body*/
+        .main { width: 480px; height: auto; }
+            .main .fengmian { width: 480px; }
+            .main .name { width: 100%; margin-top: 20px; height: 50px; }
+        .name span { display: inline-block; float: left; height: 48px; line-height: 48px; width: 200px; }
+        .name .lang { text-align: right; }
+        .name .niang { text-align: left; }
+        .name .xin { float: left; margin: 0 10px; }
+        .main .menu { width: 440px; height: 190px; margin: 20px auto; overflow: hidden; }
+
+        /*无缝滚动*/
+        #demo { overflow: hidden; width: 480px; }
+            #demo a { width: 240px; height: 190px; display: inline-block; text-align: center; }
+            #demo img { }
+        #indemo { float: left; width: 800%; }
+        #demo1 { float: left; }
+        #demo2 { float: left; }
+    </style>
+</head>
+<body>
+    <header><span class="countdown">距离婚期还有<span id="num">84</span>天</span><span class="refresh" onclick="javascript:window.location.reload();"><img src="images/refresh.jpg"></span></header>
+    <div class="main">
+        <img src="images/carv.jpg" class="fengmian" />
+        <div class="name"><span class="lang">曾小贤</span><img src="images/skin1/xin.png" class="xin" /><span class="niang">胡一菲</span></div>
+        <div class="menu">
+            <div id="demo">
+                <div id="indemo">
+                    <div id="demo1">
+                        <a href="javascript:;" onclick="window.location.href='zhufuqiandao.html'">
+                            <img src="images/skin1/ico_qiandao.jpg" border="0" /></a>
+                        <a href="javascript:;" onclick="window.location.href='ourphoto.html'">
+                            <img src="images/skin1/ico_xiangce.jpg" border="0" /></a>
+                        <a href="javascript:;" onclick="window.location.href='ourvideo.html'">
+                            <img src="images/skin1/ico_shipin.jpg" border="0" /></a>
+                        <a href="javascript:;" onclick="window.location.href='qingtie.html'">
+                            <img src="images/skin1/ico_qingjian.jpg" border="0" /></a>
+                        <a href="javascript:;" onclick="window.location.href='fenxiang.html'">
+                            <img src="images/skin1/ico_fenxiang.jpg" border="0" /></a>
+                        <a href="javascript:;" onclick="window.location.href='mingxie.html'">
+                            <img src="images/skin1/ico_mingxie.jpg" border="0" /></a>
+                    </div>
+                    <div id="demo2"></div>
+                </div>
+            </div>
+            <script>
+                var speed = 20;
+                var tab = document.getElementById("demo");
+                var tab1 = document.getElementById("demo1");
+                var tab2 = document.getElementById("demo2");
+                tab2.innerHTML = tab1.innerHTML;
+                function Marquee() {
+                    if (tab2.offsetWidth - tab.scrollLeft <= 0)
+                        tab.scrollLeft -= tab1.offsetWidth;
+                    else {
+                        tab.scrollLeft++;
+                    }
+                }
+                var MyMar = setInterval(Marquee, speed);
+                tab.onmouseover = function () { clearInterval(MyMar) };
+                tab.onmouseout = function () { MyMar = setInterval(Marquee, speed) };
+            </script>
+        </div>
+    </div>
+    <footer>
+        <img src="images/skin1/buttom.png" /></footer>
+</body>
+</html>

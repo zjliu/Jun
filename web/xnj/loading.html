@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新娘街加载中ing...</title>
+<meta http-equiv="Cache-Control" content="max-age=300" />
+<meta name="author" content="MangLiuGuo" />
+<meta name="viewport" content="width=480,target-densitydpi=high-dpi,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<style type="text/css">
+*{ padding:0; margin:0;}
+a{ text-decoration:none;}
+body{ font-family:"Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体";background:url(images/skin1/bgpoint.png);}
+img{ max-width:100%; border:none;}
+/*body*/
+.main{ width:400px; height:auto; margin:100px auto;}
+.main p{ width:100%; margin:20px 0 20px 0; line-height:30px;text-align:center; color:#999;}
+.main p.loading{ background:url(images/loading_circle.gif) no-repeat center; background-size:25%; width:100%; height:100px;}
+.main h2{ width:100%; text-align:center; color:#666;}
+.main p.ts{ color:#C33;}
+#num{ height:100px; line-height:100px;}
+</style>
+</head>
+<body>
+<div class="main">
+<p><img src="images/loadingad.jpg" ></p>
+<h2>幸福格子婚纱摄影</h2>
+<p class="loading"><span id="num">loading...</span></p>
+<p>&copy;xinniangjie.com</p>
+<p class="ts">建议在wifi环境下使用</p>
+</div>
+</body>
+<script>
+var num=1;
+function showTime(){
+	if(num>=100){
+		clearInterval(sx);
+		window.location.href="index.html";
+	}else{
+		num++;
+	}
+	document.getElementById("num").innerHTML=num+"%";
+}
+var sx=setInterval("showTime()",100);
+</script>
+</html>

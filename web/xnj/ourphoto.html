@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新娘街我们的相册</title>
+<meta http-equiv="Cache-Control" content="max-age=300" />
+<meta name="author" content="MangLiuGuo" />
+<meta name="viewport" content="width=480,target-densitydpi=high-dpi,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<style type="text/css">
+*{ padding:0; margin:0;}
+a{ text-decoration:none;}
+body{ font-family:"Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体";background:url(images/skin1/bgpoint.png);}
+img{ max-width:100%; border:none;}
+/*top\footer*/
+header{ width:480px; clear:both; background:url(images/skin1/qiandaotop.png) no-repeat; height:100px;left:0; position: fixed; top: 0; z-index: 109;}
+header .back{ display:inline-block; width:40px; height:50px; margin:10px 0 0 20px; float:left; cursor:pointer}
+header .qiandao{display:inline-block; width:200px; height:50px; line-height:50px; float:left; margin:10px 0 0 80px; text-align:center; color:#6C9; font-size:20px;}
+header .refresh{display:inline-block; width:40px; height:50px; float:right; margin:10px 20px 0 0; cursor:pointer;}
+footer{ width:480px; height:20px; margin:20px 0 0 0; clear:both; text-align:center;}
+/*body*/
+.main{ width:480px; height:auto; margin:100px 0 0 0;}
+.main .name{ width:100%; height:50px;}
+.name span{ display:inline-block; float:left; height:48px; line-height:48px; width:200px;font-size:18px; color:#F66;}
+.name .lang{ text-align:right;}
+.name .niang{ text-align:left;}
+.name .xin{ float:left; margin:0 10px;}
+/*--------------*/
+.main ul{ width:440px; margin:10px auto; list-style-type:none;}
+.main ul li{ width:210px; height:283px; padding:0 5px; background:url(images/xiangkuangbg.jpg) no-repeat; float:left;}
+.main ul li img{ margin:17px 0 0 12px; width:176px; height:230px;}
+.like{ cursor:pointer;}
+/*弹出遮罩层*/
+.mask{ position:absolute; z-index:100; width:100%; height:100%; background:#000; opacity:0.6; display:none;}
+.vote_success{ width:400px; height:800px;position:absolute; z-index:101; display:none;}
+.vote_success .console{background:url(images/skin1/kongzhiqi6.png) no-repeat; width:236px; height:249px;}
+.console p{ width:100%; height:20px; padding:20px 0;}
+.console .p1 a{ display:inline-block; width:110px; height:50px; cursor:pointer}
+.console .p2 a{ display:inline-block; width:70px; height:50px; cursor:pointer}
+.console .p3 span{ display:inline-block; width:50px; height:50px; float:right; cursor:pointer}
+</style>
+<script src="js/jQuery-1.7.1.js"></script>
+<script>
+$(document).ready(function(){
+	_w=window.screen.width;
+	_h=$("footer").position().top;
+	_popw=480;
+	_poph=_h+150;
+	_left=0;
+	_top=0;
+	$(".like").click(function(){
+		$(".mask").fadeIn(200);
+		$(".mask").css({height:_poph+"px"});
+		$(".vote_success").css({width:_popw+"px",height:_poph+"px",left:_left+"px",top:_top+"px"});
+		$(".console").css({"margin-top":_h-176+"px","margin-left":"230px"});
+		$(".vote_success").fadeIn(400);
+	});
+	$("#exit").click(function(){
+		$(".mask").fadeOut(400);
+		$(".vote_success").fadeOut(200);
+	});
+});
+</script>
+</head>
+<body>
+<div class="mask"></div>
+<div class="vote_success">
+<div class="console">
+<p class="p1">
+	<a href="javascript:;" onClick="window.location.href='fenxiang.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='qingtie.html'"></a>
+</p>
+<p class="p2">
+	<a href="javascript:;" onClick="window.location.href='zhufuqiandao.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='index.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='songzhufu.html'"></a>
+</p>
+<p class="p1">
+	<a href="javascript:;" onClick="window.location.href='ourvideo.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='ourphoto.html'"></a>
+</p>
+<p class="p3"><span id="exit"></span></p>
+</div></div>
+<header><span class="back" onClick="javascript:history.go(-1);"></span><span class="qiandao">我们的相册</span><span class="refresh" onClick="javascript:window.location.reload();"></span></header>
+<div class="main">
+<div class="name"><span class="lang">曾小贤</span><img src="images/skin1/xin.png" class="xin" /><span class="niang">胡一菲</span></div>
+<ul>
+<li><a href="javascript:;" onClick="window.location.href='ourphotoview.html'"><img src="images/photo_demo.jpg"></a></li>
+<li><a href="javascript:;" onClick="window.location.href='ourphotoview.html'"><img src="images/photo_demo.jpg"></a></li>
+<li><a href="javascript:;" onClick="window.location.href='ourphotoview.html'"><img src="images/photo_demo.jpg"></a></li>
+<li><a href="javascript:;" onClick="window.location.href='ourphotoview.html'"><img src="images/photo_demo.jpg"></a></li>
+</ul>
+</div>
+<footer><img src="images/skin1/buttom.png" /><img src="images/skin1/like.png" class="like"></footer>
+</body>
+</html>

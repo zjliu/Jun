@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新娘街鸣谢</title>
+<meta http-equiv="Cache-Control" content="max-age=300" />
+<meta name="author" content="MangLiuGuo" />
+<meta name="viewport" content="width=480,target-densitydpi=high-dpi,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<style type="text/css">
+*{ padding:0; margin:0;}
+a{ text-decoration:none;}
+body{ font-family:"Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体";background:url(images/skin1/bgpoint.png);}
+img{ max-width:100%; border:none;}
+/*top\footer*/
+header{ width:480px; clear:both; background:url(images/skin1/qiandaotop.png) no-repeat; height:100px;left:0; position: fixed; top: 0; z-index: 109;}
+header .back{ display:inline-block; width:40px; height:50px; margin:10px 0 0 20px; float:left; cursor:pointer}
+header .qiandao{display:inline-block; width:200px; height:50px; line-height:50px; float:left; margin:10px 0 0 80px; text-align:center; color:#6C9; font-size:20px;}
+header .refresh{display:inline-block; width:40px; height:50px; float:right; margin:10px 20px 0 0; cursor:pointer;}
+footer{ width:480px; height:20px; margin:20px 0 0 0; clear:both; text-align:center;}
+/*body*/
+.main{ width:480px; height:auto; margin:100px 0 0 0;}
+.main .name{ width:100%; height:50px;}
+.name span{ display:inline-block; float:left; height:48px; line-height:48px; width:200px;font-size:18px; color:#F66;}
+.name .lang{ text-align:right;}
+.name .niang{ text-align:left;}
+.name .xin{ float:left; margin:0 10px;}
+.main p{ width:400px; margin:40px auto; text-align:center; color:#999;}
+.main ul{ width:400px; margin:0 auto; height:auto; list-style-type:none}
+.main ul li{ background:url(images/gezi.jpg) no-repeat; width:400px; height:182px; margin:10px 0;}
+.main ul li span{ display:inline-block;}
+.main ul li .sp1{ width:145px; height:122px; padding:8px 0 0 8px; float:left;}
+.main ul li .sp2{ width:223px; height:100px; float:left; color:#666; padding:18px 10px 10px 10px; font-weight:bold; overflow:hidden;}
+.main ul li .sp3{ width:397px; height:37px; line-height:37px; text-indent:14px; color:#999; overflow:hidden;}
+.main ul li .sp1 img{ width:128px; height:108px;}
+.main ul li .sp2 .tm{ font-weight:normal; color:#999;}
+
+.like{ cursor:pointer;}
+/*弹出遮罩层*/
+.mask{ position:absolute; z-index:100; width:100%; height:100%; background:#000; opacity:0.6; display:none;}
+.vote_success{ width:400px; height:800px;position:absolute; z-index:101; display:none;}
+.vote_success .console{background:url(images/skin1/kongzhiqi.png) no-repeat; width:236px; height:249px;}
+.console p{ width:100%; height:20px; padding:20px 0;}
+.console .p1 a{ display:inline-block; width:110px; height:50px; cursor:pointer}
+.console .p2 a{ display:inline-block; width:70px; height:50px; cursor:pointer}
+.console .p3 span{ display:inline-block; width:50px; height:50px; float:right; cursor:pointer}
+</style>
+<script src="js/jQuery-1.7.1.js"></script>
+<script>
+$(document).ready(function(){
+	_w=window.screen.width;
+	_h=$("footer").position().top;
+	_popw=480;
+	_poph=_h+150;
+	_left=0;
+	_top=0;
+	$(".like").click(function(){
+		$(".mask").fadeIn(200);
+		$(".mask").css({height:_poph+"px"});
+		$(".vote_success").css({width:_popw+"px",height:_poph+"px",left:_left+"px",top:_top+"px"});
+		$(".console").css({"margin-top":_h-176+"px","margin-left":"230px"});
+		$(".vote_success").fadeIn(400);
+	});
+	$("#exit").click(function(){
+		$(".mask").fadeOut(400);
+		$(".vote_success").fadeOut(200);
+	});
+});
+</script>
+</head>
+<body>
+<div class="mask"></div>
+<div class="vote_success">
+<div class="console">
+<p class="p1">
+	<a href="javascript:;" onClick="window.location.href='fenxiang.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='qingtie.html'"></a>
+</p>
+<p class="p2">
+	<a href="javascript:;" onClick="window.location.href='zhufuqiandao.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='index.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='songzhufu.html'"></a>
+</p>
+<p class="p1">
+	<a href="javascript:;" onClick="window.location.href='ourvideo.html'"></a>
+    <a href="javascript:;" onClick="window.location.href='ourphoto.html'"></a>
+</p>
+<p class="p3"><span id="exit"></span></p>
+</div></div>
+<header><span class="back" onClick="javascript:history.go(-1);"></span><span class="qiandao">宾客签到</span><span class="refresh" onClick="javascript:window.location.reload();"></span></header>
+<div class="main">
+<div class="name"><span class="lang">曾小贤</span><img src="images/skin1/xin.png" class="xin" /><span class="niang">胡一菲</span></div>
+<p>婚礼请柬购买热线：400-823-823</p>
+<ul>
+<li>
+<span class="sp1"><img src="images/mx01.jpg"></span>
+<span class="sp2">【新娘街】季后风春装上市 全场特卖1.9~2.5折 可叠加满300送20 满300减30 <span class="tm">截至日期：2013-04-30</span></span>
+<span class="sp3">北京市海淀区中关村东路1号院清华科技园9号楼</span></li>
+<li>
+<span class="sp1"><img src="images/mx01.jpg"></span>
+<span class="sp2">【新娘街】季后风春装上市 全场特卖1.9~2.5折 可叠加满300送20 满300减30 <span class="tm">截至日期：2013-04-30</span></span>
+<span class="sp3">北京市海淀区中关村东路1号院清华科技园9号楼</span></li>
+</ul>
+</div>
+<footer><img src="images/skin1/buttom.png" /><img src="images/skin1/like.png" class="like"></footer>
+</body>
+</html>

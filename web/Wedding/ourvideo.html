@@ -1,0 +1,146 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>新娘街我们的视频</title>
+    <meta http-equiv="Cache-Control" content="max-age=300" />
+    <meta name="author" content="MangLiuGuo" />
+    <meta name="viewport" content="width=480,target-densitydpi=high-dpi,user-scalable=no" />
+    <meta http-equiv="cleartype" content="on">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style type="text/css">
+        * { padding: 0; margin: 0; }
+        a { text-decoration: none; }
+        body { font-family: "Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体"; background: url(images/bgpoint.png); }
+        img { max-width: 100%; border: none; }
+        /*top\footer*/
+        header { width: 480px; clear: both; background: url(images/qiandaotop.png) no-repeat; height: 100px; }
+            header .back { display: inline-block; width: 40px; height: 50px; margin: 10px 0 0 20px; float: left; cursor: pointer; }
+            header .qiandao { display: inline-block; width: 200px; height: 50px; line-height: 50px; float: left; margin:10px 0 0 80px; text-align: center; color: #6C9; font-size: 20px; }
+            header .refresh { display: inline-block; width: 40px; height: 50px; float: right; margin: 10px 20px 0 0; cursor: pointer; }
+        footer { width: 480px; height: 20px; margin: 20px 0 0 0; clear: both; text-align: center; }
+        /*body*/
+        .main { width: 480px; height: auto; }
+            .main .name { width: 100%; height: 50px; }
+        .name span { display: inline-block; float: left; height: 48px; line-height: 48px; width: 196px; font-size: 18px; color: #F66; }
+        .name .lang { text-align: right; }
+        .name .niang { text-align: left; }
+        .name .xin { float: left; margin: 0 10px; }
+        .main h2 { width: 400px; margin: 20px auto 10px auto; color: #999; text-align: center; }
+        /*--------------*/
+        .swipe { width: 400px; margin: 10px auto; overflow: hidden; visibility: hidden; position: relative; }
+        .swipe-wrap { overflow: hidden; position: relative; list-style-type: none; }
+            .swipe-wrap > li { float: left; width: 100%; position: relative; }
+            .swipe-wrap h3 { width: 300px; height: 244px; margin: 20px auto; text-align: center; background: url(images/videobg.png) no-repeat; }
+                .swipe-wrap h3 img { width: 265px; height: 188px; margin: 18px; }
+            .swipe-wrap h4 { width: 300px; margin: 20px auto; text-align: center; }
+            .swipe-wrap p { width: 400px; margin: 20px auto; text-align: center; }
+
+        #position { list-style: none; margin: 0px; padding: 0px; text-align: center; }
+            #position > li { background: rgb(20, 20, 20); margin: 0px 2px; border-radius: 10px; width: 10px; height: 10px; display: inline-block; cursor: pointer; box-shadow: inset 0px 1px 3px black, 0px 0px 1px 1px #202020; }
+                #position > li.on { box-shadow: inset 0px 1px 3px -1px #28b4ea, 0px 1px 2px rgba(0,0,0,0.5); background-image: -ms-linear-gradient(rgb(18, 147, 220), rgb(15, 98, 151)); background-color: rgb(18, 147, 220); }
+
+        /*弹出遮罩层*/
+        .like { cursor: pointer; }
+        .mask { position: absolute; z-index: 100; width: 100%; height: 100%; background: #000; opacity: 0.6; display: none; }
+        .vote_success { width: 400px; height: 800px; position: absolute; z-index: 101; display: none; }
+            .vote_success .console { background: url(images/kongzhiqi.png) no-repeat; width: 236px; height: 249px; }
+        .console p { width: 100%; height: 20px; padding: 20px 0; }
+        .console .p1 a { display: inline-block; width: 110px; height: 50px; cursor: pointer; }
+        .console .p2 a { display: inline-block; width: 70px; height: 50px; cursor: pointer; }
+        .console .p3 span { display: inline-block; width: 50px; height: 50px; float: right; cursor: pointer; }
+    </style>
+    <script src="js/jQuery-1.7.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            _w = window.screen.width;
+            _h = $("footer").position().top;
+            _popw = 480;
+            _poph = _h + 150;
+            _left = 0;
+            _top = 0;
+            $(".like").click(function () {
+                $(".mask").fadeIn(200);
+                $(".mask").css({ height: _poph + "px" });
+                $(".vote_success").css({ width: _popw + "px", height: _poph + "px", left: _left + "px", top: _top + "px" });
+                $(".console").css({ "margin-top": _h - 176 + "px", "margin-left": "230px" });
+                $(".vote_success").fadeIn(400);
+            });
+            $("#exit").click(function () {
+                $(".mask").fadeOut(400);
+                $(".vote_success").fadeOut(200);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="mask"></div>
+    <div class="vote_success">
+        <div class="console">
+            <p class="p1"><a href="zhufuqiandao.html"></a><a href="qingtie.html"></a></p>
+            <p class="p2"><a href="zhufuqiandao.html"></a><a href="index.html"></a><a href="songzhufu.html"></a></p>
+            <p class="p1"><a href="ourvideo.html"></a><a href="ourphoto.html"></a></p>
+            <p class="p3"><span id="exit"></span></p>
+        </div>
+    </div>
+    <header><span class="back" onclick="javascript:history.go(-1);"></span><span class="qiandao">我们的视频</span><span class="refresh" onclick="javascript:window.location.reload();"></span></header>
+    <div class="main">
+        <div class="name"><span class="lang">曾小贤</span><img src="images/xin.png" class="xin" /><span class="niang">胡一菲</span></div>
+        <h2>建议您在wifi、3G网络下观看视频</h2>
+        <div class="swipe" id="slider">
+            <ul class="swipe-wrap">
+                <li>
+                    <h3><a href="#">
+                        <img src="images/testvideo.jpg"></a></h3>
+                    <h4>《我们的爱》</h4>
+                    <p>从相识、相知、相恋、一路走来，让光影留住最珍贵的瞬间，点滴幸福我们与您分享！</p>
+                </li>
+                <li>
+                    <h3><a href="#">
+                        <img src="images/testvideo.jpg"></a></h3>
+                    <h4>《我们的爱》</h4>
+                    <p>从相识、相知、相恋、一路走来，让光影留住最珍贵的瞬间，点滴幸福我们与您分享！</p>
+                </li>
+                <li>
+                    <h3><a href="#">
+                        <img src="images/testvideo.jpg"></a></h3>
+                    <h4>《我们的爱》</h4>
+                    <p>从相识、相知、相恋、一路走来，让光影留住最珍贵的瞬间，点滴幸福我们与您分享！</p>
+                </li>
+                <li>
+                    <h3><a href="#">
+                        <img src="images/testvideo.jpg"></a></h3>
+                    <h4>《我们的爱》</h4>
+                    <p>从相识、相知、相恋、一路走来，让光影留住最珍贵的瞬间，点滴幸福我们与您分享！</p>
+                </li>
+            </ul>
+        </div>
+        <ul id="position">
+            <li class="on"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+
+    </div>
+    <footer>
+        <img src="images/buttom.png" /><img src="images/like.png" class="like"></footer>
+</body>
+<script src="js/swipe.js"></script>
+<script>
+    var slider =
+      Swipe(document.getElementById('slider'), {
+          auto: 5000,
+          continuous: true,
+          callback: function (pos) {
+              var i = bullets.length;
+              while (i--) {
+                  bullets[i].className = ' ';
+              }
+              bullets[pos].className = 'on';
+          }
+      });
+    var bullets = document.getElementById('position').getElementsByTagName('li');
+</script>
+</html>

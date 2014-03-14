@@ -1,0 +1,40 @@
+﻿@charset "utf-8";
+/* Creat by 氓流果 2013-04-07*/
+* { padding: 0; margin: 0; }
+a { text-decoration: none; }
+body { font-family: "Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体"; }
+img { max-width: 100%; border: none; }
+header { width: 100%; background: url(../images/topbg.png) no-repeat; -moz-background-size: 40% 100%; background-size: 40% 100%; height: 44px; clear: both; }
+footer { width: 100%; height: 20px; margin: 0px auto; clear: both; }
+.main { width: 100%; height: auto; }
+
+* { padding: 0; margin: 0; }
+a { text-decoration: none; }
+body { font-family: "Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体"; background: url(images/bgpoint.png); }
+img { max-width: 100%; border: none; }
+/*top\footer*/
+header { width: 480px; clear: both; background: url(images/qiandaotop.png) no-repeat; height: 100px; }
+    header .back { display: inline-block; width: 40px; height: 50px; margin: 10px 0 0 20px; float: left; cursor: pointer; }
+    header .qiandao { display: inline-block; width: 200px; height: 50px; line-height: 50px; float: left; margin: 10px 0 0 80px; text-align: center; color: #6C9; font-size: 20px; }
+    header .refresh { display: inline-block; width: 40px; height: 50px; float: right; margin: 10px 20px 0 0; cursor: pointer; }
+footer { width: 480px; height: 20px; margin: 20px 0 0 0; clear: both; text-align: center; }
+/*body*/
+.main { width: 480px; height: auto; }
+    .main .name { width: 100%; height: 50px; }
+.name span { display: inline-block; float: left; height: 48px; line-height: 48px; width: 196px; font-size: 18px; color: #F66; }
+.name .lang { text-align: right; }
+.name .niang { text-align: left; }
+.name .xin { float: left; margin: 0 10px; }
+/*--------------*/
+.main ul { width: 440px; margin: 10px auto; list-style-type: none; }
+    .main ul li { width: 210px; height: 283px; padding: 0 5px; background: url(images/xiangkuangbg.jpg) no-repeat; float: left; }
+        .main ul li img { margin: 17px 0 0 12px; width: 176px; height: 230px; }
+.like { cursor: pointer; }
+/*弹出遮罩层*/
+.mask { position: absolute; z-index: 100; width: 100%; height: 100%; background: #000; opacity: 0.6; display: none; }
+.vote_success { width: 400px; height: 800px; position: absolute; z-index: 101; display: none; }
+    .vote_success .console { background: url(images/kongzhiqi.png) no-repeat; width: 236px; height: 249px; }
+.console p { width: 100%; height: 20px; padding: 20px 0; }
+.console .p1 a { display: inline-block; width: 110px; height: 50px; cursor: pointer; }
+.console .p2 a { display: inline-block; width: 70px; height: 50px; cursor: pointer; }
+.console .p3 span { display: inline-block; width: 50px; height: 50px; float: right; cursor: pointer; }

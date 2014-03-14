@@ -1,0 +1,9 @@
+@charset "utf-8";
+/* Creat by 氓流果 2013-04-07*/
+*{ padding:0; margin:0;}
+a{ text-decoration:none;}
+body{ font-family:"Microsoft YaHei",Arial,Helvetica,Verdana,serif,sans-serif,"宋体";}
+img{ max-width:100%; border:none;}
+header{ width:100%; background:url(../images/topbg.png) no-repeat; -moz-background-size:40% 100%; background-size:40% 100%; height:44px; clear:both;}
+footer{ width:100%; height:20px; margin:0px auto; clear:both;}
+.main{ width:100%; height:auto;}
