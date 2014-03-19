@@ -1,0 +1,182 @@
+<!DOCTYPE htmle>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html" charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+<link ref="stylesheet" href=""></link>
+<style>
+	body{padding:0px;margin:0px;}
+	.picsDiv{width:100%;height:100%;}
+	.picsDiv .pics_nav{width:100%;height:50px;background-color:red;}
+	.pics_list{width:100%;overflow-x:hidden;padding-bottom:10px;height:81%;}
+	.pics_list ul{padding:0;margin:0;}
+	.pics_list li{list-stle:none;float:left;margin:10px 0 0 10px;}
+	.pics_list li a{
+		position:relative;
+		display:block;
+		width:90px;
+		height:90px;
+		border:1px solid rgb(221, 221, 221);
+		text-decoration:none;
+		border-radius:5px;
+		-webkit-border-radius:5px;
+		-moz-border-radius:5px;
+		-o-border-radius:5px;
+		-ms-border-radius:5px;
+		cursor:pointer;
+	}
+	.pics_list li a.on{box-shadow:0 0 8px #f60;}
+	.pics_list li a.on .marker{display:block;position:absolute;height:16px;width:16px;right: -8px; top: -5px; background:url(selected.png) center center no-repeat;}
+	.pics_list li a img{
+		display:block;
+		position:absolute;
+	}
+	.pics_list li a img.refresh{
+		left:34px;
+		top:34px;
+		z-index:1;
+	}
+</style>
+</head>
+<body>
+	<div id="picsDiv" class="picsDiv">
+		<div class="pics_nav"></div>
+		<div id="pics_list" class="pics_list"><ul></ul></div>
+	</div>
+</div>
+</body>
+</html>
+<script>
+
+	function E(f, e, o) {
+		if (!e) e = 'load';
+		if (!o) o = window;
+		if (o.attachEvent) {
+			o.attachEvent('on' + e, f)
+		} else {
+			o.addEventListener(e, f, false)
+		}
+	}
+
+	function stopDefault(e){
+		e.preventDefault();
+		e.stopPropagation();
+	}
+
+	var listEl = document.getElementById("pics_list");
+
+	listEl.onclick=function(e){
+		var ex = e || window.event;
+		var target = ex.target || ex.srcElement;
+		if(target.tagName.toLowerCase()==="img"){
+			var aEl = target.parentNode;
+			aEl.classList.toggle("on");
+			if(aEl.children.length===1){
+				var span = document.createElement("span");
+				span.classList.add("marker");
+				aEl.appendChild(span);
+			}
+			else{
+				aEl.removeChild(aEl.lastChild);
+			}
+		}
+	}
+
+	var resizeImg=function(img){
+		if(!img) return;
+		var parent = img.parentNode;
+		var w = parseInt(getComputedStyle(parent)["width"])
+		var h = parseInt(getComputedStyle(parent)["height"])
+		var iw=img.width;
+		var ih=img.height;
+		var newW=w;
+		var newH=h;
+		if (iw > w || ih > h) {
+			if (iw / ih > w / h){
+				img.width = w;
+				newW = w;
+				newH = w * (ih / iw);
+				img.height = newH;
+				}else {
+				img.height = h;
+				newH = h;
+				newW = h / (ih / iw);
+				img.width = newW;
+			}
+		}	
+		img.style.marginTop = (h - newH)/2 + "px";
+		img.style.marginLeft = (w - newW)/2 + "px";
+	}
+
+	var ulEl = listEl.firstElementChild;
+	var arr=["http://img0.bdstatic.com/img/image/shouye/meinv.jpg","http://img0.bdstatic.com/img/image/shouye/xiezhen1.jpg","http://img0.bdstatic.com/img/image/fushi/kaishan.jpg"];
+	arr = arr.concat(arr);
+	arr = arr.concat(arr);
+	arr = arr.concat(arr);
+	
+	var loadImg=function(url,pli,index){
+		var img = new Image();
+		img.onload=function(e){
+			pli.removeChild(pli.firstChild);
+			pli.appendChild(img);
+			resizeImg(img);
+			if(index<arr.length-1)
+				addNext(++index);	
+		}
+		img.src=url;
+	}
+
+
+	function addNext(index){
+		var item = arr[index];
+		var li = document.createElement("li");
+		li.innerHTML='<a><img class="refresh" src="refresh.gif" /></a><b></b>';
+		ulEl.appendChild(li);
+		loadImg(item,li.firstChild,index);
+	}
+
+	addNext(0);
+
+	E(function(e){
+		stopDefault(e);
+	},"touchstart",document.getElementById('picsDiv'));
+
+
+</script>
+<script>
+	function ajax(o) {
+		var b = /POST/i.test(o.type),
+		p = o.data || '',
+		t = o.dataType,
+		url = o.url || location.href,
+		q = /\?/.test(url) ? '&' : '?',
+		x = window.XMLHttpRequest ? new XMLHttpRequest() : (new ActiveXObject('Msxml2.XMLHTTP') || new ActiveXObject('Microsoft.XMLHTTP')),
+		z = function (s) {
+			if (x.readyState == 4) {
+				if (x.status == 200) {
+					s = x.responseText;
+					if (t == 'json')
+					s = json(s);
+					if (b = o.success)
+					b(s)
+					} else if (o.error) {
+					o.error(x.status, x)
+				}
+			}
+		};
+		x.onreadystatechange = z;
+		if (typeof p == 'object') {
+			var r = [];
+			for (var k in p)
+			r.push(encodeURIComponent(k) + '=' + encodeURIComponent(p[k]));
+			p = r.join('&')
+		}
+		x.open(b ? 'POST' : 'GET', url + (b ? '' : ((p ? q : '') + p + (o.cache ? '' : (((!p && q == '?') ? '?' : '&') + '_=' + new Date().getTime())))),
+		o.async === false ? false : true);
+		if (b) x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		x.send(p);
+		return x;
+	}
+</script>
+

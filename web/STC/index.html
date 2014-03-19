@@ -14,20 +14,21 @@
 	if (/Android (\d+\.\d+)/.test(ua)){
 		var version = parseFloat(RegExp.$1);
 		if(version>2.3){
-			document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+			document.write('<meta name="viewport" content="width=320, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
 		}else{
-			document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+			document.write('<meta name="viewport" content="width=320, target-densitydpi=device-dpi">');
 		}
 	} else {
 		document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
 	}
 </script>
-<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+<script src="wxm-core.js"></script>
+<script src="wxshare.js"></script>
 <!--移动端版本兼容 end -->
 <script>SYS_SITE_ID = 136</script>
 <style type="text/css">
 html { width: 100%; height: 100%; }
-body { margin:0 auto; width:400px; background:#fff; font-family:"微软雅黑";z-index:1;position:relative;}
+body { overflow:hidden;margin:0 auto; width:100%; background:#fff; font-family:"微软雅黑";z-index:1;position:relative;}
 *{ padding:0; margin:0;}
 a{ text-decoration:none;}
 .win{ 
@@ -67,7 +68,7 @@ a{ text-decoration:none;}
 }
 section{display:block;}
 /* 声音提示 */
-.audio_txt { position:fixed; top:59px; right:90px; height:60px; overflow:hidden; opacity:1;z-index:2000; 
+.audio_txt { position:fixed; top:59px; right:90px; height:60px; overflow:hidden; opacity:1;z-index:3000; 
 	-webkit-transition: opacity 1s;
 	-moz-transition: opacity 1s;
 	-ms-transition: opacity 1s;
@@ -76,21 +77,19 @@ section{display:block;}
 }
 
 /* 统一功能模块样式 fn- */
-.fn-audio { position:fixed; top:45px; right:35px; z-index:2000; width:60px; height:61px; line-height:120px; text-align:center; }
-.fn-audio .btn p { width:60px; height:61px; }
-.fn-audio .btn p span { display:none; width: 60px; height: 61px; }
-.fn-audio .btn p span:first-child { display:inline-block; }
-.fn-audio .btn audio { height:0; width:0; opacity:0; }
-
-/* 统一功能模块样式 fn- */
-.fn-audio { position:fixed; top:45px; right:35px; z-index:2000; width:60px; height:61px; line-height:120px; text-align:center; }
+.fn-audio { position:fixed; top:45px; right:35px; z-index:3000;
+	-webkit-transform:translateZ(3000px);
+	-moz-transform:translateZ(3000px);
+	-o-transform:translateZ(3000px);
+	-ms-transform:translateZ(3000px);
+	width:60px; height:61px; line-height:120px; text-align:center; }
 .fn-audio .btn p { width:60px; height:61px; }
 .fn-audio .btn p span { display:none; width: 60px; height: 61px; }
 .fn-audio .btn p span:first-child { display:inline-block; }
 .fn-audio .btn audio { height:0; width:0; opacity:0; }
 
 /* 声音提示 */
-.audio_txt { position:fixed; top:59px; right:90px; height:60px; overflow:hidden; opacity:1; z-index:2000; 
+.audio_txt { position:fixed; top:59px; right:90px; height:60px; overflow:hidden; opacity:1; z-index:3000; 
 	-webkit-transition: opacity 1s;
 	-moz-transition: opacity 1s;
 	-ms-transition: opacity 1s;
@@ -117,23 +116,21 @@ section{display:block;}
 <script src="jquery-1.8.2.min.js"></script>
 </head>
 <body>
-	<section class="win" id="win">
+	<section class="win win720" id="win">
 		<section class="pscroll" style="background:url(001.jpg) center no-repeat;"></section>
 		<section class="pscroll" style="background:url(002.jpg) center no-repeat;"></section>
-		<section class="pscroll" style="background:url(003.jpg) center no-repeat;"></section>
-		<section class="pscroll" style="background:url(004.jpg) center no-repeat;"></section>
 		<section class="pscroll" style="background:url(005.jpg) center no-repeat;"></section>
 		<section class="pscroll" style="background:url(006.jpg) center no-repeat;"></section>
 		<section class="pscroll" style="background:url(007.jpg) center no-repeat;"></section>
 		<section class="pscroll" style="background:url(008.jpg) center no-repeat;">
-			<img id="register" style="position:absolute;left:34%;top:54%;" width="112px" height="31px" src="regbtn.png">
+			<img id="register" style="position:absolute;left:40%;top:54%;" width="112px" height="31px" src="regbtn.png">
 		</section>
 	</section>
 	<div class="audio_txt close">
 		<p class="txt">点击开启/关闭音效</p>
 		<p></p>
 	</div>
-	<section class="fn-audio">
+	<section id="fn_audio" class="fn-audio">
 	<div class="btn">
 		<p class="btn_audio"><span class="css_sprite01 audio_open"></span><span class="css_sprite01 audio_close"></span></p>
 		<audio id="car_audio" controls="" preload="preload">
@@ -184,6 +181,7 @@ section{display:block;}
 	var START = isM ? "touchstart": "mousedown";
 	var MOVE = isM ? "touchmove": "mousemove";
 	var END = isM ? "touchend": "mouseup";
+	var pageW = 0;
 
 	function init_pageH(){
 		var fn_h = function() {
@@ -204,7 +202,9 @@ section{display:block;}
 		var page_w = fn_w();
 		var m_h = $(".m-page").height();
 		page_h >= m_h ? v_h = page_h : v_h = m_h ;
-		
+
+		pageW = page_w;
+
 		//设置各种模块页面的高度，扩展到整个屏幕高度
 		$(".win,.pscroll").css({"height":v_h});
 	};
@@ -218,7 +218,7 @@ $(document).ready(function(){
 	var win = $("#win")[0]; 
 	if(!win) return;
 	_w=window.screen.width;
-	_popw=480;
+	_popw=0;
 	_left=0;
 	_top=0;
 	setTimeout(function() {
@@ -227,13 +227,24 @@ $(document).ready(function(){
 	var len=$(".pscroll").length;
 	var degree = 360/len;
 	var halfdeg=degree/2;
-	zdegree=420/(Math.tan(2*Math.PI/360*halfdeg));
+	var tValue = 580;
+	if(_w>640){
+		$("#register").css("left","46.6%")
+	}
+	if(_w===480){
+		tValue = 385;
+		$("#register").css("left","36.6%")
+	}
+	else if(_w===720){
+		tValue = 380;
+		$("#register").css("left","41%")
+	}
+	zdegree=tValue/(Math.tan(2*Math.PI/360*halfdeg));
 	$(".pscroll").each(function(i){
 		$(this).css("-webkit-transform","rotateY("+(degree*i)+"deg) translateZ("+zdegree+"px)");
 		$(this).css("-moz-transform","rotateY("+(degree*i)+"deg) translateZ("+zdegree+"px)");
 		$(this).css("-o-transform","rotateY("+(degree*i)+"deg) translateZ("+zdegree+"px)");
 		$(this).css("-ms-transform","rotateY("+(degree*i)+"deg) translateZ("+zdegree+"px)");
-		$(this).append((i+1)+"/"+len)
 	});
 	var n=0,to=1;
 	function moveimg(to){
@@ -261,6 +272,9 @@ $(document).ready(function(){
 		var target = ex.target || ex.srcElement;
 		if(target.id==="register"){
 			window.location.href = registerUrl;
+		}
+		else if($(target)===$("#fn_audio") || $(target).closest("#fn_audio").length){
+			$(".fn-audio").find(".btn").trigger("click");
 		}
 		stopDefault(ex);
 		try{
