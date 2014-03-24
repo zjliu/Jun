@@ -12,10 +12,16 @@
 <script src="pic.js"></script>
 </head>
 <body>
+<div id="t" style="width:400px;height:300px;">
 </div>
 </body>
 </html>
 <script>
-	var mpics= new  MucardPicture();
+	var mpics= new  MucardPicture({
+		parent:document.getElementById("t"),
+		callback:function(data){
+			alert(JSON.stringify(data));
+		}
+	});
 </script>
 
