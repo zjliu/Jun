@@ -1,0 +1,133 @@
+<!DOCTYPE htmle>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html" charset="utf-8">
+<link ref="stylesheet" href=""></link>
+<script src="../JunDraw/common.js"></script>
+</head>
+<body>
+</body>
+</html>
+<script src="db.js"></script>
+<script>
+	var sexArr = ["男","女"];
+	var	db = openDatabase("JunDB", "1.0", "Jun Database", 2*1024*1024); 
+
+	var mDb = new DB({"db":db});
+
+	//createUserTable();
+	//createData();
+	showData();
+	
+	function executeSql(callback){
+		if(!db) return;
+		db.transaction(function(tx){
+			callback(tx);	
+		});
+	}
+
+	function excuteSql2(sql,arr,callback){
+		arr = arr || [];
+		callback = callback || function(){};
+		executeSql(function(tx){
+			tx.executeSql(sql,arr,function(tx,rs){
+				callback(tx,rs);	
+			});
+		});
+	}
+
+	function createUserTable(){
+		executeSql(function(tx){
+			tx.executeSql('create table if not exists User(value text)',[]);
+		});
+	}
+
+	function insertUser(user){
+		executeSql(function(tx){
+			tx.executeSql('insert into User values(?)',[user.toString()],function(tx,rs){
+			});
+		});
+	}
+
+	function User(id,name,sex,tel){
+		this.id=id;
+		this.name=name;
+		this.sex=sex;
+		this.tel=tel;
+		this.toJSON=function(){
+			return {id:this.id,name:this.name,sex:this.sex,tel:this.tel};
+		}
+		this.toString=function(){
+			return JSON.stringify(this.toJSON());
+		}
+		this.add=function(){
+			insertUser(this);	
+		}
+	}
+	
+	function createUserByJSON(json){
+		return new User(json.id,json.name,json.sex,json.tel);	
+	}
+	
+	function createRandomUser(id){
+		var i = parseInt(id);
+		var name = "name" + i;
+		var rsex = eRandom(0,1,true);
+		var sex = sexArr[rsex];
+		var tel = (10000000000 + i).toString();
+		var user = new User(id,name,sex,tel);
+		return user;
+	}
+
+	function createData(){
+		for(var i=0;i<20;i++){
+			createRandomUser(i).add();
+		}
+	}
+
+	function getData(callback){
+		executeSql(function(tx){
+			tx.executeSql('select * from User',[],function(tx,rs){
+				var data=[];
+				for(var i=0,rows=rs.rows,l=rows.length;i<l;i++){
+					var item = rows.item(i);
+					if(item){
+						var user = createUserByJSON(JSON.parse(item.value)); 
+						data.push(user);	
+					}
+				}
+				callback(data);
+			});
+		});
+	}
+
+	function showData(data){
+		getData(function(data){
+			var tableEl = createTable();
+			for(var i=0,l=data.length;i<l;i++){
+				var user = data[i];
+				var tr = createTr(user);	
+				tableEl.appendChild(tr);
+			}
+			document.body.appendChild(tableEl);
+		});
+	}
+
+	function createTable(){
+		var table = document.createElement("table");
+		return table;
+	}
+
+	function createTr(user){
+		var tr = document.createElement("tr");
+		var userObj = user.toJSON();
+		for(var key in userObj){
+			var td = document.createElement("td");
+			td.innerText = userObj[key];
+			tr.appendChild(td);
+		}
+		return tr;
+	}
+
+</script>

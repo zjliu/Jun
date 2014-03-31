@@ -19,10 +19,20 @@
 </html>
 <script>
 	var mpics= new  MucardPicture({
-		parent:document.getElementById("t"),
-		callback:function(data){
+		//
+		callback:function(data,pic){
 			alert(JSON.stringify(data));
-		}
+			pic.hide();
+		},
+		logCallback:function(pic){
+			console.log(pic);
+			alert("login callback funtion");
+		},
+		imageDomain:"https://mugeda-mobile.mugeda.com",
+		imageUdataUrl:"https://mugeda-mobile.mugeda.com/udata_list.php",
+		signatureUdataUrl:"",
+		audioUdataUrl:"",
+		imageDelUrl:""
 	});
 </script>
 

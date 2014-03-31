@@ -1,0 +1,105 @@
+<!DOCTYPE htmle>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html" charset="utf-8">
+<link rel="stylesheet" href=""></link>
+<style>
+	html{-webkit-text-size-adjust:none;font-size:62.5%;}
+	body{background-color:rgb(0,0,0);}
+	body{font-size:1.4rem;}
+	.sword{margin-top:100px;margin-left:600px;}
+	.sword .swordL{
+		height: 20rem;
+		width: 0.5rem;
+		border-radius:0.2rem;
+		background-color: rgb(199, 224, 255);
+		box-shadow: 0 0 3rem 0.5rem rgb(66, 161, 255);
+	}
+	.sword .swordS{}
+	.pen{
+		position:absolute;top:80px;left:800px;
+		width:15rem;height:15rem;
+		border-radius:15rem;
+		background-color:rgb(199,244,255);
+		box-shadow: 0rem 0 3rem 0.5rem rgb(66,161,255);
+	}
+
+	.pen2{
+		position:absolute;top:80px;left:730px;
+		width:15rem;height:15rem;
+		border-radius:15rem;
+		background-color:rgb(0,0,0);
+	}
+
+	.moon{
+		position:absolute;
+		top:80px;
+		left:1200px;
+		display: inline-block;
+		width: 0;
+		height: 0;
+		border-top: 15px solid rgba(0,0,0,0);
+		border-bottom: 15px solid rgba(0,0,0,0);
+		border-left-width: 0;
+		border-right: 25px solid rgb(85,85,85);
+		opacity: 0.8;
+		/*
+		border-radius:15rem 15rem 10rem 10rem;
+		background-color:rgb(199,244,255);
+		*/
+		box-shadow: 0 0 3rem 0.5rem rgb(66,161,255);
+	}
+
+
+	.rr,.rl{
+		display: inline-block;
+		width: 0;
+		height: 0;
+		border-top: 15px solid transparent;
+		border-bottom: 15px solid transparent;
+		position: absolute;
+		top: 80;
+		z-index: 5;
+		margin: 3px 0;
+		border-radius: 3px;
+	}
+
+	.rr{
+		border-right: 0;
+		border-left: 25px solid #555555;
+		opacity: 0.8;
+		left: 1300;
+	}
+
+	.rl{
+		border-left: 0;
+		border-right: 25px solid #555555;
+		opacity: 0.8;
+		left: 1400px;
+	}
+
+</style>
+<script src="../JunDraw/common.min.js"></script>
+</head>
+<body>
+	<div class="sword">
+		<div class="swordL"></div>
+		<div class="swordS"></div>
+	</div>
+	<div class="pen">
+	</div>
+	<div class="pen2">
+	</div>
+
+	<span class="moon">
+	</span>
+
+
+	<span class="rr"></span>
+	<span class="rl"></span>
+
+</body>
+</html>
+<script>
+</script>
