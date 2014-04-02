@@ -1,0 +1,74 @@
+<!DOCTYPE htmle>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html" charset="utf-8">
+<style>
+*{margin:0;padding:0}
+#room{width:870px;height:460px;margin-top:200px;margin-left:200px;background: rgb(181, 199, 223);}
+#room div{
+	position:absolute;
+}
+#room .minaret{
+	/*
+	border-left:10px solid rgba(0,0,0,0);
+	border-right:10px solid rgba(0,0,0,0);
+	border-bottom:231px solid rgba(234,235,235,1);
+	height:0px;
+	width:44px;
+	*/
+	width:20px;
+	height:20px;
+	border:100px solid rgba(0,0,0,0);
+	border-width:20px 30px 40px 50px;
+	border-top-color:red;
+	border-right-color:green;
+	border-bottom-color:black;
+	border-left-color:yellow;
+}
+</style>
+</head>
+<body>
+	<div id="room">
+		<div class="left-minaret minaret">
+		</div>
+		<div class="right-minaret minaret">
+		</div>
+	<div>
+</body>
+</html>
+<script>
+	function drawT(left_width,right_width,height,color,dir){
+		left_width = parseInt(left_width) + "px";
+		right_width = parseInt(right_width) + "px";
+		height = parseInt(height) + "px";
+		var arr = {
+		   top:[height,right_width,0,left_width],
+		   right:[left_width,height,right_width,0],
+		   bottom:[0,left_width,height,right_width],
+		   left:[right_width,0,left_width,height],
+		}
+		var arr = arr[dir];
+		var div = document.createElement("div");
+		div.style.width="0px";
+		div.style.height="0px";
+		div.style.border="0px solid rgba(0,0,0,0)";
+		div.style.borderWidth=arr.join(" ");
+		div.style["border-"+dir+"-color"]=color;
+		return div;
+	}
+	
+	function drawET(width,color,dir){
+		var qWidth = parseInt(width) /2;
+		return drawT(qWidth,qWidth,Math.sqrt(3)*qWidth,color,dir);
+	}
+
+	//var div = drawET(200,"red","bottom");
+	var div = drawT(10,500,50,"red","bottom");
+	div.style.position="absolute";
+	div.style.top=300;
+	div.style.left=350;
+
+	document.body.appendChild(div);
+
+</script>
