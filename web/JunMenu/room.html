@@ -10,21 +10,7 @@
 	position:absolute;
 }
 #room .minaret{
-	/*
-	border-left:10px solid rgba(0,0,0,0);
-	border-right:10px solid rgba(0,0,0,0);
-	border-bottom:231px solid rgba(234,235,235,1);
-	height:0px;
-	width:44px;
-	*/
-	width:20px;
-	height:20px;
-	border:100px solid rgba(0,0,0,0);
-	border-width:20px 30px 40px 50px;
-	border-top-color:red;
-	border-right-color:green;
-	border-bottom-color:black;
-	border-left-color:yellow;
+
 }
 </style>
 </head>
@@ -55,6 +41,7 @@
 		div.style.border="0px solid rgba(0,0,0,0)";
 		div.style.borderWidth=arr.join(" ");
 		div.style["border-"+dir+"-color"]=color;
+
 		return div;
 	}
 	
@@ -63,12 +50,27 @@
 		return drawT(qWidth,qWidth,Math.sqrt(3)*qWidth,color,dir);
 	}
 
-	//var div = drawET(200,"red","bottom");
-	var div = drawT(10,500,50,"red","bottom");
-	div.style.position="absolute";
-	div.style.top=300;
-	div.style.left=350;
+	function drawTrapezoid(left_width,right_width,height,short_wh,color,dir){
+		var tEl = drawT(left_width,right_width,height,color,dir);
+		if(tEl){
+			short_wh = parseInt(short_wh) + "px";
+			if(dir==="top" || dir ==="bottom")
+				tEl.style.width=short_wh;
+			if(dir==="left" || dir ==="right")
+				tEl.style.height=short_wh;
+		}
+		return tEl;
+	}
 
-	document.body.appendChild(div);
+	function getStyle(div){
+		return div.getAttribute("style");
+	}
+
+	//var div = drawET(200,"red","bottom");
+	var div = drawTrapezoid(10,10,231,24,"rgba(234,234,234,1)","bottom");
+
+	console.log(getStyle(div));
+
+	document.getElementById("room").appendChild(div);
 
 </script>
