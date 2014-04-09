@@ -3,74 +3,60 @@
 <head>
 <title></title>
 <meta http-equiv="content-type" content="text/html" charset="utf-8">
-<style>
-*{margin:0;padding:0}
-#room{width:870px;height:460px;margin-top:200px;margin-left:200px;background: rgb(181, 199, 223);}
-#room div{
-	position:absolute;
-}
-#room .minaret{
-
-}
-</style>
+<link rel="stylesheet/less" href="room.less"></link>
+<script src="/Common/Dom.js"></script>
+<script src="/less-1.5.0.min.js"></script>
 </head>
 <body>
 	<div id="room">
 		<div class="left-minaret minaret">
+			<div class="base ledge"></div>
+			<div class="minaret-chattri">
+				<div class="arches">
+					<div class="arch"></div>
+					<div class="arch"></div>
+					<div class="arch"></div>
+				</div>
+				<div class="spire">
+					<div class="finial"></div>
+				</div>
+				<div class="minaret-dome"></div>
+			</div>
+			<div class="band1 band"></div>
+			<div class="band2 band"></div>
+			<div class="band3 band"></div>
 		</div>
 		<div class="right-minaret minaret">
+			<div class="base ledge"></div>
+			<div class="minaret-chattri">
+				<div class="arches">
+					<div class="arch"></div>
+					<div class="arch"></div>
+					<div class="arch"></div>
+				</div>
+				<div class="spire">
+					<div class="finial"></div>
+				</div>
+				<div class="minaret-dome"></div>
+			</div>
+			<div class="band1 band"></div>
+			<div class="band2 band"></div>
+			<div class="band3 band"></div>
 		</div>
 	<div>
 </body>
 </html>
 <script>
-	function drawT(left_width,right_width,height,color,dir){
-		left_width = parseInt(left_width) + "px";
-		right_width = parseInt(right_width) + "px";
-		height = parseInt(height) + "px";
-		var arr = {
-		   top:[height,right_width,0,left_width],
-		   right:[left_width,height,right_width,0],
-		   bottom:[0,left_width,height,right_width],
-		   left:[right_width,0,left_width,height],
-		}
-		var arr = arr[dir];
-		var div = document.createElement("div");
-		div.style.width="0px";
-		div.style.height="0px";
-		div.style.border="0px solid rgba(0,0,0,0)";
-		div.style.borderWidth=arr.join(" ");
-		div.style["border-"+dir+"-color"]=color;
-
-		return div;
-	}
-	
-	function drawET(width,color,dir){
-		var qWidth = parseInt(width) /2;
-		return drawT(qWidth,qWidth,Math.sqrt(3)*qWidth,color,dir);
-	}
-
-	function drawTrapezoid(left_width,right_width,height,short_wh,color,dir){
-		var tEl = drawT(left_width,right_width,height,color,dir);
-		if(tEl){
-			short_wh = parseInt(short_wh) + "px";
-			if(dir==="top" || dir ==="bottom")
-				tEl.style.width=short_wh;
-			if(dir==="left" || dir ==="right")
-				tEl.style.height=short_wh;
-		}
-		return tEl;
-	}
-
 	function getStyle(div){
 		return div.getAttribute("style");
 	}
 
-	//var div = drawET(200,"red","bottom");
 	var div = drawTrapezoid(10,10,231,24,"rgba(234,234,234,1)","bottom");
-
+	//var div = drawRegularTriangle(231,"rgba(234,234,234,1)","bottom");
 	console.log(getStyle(div));
 
-	document.getElementById("room").appendChild(div);
+	//document.getElementById("room").appendChild(div);
+
+	
 
 </script>
