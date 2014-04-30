@@ -452,13 +452,11 @@ var MugedaSignature = (function() {
 				},isM ? "touchstart": "mousedown", backBtn);
 				E(function(e) {
 					if (!self.backStart) return false;
-					/*
 					self.backStart = false;
 					self.data.pencils.splice(-1,1);
 					self.clear();
 					self.draw();
-					*/
-					self.options.cancelCallback(self);
+					//self.options.cancelCallback(self);
 				},isM ? "touchend": "mouseup", backBtn);
 			}
 		},

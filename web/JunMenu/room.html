@@ -51,11 +51,12 @@
 		return div.getAttribute("style");
 	}
 
-	var div = drawTrapezoid(10,10,231,24,"rgba(234,234,234,1)","bottom");
-	//var div = drawRegularTriangle(231,"rgba(234,234,234,1)","bottom");
+	var div = drawTrapezoid(10,10,231,24,"rgba(234,234,234,1)","left");
+	var div = drawRegularTriangle(10,"rgba(0,0,0,1)","left");
+	var div = drawTriangle(4,4,8,"rgba(0,0,0,1)","top");
 	console.log(getStyle(div));
 
-	//document.getElementById("room").appendChild(div);
+	document.getElementById("room").appendChild(div);
 
 	
 

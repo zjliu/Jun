@@ -7,7 +7,7 @@ var port = Config.getConfig("port");
 function start(route,handle){
 	function onRequest(request,response){
 		var pathname = url.parse(request.url).pathname;
-		route(handle,pathname,response);
+		route(handle,pathname,response,request);
 	}
 	var httpServer = http.createServer(onRequest);
 	httpServer.listen(port);

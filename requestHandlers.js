@@ -1,3 +1,4 @@
+var url = require("url");
 var exec = require("child_process").exec;
 var fs =require("fs");
 var contentType=require("./contentType");
@@ -46,6 +47,39 @@ var resourceRequest={
 			}
 		});
 	},
+	getFileText:function(response,pathname,callback){
+		var self = this;
+		fs.readFile("."+pathname,function(err,data){
+			var mdata = !!err ? null : data;
+			if(!err){
+				callback(mdata);
+			}
+			else{
+				self.writeResponse(response,{"status":1,"error":"cannot find server-file!"});		
+			}
+		});
+	},
+	getServer:function(response,pathname,request){
+		var self = this;
+		this.getFileText(response,pathname,function(data){
+			if(!data) {
+				response.end();
+				return;
+			}
+			var reFun = eval('('+data.toString()+')');
+			if(typeof reFun === "function"){
+				var query = url.parse(request.url,true);
+				var reStr = reFun(query.query);
+				self.writeResponse(response,reStr);	
+			}
+		});
+	},
+	writeResponse:function(response,data){
+		response.writeHead(200,{"Content-Type":"application/x-javascript"});
+		var mdata = typeof data === "string" ? data : JSON.stringify(data);
+		response.write(mdata);
+		response.end();
+	},
 	rewrite:function(response,pathname){
 		var target = Rules[pathname];
 		console.log(Rules);
@@ -59,22 +93,6 @@ var resourceRequest={
 			response.end();
 		}
 		response.end();
-	},
-	excuteMethod:function(pathname){
-		/*
-		var paths = pathname.split("/");
-		var myPaths = [];
-		for(var i=0,l=paths.length;i<l;i++){
-		}
-		*/
-		return pathname.substring(1);
-	},
-	start:function(response){
-		exec("ls -lah",function(error,stdout,stderr){
-			response.writeHead(200, {"Content-Type": "text/plain; charset=utf8"});
-			response.write(stdout);
-			response.end();
-		});
 	},
 	upload:function(response){
 	
