@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="html5.js"></script>
+		<![endif]-->
+		<script type="text/javascript">
+			var phoneWidth =  parseInt(window.screen.width);
+var phoneScale = phoneWidth/640;
+var ua = navigator.userAgent;
+if (/Android (\d+\.\d+)/.test(ua)){
+var version = parseFloat(RegExp.$1);
+if(version>2.3){
+document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+}else{
+document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+}
+} 
+else document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+		</script>
+		<style>
+			*{margin:0;padding:0;}
+			html,body{width:100%;height:100%;}
+			@import url(http://fonts.googleapis.com/css?family=Arvo:400,700);
+			body {
+				background: #ccc;
+				padding: 50px;
+				font: normal normal 100%/1.6em 'Arvo',sans-serif;
+			}
+
+			p {
+				line-height: 1.5em;
+			}
+
+			.tile-container {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-flex-wrap: wrap;
+				-ms-flex-wrap: wrap;
+				flex-wrap: wrap;
+				-webkit-box-align: stretch;
+				-webkit-align-items: stretch;
+				-ms-flex-align: stretch;
+				align-items: stretch;
+				margin: auto;
+			}
+
+			.tile {
+				position: relative;
+				-webkit-box-flex: 1;
+				-webkit-flex: 1 0 350px;
+				-ms-flex: 1 0 350px;
+				flex: 1 0 350px;
+				-webkit-align-self: stretch;
+				-ms-flex-item-align: stretch;
+				align-self: stretch;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				overflow: hidden;
+				margin: 5px;
+				padding: 40px;
+				-webkit-box-shadow: 0 0 0 1px #999, 0 1px 2px #999;
+				box-shadow: 0 0 0 1px #999, 0 1px 2px #999;
+				border-top: 8px solid;
+				border-radius: 5px;
+				background: white;
+			}
+			.tile-heading {
+				font-weight: 700;
+			}
+			.tile-img {
+				margin: -20px -20px 20px;
+			}
+			.tile-img img {
+				width: 100%;
+				margin: 0;
+			}
+			.tile-contents blockquote {
+				margin: 0;
+				font-size: 1.5em;
+			}
+			.tile-contents blockquote p {
+				position: relative;
+			}
+			.tile-contents blockquote p:before, .tile-contents blockquote p:after {
+				content: '"';
+				display: inline-block;
+				margin: 0 .25em;
+				color: #ccc;
+			}
+			.tile-sharelinks-link {
+				display: inline-block;
+				padding: .5em 20px;
+				border-radius: 5px;
+				color: white;
+				background: teal;
+				text-decoration: none;
+			}
+			.tile-sharelinks-link:hover {
+				background: #004d4d;
+			}
+			.tile:nth-child(odd) {
+				border-top-color: teal;
+			}
+			.tile:nth-child(even) {
+				border-top-color: wheat;
+			}
+			.tile:nth-child(2n+3) {
+				-webkit-flex-basis: 300px;
+				-ms-flex-preferred-size: 300px;
+				flex-basis: 300px;
+			}
+			.tile:nth-child(4n+5) {
+				-webkit-flex-basis: 450px;
+				-ms-flex-preferred-size: 450px;
+				flex-basis: 450px;
+			}
+			.tile--quote .tile-heading {
+				display: none;
+			}
+
+			@media screen and (max-width: 500px) {
+				body {
+					padding: 20px;
+				}
+
+				.tile {
+					-webkit-flex-basis: 100% !important;
+					-ms-flex-preferred-size: 100% !important;
+					flex-basis: 100% !important;
+					max-width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="tile-container">
+			<div style="-webkit-box-flex: 2;" class="tile">
+				<figure class="tile-img"><img src="http://d.alistapart.com/_made/d/ALA394_shapes_300_960_390_60.jpg"/></figure>
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi. Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile tile--quote">
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<blockquote>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi. Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+					</blockquote>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile">
+				<figure class="tile-img"><img src="http://d.alistapart.com/_made/d/ALA392_contentout_300_960_540_60.jpg"/></figure>
+				<div class="tile-contents">
+					<h2 class="tile-heading">Another heading</h2>
+					<p>Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi.</p>
+					<p>Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile tile--quote">
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<blockquote>
+						<p>Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+					</blockquote>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile">
+				<figure class="tile-img"><img src="http://d.alistapart.com/_made/d/ALA394_shapes_300_960_390_60.jpg"/></figure>
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi. Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile">
+				<figure class="tile-img"><img src="http://d.alistapart.com/_made/d/ALA392_contentout_300_960_540_60.jpg"/></figure>
+				<div class="tile-contents">
+					<h2 class="tile-heading">Another heading</h2>
+					<p>Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi.</p>
+					<p>Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile tile--quote">
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<blockquote>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi. Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+					</blockquote>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile">
+				<figure class="tile-img"><img src="http://d.alistapart.com/_made/d/ALA394_shapes_300_960_390_60.jpg"/></figure>
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi. Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile">
+				<figure class="tile-img"><img src="http://d.alistapart.com/_made/d/ALA392_contentout_300_960_540_60.jpg"/></figure>
+				<div class="tile-contents">
+					<h2 class="tile-heading">Another heading</h2>
+					<p>Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi.</p>
+					<p>Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile tile--quote">
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<blockquote>
+						<p>Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+					</blockquote>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile tile--quote">
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<blockquote>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi. Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+					</blockquote>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile">
+				<figure class="tile-img"><img src="http://d.alistapart.com/_made/d/ALA392_contentout_300_960_540_60.jpg"/></figure>
+				<div class="tile-contents">
+					<h2 class="tile-heading">Another heading</h2>
+					<p>Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi.</p>
+					<p>Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile tile--quote">
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<blockquote>
+						<p>Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+					</blockquote>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+			<div class="tile">
+				<figure class="tile-img"><img src="http://d.alistapart.com/_made/d/ALA394_shapes_300_960_390_60.jpg"/></figure>
+				<div class="tile-contents">
+					<h2 class="tile-heading">Heading</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi. Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+				</div>
+				<div class="tile-sharelinks"><a href="" class="tile-sharelinks-link">Share this</a></div>
+			</div>
+		</div>
+	</body>
+</html>

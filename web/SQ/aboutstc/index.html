@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ch"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!--
+	<link rel="apple-touch-icon" sizes="57x57" href="./userfiles/qrcode/136/341/logo/57_57/52ac4d82a4fa7.1.jpg">
+	<link rel="apple-touch-icon" sizes="72x72" href="./userfiles/qrcode/136/341/logo/72_72/52ac4d82a4fa7.1.jpg">
+	<link data-logo="" rel="apple-touch-icon" sizes="114x114" href="./userfiles/qrcode/136/341/logo/114_114/52ac4d82a4fa7.1.jpg">  
+	-->
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="-1">
+	<title>STC</title>
+	<link rel="stylesheet" type="text/css" href="./userfiles/main.css">
+	<!--浏览器兼容HTML5标签-->
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="./userfiles/html5.js"></script>
+	<![endif]-->
+	<!--移动端版本兼容 -->
+	<script type="text/javascript">
+		var phoneWidth =  parseInt(window.screen.width);
+		var phoneScale = phoneWidth/640;
+		var ua = navigator.userAgent;
+		if (/Android (\d+\.\d+)/.test(ua)){
+			var version = parseFloat(RegExp.$1);
+			if(version>2.3){
+				document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+			}else{
+				document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+			}
+		} else {
+			document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+		}
+	</script>
+	<script>SYS_SITE_ID = 136</script>
+</head>
+<body>
+<input type="hidden" value="341" id="activeId">
+<section class="p-index" >
+	<!--fn-声音提示 -->
+	<div class="audio_txt close">
+		<p class="txt">点击开启/关闭音效</p>
+		<p></p>
+	</div>
+	<!--fn-声音提示 end-->
+	<!--fn-声音显示 -->
+	<section class="fn-audio">
+	<div class="btn">
+		<p class="btn_audio"><span class="css_sprite01 audio_open"></span><span class="css_sprite01 audio_close"></span></p>
+		<audio id="car_audio" controls="" preload="preload">
+			<source src="./userfiles/bg.mp3" type="audio/mpeg" />
+			您的浏览器不支持HTML5音频格式
+		</audio>
+	</div>
+	</section>
+	<section data-page="1" class="m-page m-page1" data-type="info-nomore">
+		<div class="m-img m-img01" data-bk="./userfiles/001.jpg" style="background:url(./userfiles/001.jpg) center no-repeat; background-size:cover;">
+		</div>
+	</section>
+	<section data-page="2" class="m-page m-page2" data-type="info_nomore">
+		<div class="m-img m-img02" data-bk="./userfiles/002.jpg" style="background:url(./userfiles/002.jpg) center no-repeat; background-size:cover;">
+		</div>
+	</section>
+	<section data-page="3" class="m-page m-page3" data-type="info_nomore">
+		<div class="m-img m-img03" data-bk="./userfiles/003.jpg" style="background:url(./userfiles/003.jpg) center no-repeat; background-size:cover;">
+		</div>
+	</section>
+	<section data-page="4" class="m-page m-page4" data-type="info_nomore">
+		<div class="m-img m-img04" data-bk="./userfiles/004.jpg" style="background:url(./userfiles/004.jpg) center no-repeat; background-size:cover;">
+		</div>
+	</section>
+	<section data-page="5" class="m-page m-page5" data-type="info_nomore">
+		<div class="m-img m-img05" data-bk="./userfiles/005.jpg" style="background:url(./userfiles/005.jpg) center no-repeat; background-size:cover;">
+		</div>
+	</section>
+	
+	<section data-page="7" class="m-page m-page7" data-type="info_nomore">
+		<div class="m-img m-img07" data-bk="./userfiles/007.jpg" style="background:url(./userfiles/007.jpg) center no-repeat; background-size:cover;">
+		</div>
+	</section>
+	<section data-page="8" class="m-page m-page8" data-type="info_nomore">
+		<div class="m-img m-img08" data-bk="./userfiles/008.jpg" style="background:url(./userfiles/008.jpg) center no-repeat; background-size:cover;">
+			<a class="register" style="position:absolute;margin-left:24%;top:61%;" href="http://mp.weixin.qq.com/s?__biz=MzA5NTM1NTUyNw==&mid=200175183&idx=1&sn=bd3c0b798a219cad509862c285418ce2#rd">
+				<img width="340px" height="80px" src="./userfiles/regbtn.png">
+			</a>
+		</div>
+	</section>
+	<section class="pageLoading">
+		<img src="./userfiles/load.gif" alt="loading">
+	</section>
+	<div id="arrow_firstPage" class="swiper" align="center">
+		<div style="width:100%;height:100%;background:url(./userfiles/arrow2.png) center no-repeat; background-size:80px;"> </div>
+	</div>
+	<div id="arrow_slowUp" class="swiper" align="center">
+		<div style="width:100%;height:100%;">向上滑动</div>
+	</div>
+	<div id="arrow_down" class="swiper" align="center">
+		<div style="width:100%;height:100%;background:url(./userfiles/arrow2.png) center no-repeat; background-size:80px;"> </div>
+	</div>
+	<div id="arrow_up" class="swiper" align="center">
+		<div style="width:100%;height:100%;background:url(./userfiles/arrow2.png) center no-repeat; background-size:80px;"> </div>
+	</div>
+	<!--脚本加载-->
+	<script type="text/javascript" src="./userfiles/html5.js"></script>
+	<script type="text/javascript" src="./userfiles/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="./userfiles/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="./userfiles/yl3d.js"></script>
+	<script type="text/javascript" src="./userfiles/main.js"></script>
+	<!--脚本加载 end-->
+</section>
+</body>
+<script>
+var dataForWeixin={
+    appId:"",
+	MsgImg:"http://nowstc.com/aboutstc/sharelogo/suoluetu.png",
+	TLImg:"http://nowstc.com/aboutstc/sharelogo/suoluetu.png",
+    	url:"http://nowstc.com/aboutstc/",
+	title:"Social Talent Circle",
+	desc:"May the social power be with you!",
+	fakeid:"",
+	callback:function(){}
+};
+(function(){
+	var onBridgeReady=function(){
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            WeixinJSBridge.invoke('sendAppMessage',{
+                "appid":dataForWeixin.appId,
+                    "img_url":dataForWeixin.MsgImg,
+                    "img_width":"120",
+                    "img_height":"120",
+                    "link":dataForWeixin.url,
+                    "desc":dataForWeixin.desc,
+                    "title":dataForWeixin.title
+            }, function(res){(dataForWeixin.callback)();});
+        });
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+            (dataForWeixin.callback)();
+            WeixinJSBridge.invoke('shareTimeline',{
+                "img_url":dataForWeixin.TLImg,
+                    "img_width":"120",
+                    "img_height":"120",
+                    "link":dataForWeixin.url,
+                    "desc":dataForWeixin.desc,
+                    "title":dataForWeixin.title
+            }, function(res){});
+        });
+        WeixinJSBridge.on('menu:share:weibo', function(argv){
+            WeixinJSBridge.invoke('shareWeibo',{
+                "content":dataForWeixin.title,
+                    "url":dataForWeixin.url
+            }, function(res){(dataForWeixin.callback)();});
+        });
+        WeixinJSBridge.on('menu:shareacebook', function(argv){
+            (dataForWeixin.callback)();
+            WeixinJSBridge.invoke('shareFB',{
+                "img_url":dataForWeixin.TLImg,
+                    "img_width":"120",
+                    "img_height":"120",
+                    "link":dataForWeixin.url,
+                    "desc":dataForWeixin.desc,
+                    "title":dataForWeixin.title
+            }, function(res){});
+        });
+    };
+    if(document.addEventListener){
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    }else if(document.attachEvent){
+        document.attachEvent('WeixinJSBridgeReady'   , onBridgeReady);
+        document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+    }
+})();
+
+window.onload=function(){
+	var $firstPage = $("#arrow_firstPage");
+	var $down = $("#arrow_down");
+	var $up = $("#arrow_up");
+	setInterval(function(){
+		$firstPage
+			.animate({"bottom":"20%"},500)
+			.animate({"bottom":"14.97%"},500);
+	},1000);
+	setInterval(function(){
+		$down
+			.animate({"top":"40px"},500)
+			.animate({"top":"0px"},500);
+	},1000);
+	setInterval(function(){
+		$up
+			.animate({"bottom":"40px"},500)
+			.animate({"bottom":"0px"},500);
+	},1000);
+}
+
+</script>
+</html>

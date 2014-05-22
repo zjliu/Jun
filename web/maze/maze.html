@@ -1,0 +1,205 @@
+<!DOCTYPE htmle>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html" charset="utf-8">
+<link ref="stylesheet" href=""></link>
+<style>
+	body{
+		box-sizing:border-box;
+		display:-webkit-box;
+		-webkit-box-pack:center;
+		-webkit-box-align:center;
+	}
+	#canvas{
+		box-shadow:0px 0px 8px rgb(0,0,0) inset;
+	}
+</style>
+</head>
+<body>
+	<canvas id="canvas" width="400" height="400"></canvas>
+</body>
+</html>
+<script>
+
+	Array.prototype.each=function(callback){
+		for(var i=0,len=this.length;i<len;i++){
+			callback(i,this[i]);	
+		}
+	}
+
+	function Grad(x,y,color){
+		this.x=x;
+		this.y=y;
+		this.color=color;
+		this.size = 10;
+		this.draw=function(context){
+			context.fillStyle = this.color;
+			var x = this.x*this.size;
+			var y = this.y*this.size;
+			context.moveTo(x,y);
+			context.fillRect(x,y,this.size,this.size);
+		}
+	}
+
+	function draw(context,arr){
+		arr.each(function(index_j,item_j){
+			item_j.each(function(index_i,item_i){
+				var color = "";
+				switch(item_i){
+					case -1:
+					color = "rgb(0,0,0)";
+					break;
+					case 0:
+					color = "rgb(255,0,0)";
+					break;
+					case 1:
+					color = "rgb(0,255,255)";
+					break;
+				}
+				var grad = new Grad(index_i,index_j,color);
+				grad.draw(context);
+			});
+		});
+	}
+
+	var size = 40;
+	var arr = [];
+	for(var j=0;j<size;j++){
+		var arrJ = [];
+		for(var i=0;i<size;i++){
+			arrJ.push((i===0 || j===0 || i===size-1 || j===size-1)?-1:0);
+		}
+		arr.push(arrJ);
+	}
+
+	var start = {x:0,y:1};
+	var end = {x:arr.length-1,y:arr.length-2};
+
+	arr[start.x][start.y]=1;
+	arr[end.x][end.y]=1;
+
+	var canvas = document.getElementById("canvas"),
+		context = canvas.getContext("2d");
+	draw(context,arr);
+
+	function Kpoint(arr){
+		function Point(x,y){
+			this.x = x;
+			this.y = y;
+			this.point = {'x':x,'y':y};
+			this.tryDir = [1,1,1,1];
+			this.equal=function(point){
+				return this.x === point.x && this.y===point.y;
+			}
+			this.setRightPoint:function(){
+				arr[this.y][this.x]=1;
+			}
+			this.getValue :function(){
+				return arr[this.y][this.x];
+			}
+
+			this.dirBase:function(dx,dy){
+				var has = false;
+				var x = this.x-dx;
+				var y = this.y-dy;
+				if(arr[y] && arr[y][x]!=undefined){
+					has = true;	
+				}
+				return has?{'x':x,'y':y,'v':arr[y][x]}:undefined;
+			}
+
+			this.top=function(){
+				return this.dirBase(0,-1);
+			}
+			this.bottom = function(){
+				return this.dirBase(0,1);
+			}
+			this.left=function(){
+				return this.dirBase(-1,0);
+			}
+			this.right = function(){
+				return this.dirBase(1,0);
+			}
+		}
+		return Point;
+	}
+
+
+	var Point = Kpoint(arr);
+	var pathArr = [];
+	var pointStart = new Point(start.x,start.y);
+	var pointEnd = new Point(end.x,end.y);
+
+	function tryPoint(point,arr){
+		if(point.equal(pointEnd)) return;
+
+		var useArr = [];
+		var 
+			top = point.top(),
+			right = point.right(),
+			bottom = point.bottom(),
+			left = point.left();
+			for(var i=0,dirArr=[top,right,bottom,left],len=dirArr.length;i<len;i++){
+				var item = dirArr[i];
+				if(item && item.v===0) useArr.push(item);
+				else{
+					point.tryDir[i]=0;
+				}
+			}
+		
+		if(!useArr.length){
+			var x = point.x;
+			var y = point.y;
+			var nextPoint = pathArr[pathArr.length-1];
+			tryPoint(nextPoint);
+		}
+
+		var tarr = [[point.x,point.y-1],[point.x+1,point.y],[point.x,point.y+1],[point.x-1,point.y]];
+		var index = Math.floor(Math.random()*4);
+
+		if(point.getValue(arr)===0){
+			pathArr.push(point);
+			point.setRightPoint();
+			var tarr = [[point.x,point.y-1],[point.x+1,point.y],[point.x,point.y+1],[point.x-1,point.y]];
+			var index = Math.floor(Math.random()*4);
+			var tItem = tarr[index];
+			var tPoint = new Point(tItem[0],tItem[1]);
+			tryPoint(tPoint);
+		}
+		else{
+
+		}
+	}
+	tryPoint(pointStart);
+
+	function doPoint(point,targetPoint,arr){
+		var value = arr[point.y][point.x];
+		if(value===1) return;
+
+		var pArr = [pointTop,pointRight,pointBottom,pointLeft];
+		for(var i=0,l=pArr.length;i<l;i++){
+			var item = pArr[i];
+			if(item.equal(targetPoint)){
+				return;
+			}
+		}
+		var
+			pointTop = new Point(point.x,point.y-1),
+			pointRight = new Point(point.x+1,point.y),
+			pointBottom = new Point(point.x,point.y+1),
+			pointLeft =  new Point(point.x-1,point.y);
+
+		
+		doPoint(pointTop);
+		doPoint(pointRight);
+		doPoint(pointBottom);
+		doPoint(pointLeft);
+	}
+	
+	function findWay(arr,sp,ep){
+		var route = [];
+		
+	}
+
+</script>

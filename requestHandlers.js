@@ -4,11 +4,12 @@ var fs =require("fs");
 var contentType=require("./contentType");
 var methods = require("./methods");
 var Config = require("./.config");
-var Rules = loadRules();
+//var Rules = loadRules();
 var Config = require("./.config");
 
 var rewriteReg = /Rewrite\s((?:\/[a-zA-Z0-9\_\-]+)+)\s((?:\/?[a-zA-Z0-9\_]+)+\.[a-z]+)/;
 
+/*
 function loadRules(){
 	var home = Config.getConfig("home");
 	var config = Config.getConfig("userRewrite");
@@ -31,6 +32,7 @@ function loadRules(){
 		}
 	});
 }
+*/
 
 var resourceRequest={
 	getFile:function(response,pathname){
@@ -81,6 +83,7 @@ var resourceRequest={
 		response.end();
 	},
 	rewrite:function(response,pathname){
+		/*
 		var target = Rules[pathname];
 		console.log(Rules);
 		if(target){
@@ -93,6 +96,7 @@ var resourceRequest={
 			response.end();
 		}
 		response.end();
+		*/
 	},
 	upload:function(response){
 	

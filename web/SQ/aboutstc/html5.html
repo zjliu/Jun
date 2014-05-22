@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="html5.js"></script>
+	<![endif]-->
+	<script type="text/javascript">
+		var phoneWidth =  parseInt(window.screen.width);
+		var phoneScale = phoneWidth/640;
+		var ua = navigator.userAgent;
+		if (/Android (\d+\.\d+)/.test(ua)){
+			var version = parseFloat(RegExp.$1);
+			if(version>2.3){
+				document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+			}else{
+				document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+			}
+		} 
+		else document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+	</script>
+	<style>
+		*{margin:0;padding:0;}
+		html,body{width:100%;height:100%;}
+		body{padding:50px;}
+		.title-container{
+			display:flex;
+		}
+
+		.title{
+			position:relative;
+		}
+
+		.box{
+			display:box;
+			display:-webkit-box;
+			display:-moz-box;
+		}
+
+		.box_center{
+			box-pack:center;
+			-webkit-box-pack:center;
+			-webkit-box-align:center;
+		}
+
+		.boxsizing{
+			box-sizing:border-box;
+			-webkit-box-sizing:border-box;
+			-moz-box-sizing:border-box;
+		}
+
+	</style>
+</head>
+<body>
+<div class="title-container">
+	<div class="box box_center boxsizing" style="width:200px;height:200px;border:1px solid red;padding:5px;">
+		<div style="width:100px;height:100px;display:-webkit-box;-webkit-box-pack:center;-webkit-box-align:center;background-color:green;border-radius:50px;">我是一个中国人,我爱自己的祖国。</div>
+	</div>
+	<div class="title">
+		<figure>
+			<img src="http://d.alistapart.com/_made/d/ALA394_shapes_300_960_390_60.jpg">
+		</figure>
+		<div class="title-contents">
+			<h2 class="title-heading"></h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam perspiciatis possimus odio reiciendis quasi quae reprehenderit ex doloribus autem modi. Nisi quos quas ad ea cupiditate molestias ratione labore asperiores</p>
+		</div>
+		<div class="tile-sharelinks">
+			<a href="" class="tile-sharelinks-link">Share this</a>
+		</div>
+	</div>
+</div>
+</body>
+<html>
