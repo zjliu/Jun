@@ -226,7 +226,7 @@ p.ad {
 	background: url(../images/flowImg.png) center 0 no-repeat;	
 }
 .flowWrap.current p {
-	color: #9ad100;
+	color: #087508;
 }
 .flowWrap p {
 	text-align: left;
@@ -370,7 +370,7 @@ p.ad {
 
 /*后加样式 Start */
 .menuList li.current{
-	background-color:#999999;
+	background-color:#A5A0A8;
 	border-radius:6px;
 }
 .menuList li.current a{

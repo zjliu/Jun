@@ -12,13 +12,25 @@
 		 *导航栏
 		 */
 		var $menuUl = $("ul.menuList");
+		var leftBase = 200;
+		var $menuTarget = $('div.menuTarget');
+		function setMenuTarget(index){
+			var tl = leftBase + index * 60;
+			$menuTarget.stop().animate({
+				'left': tl
+			},500);
+		}
 		$('li',$menuUl).mouseenter(function(){
-			setCurrent($(this));
+			var $this = $(this);
+			setCurrent($this);
+			var index = $this.index();
+			setMenuTarget(index);
 		});
 		$menuUl.mouseleave(function(){
-			var index = $(this).attr('currentPage');
+			var index = parseInt($(this).attr('currentPage'));
 			var $currentLi=$menuUl.find('li:eq('+index+')');
 			setCurrent($currentLi);
+			setMenuTarget(index);
 		});
 
 		/*
