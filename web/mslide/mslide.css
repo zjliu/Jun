@@ -1,0 +1,135 @@
+
+.mslide_inactive_node{
+    opacity: 0.20;
+}
+
+.mslide_active_node{
+    opacity: 0.80;
+}
+
+#mslide_nav_left.inactive, #mslide_nav_right.inactive{
+    opacity:0.25;
+}
+
+#mslide_nav_left.active, #mslide_nav_right.active, #mslide_nav_left:hover, #mslide_nav_right:hover{
+    opacity:0.75;
+}
+
+#mslide_nav_left, #mslide_nav_right {
+    width:48px;
+    height:48px;
+    margin-top:-24px;
+    line-height:48px;
+    position:absolute;
+    text-align:center;
+    vertical-align:middle;
+    font-weight:bolder;
+    top:50%;
+    cursor:pointer;
+    opacity: 0.25;
+    -webkit-transition: all 450ms;
+    -moz-transition: all 450ms;
+    -o-transition: all 450ms;
+    -ms-transition: all 450ms;
+    transition: all 450ms;
+}
+
+.mslide_node:hover{
+    opacity: 0.50;
+}
+
+#mslide_nav_left{
+    left:4px;
+    background-image: url('gallery-left.png');
+}
+#mslide_nav_right{
+    right:4px;
+    background-image: url('gallery-right.png');
+}
+
+.mslide_nav:hover{
+    opacity: 0.50;
+}
+
+.mslide_node{
+    -webkit-transition: all 500ms;
+    -moz-transition: all 500ms;
+    -o-transition: all 500ms;
+    -ms-transition: all 500ms;
+    transition: all 500ms;
+    margin: 12px 8px 12px 8px;
+    border:none;
+    background:#fff;
+    width:8px;
+    height:8px;
+    cursor:pointer;
+    display: inline-block;
+    
+    border-radius:4px;    
+    border-bottom-left-radius:4px;
+    border-bottom-right-radius:4px;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+}
+
+.mslide_motion{
+	-webkit-transition-property: left, opacity;
+	-moz-transition-property: left, opacity;
+	-o-transition-property: left, opacity;
+	-ms-transition-property: left, opacity;
+	transition-property: left, opacity;  
+
+    -webkit-transition-duration: 800ms;
+    -moz-transition-duration: 800ms;
+    -o-transition-duration: 800ms;
+    -ms-transition-duration: 800ms;
+    transition-duration: 800ms;
+    
+    -webkit-transition-timing-function:ease-in-out;
+    -moz-transition-timing-function:ease-in-out;
+    -o-transition-timing-function:ease-in-out;
+    -ms-transition-timing-function:ease-in-out;
+    transition-timing-function:ease-in-out;    
+}
+.mslide_slide {
+    padding:0;
+    margin:0;
+    border:none;
+    display:block;
+    width:100%;
+    height:100%;
+    position:absolute;
+}
+
+#mslide_navbar
+{
+    padding:0;
+    margin:auto;
+    border:none;
+    display:block;
+    position:absolute;
+    width:100%;
+    height:32px;
+    bottom:0px;
+    text-align: center;
+}
+
+#mslide_container
+{
+    padding:0;
+    margin:auto;
+    border:none;
+    display:block;
+    position:absolute;
+    overflow:hidden;
+}
+
+#mslide_tip {
+    font-family: arial;
+    color: white;
+    opacity: 0.5;
+    font-size: 12px;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+}
