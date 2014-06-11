@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新蜜蜂-案例</title>
+<link rel="stylesheet" type="text/css" href="styles/common.css"/>
+<script type="text/javascript" src="scripts/jquery1.42.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.tmpl.js"></script>
+<script src="main.js"></script>
+</head>
+<body>
+<div class="wrapper">
+	<!-- 头部区域 -->
+	<div class="headerWrapper">
+    	<div class="headerWrap">
+          <div class="header clearfix">
+              <div class="logoWrap clearfix">
+                  <img class="fl" src="images/logo.png" width="70" height="64" />
+                  <div class="logoTitle">
+                    <p class="chineTitle">新蜜蜂</p>
+                    <p>New Bee</p>
+                  </div>
+              </div>
+              <div class="menuWrap">
+                <ul currentPage="1" class="menuList clearfix">
+                    <li><a href="index.html">首页</a></li>
+                    <li class="current"><a href="case.html">案例</a><p class="triangleIcon"></p></li>
+                    <li><a href="service.html">服务</a></li>
+                    <li><a href="contract.html">动态</a></li>
+                    <li><a href="company.html">关于</a></li>
+                    <li><a href="contactUs.html">联系</a></li>
+                </ul>
+				<div style='left:260px;' class="menuTarget"></div>
+              </div>
+          </div>
+        </div>
+        <div class="secMenuWrapper">
+        	<div class="secMenuWrap">
+              <ul class="secMenuList clearfix">
+                  <li class="current"><a href="javascript:void(0);">我的案例</a>|</li>
+                  <li><a href="javascript:void(0);">世纪佳明</a></li>
+              </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 头部区域END -->
+    <!-- 内容区域 -->
+    <div class="containerWrapper">
+    	<div class="container">
+        	<div class="c_con">
+            	<div class="top_nav">
+                	<div class="tn_con">
+                      <a href="javascript:void(0);">首页</a>|
+                      <a href="javascript:void(0);">案例</a>
+                    </div>
+                </div>
+                <!-- 标题 -->
+            	<div class="title">
+                	<span class="bigSpan2">案例</span>
+                    <span class="englishSpan">New contract.</span>
+                </div>
+                <!-- 标题END -->
+                <!-- 列表 -->
+                <div class="conWrap">
+					<script id="caseTemplate" type="text/x-jquery-tmpl">
+						<li class="${alternate($data,caseArr)}">
+							<div class="clearfix">
+								<div class="conImg">
+									<img src="${img}" width="152" height="99" />
+								</div>
+								<div class="conMsg">
+									<p class="title"><a href="${link}">${title}</a></p>
+									<p>${desc}</p>
+								</div>
+							</div>
+						</li>
+					</script>
+                	<ul id="case_list" class="conList clearfix"></ul>
+					<script>
+						var caseArr=[
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'河南建委',desc:'河南资质申报系统是河南住建委的一套办公系统，其中包含了企业申请材料报批、办事员专家分配、专家审查等主要模块，是企业资质申报流程系统化，提高了工作效率，也避免了数据的冗余。'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+							{img:'images/demo_01.jpg',link:'case_detail.html',title:'蒙牛随便',desc:'xxxxxxxxxxx'},
+						];	
+
+						function alternate( item, arr ) {
+							return ($.inArray( item, arr) % 2) ? "" : "mr14";
+						}
+
+						$( "#caseTemplate" ).tmpl(caseArr)
+							.appendTo( "#case_list" );
+					</script>
+						<!--
+                    	<li class="mr14">
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_01.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="case_detail.html">蒙牛随便</a></p>
+                                    <p>蒙牛随便产品系列的网站设计风格与千助做的德芙巧克力网站风格非常相似，都是用棕色为主色调让人有浓浓的甜蜜感；多处滤镜效果，打造味觉丝滑，香浓的感觉。</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_02.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">中粮家佳康</a></p>
+                                    <p>本稿是以绿、蓝、白，三色进行配色；用家佳康在全国的分布图为背景突出家佳康的肉食产业链特色。本网站是标准的企业展示型网站，包含了企业展示类网站的基本功能</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mr14">
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_03.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">北京农业产业投资</a></p>
+                                    <p>投资类企业展示型网站，低调有内涵的网站设计风格</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_04.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">科尔沁牛肉</a></p>
+                                    <p>科尔沁牛肉的网站建设项目建设于2013年，分企业展示和在线商城两稿，本案主要采用PS的高级核技法，融入多出滤镜、蒙版；将科尔沁草原牛儿之家展示在人们眼前</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mr14">
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_05.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">菊皇茶K歌</a></p>
+                                    <p>菊皇茶K歌活动，是康美药业旗下菊皇茶产品的活动网站建设项目，本案是为2013年活动而设计的页面。网站色调；以欢快活泼的蓝色配以暖色调。设计风格；采用传统活动专题式设计，突显菊皇茶的主牌号召力。</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_06.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">大唐电信</a></p>
+                                    <p>欧美简约大气型北京网站设计效果图</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mr14">
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_07.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">长城测控</a></p>
+                                    <p>北京瑞赛长城航空测控技术有限公司（简称长城测控），隶属中国航空工业是从事现代化测控系统及设备研究，开发与制造的高新技术企业。</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_08.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">NCC教育</a></p>
+                                    <p>NCC国际教育网站分为中英文双语版，采用了统一的网站设计风格，颜色采用了LOGO颜色，蓝色和白色。在创意设计上，设计师采用了国旗为背景。</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mr14">
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_03.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">北京农业产业投资</a></p>
+                                    <p>投资类企业展示型网站，低调有内涵的网站设计风格</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_04.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">科尔沁牛肉</a></p>
+                                    <p>科尔沁牛肉的网站建设项目建设于2013年，分企业展示和在线商城两稿，本案主要采用PS的高级核技法，融入多出滤镜、蒙版；将科尔沁草原牛儿之家展示在人们眼前</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mr14">
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_05.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">菊皇茶K歌</a></p>
+                                    <p>菊皇茶K歌活动，是康美药业旗下菊皇茶产品的活动网站建设项目，本案是为2013年活动而设计的页面。网站色调；以欢快活泼的蓝色配以暖色调。设计风格；采用传统活动专题式设计，突显菊皇茶的主牌号召力。</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_06.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">大唐电信</a></p>
+                                    <p>欧美简约大气型北京网站设计效果图</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mr14">
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_07.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">长城测控</a></p>
+                                    <p>北京瑞赛长城航空测控技术有限公司（简称长城测控），隶属中国航空工业是从事现代化测控系统及设备研究，开发与制造的高新技术企业。</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                        	<div class="clearfix">
+                                <div class="conImg">
+                                    <img src="images/demo_08.jpg" width="152" height="99" />
+                                </div>
+                                <div class="conMsg">
+                                    <p class="title"><a href="javascript:void(0);">NCC教育</a></p>
+                                    <p>NCC国际教育网站分为中英文双语版，采用了统一的网站设计风格，颜色采用了LOGO颜色，蓝色和白色。在创意设计上，设计师采用了国旗为背景。</p>
+                                </div>
+                            </div>
+                        </li>
+						-->
+                </div>
+                <!-- 列表END -->
+                <div class="pageWrapper">
+                	<a class="preBtn" href="javascript:void(0);"><< Previous</a>
+                    <a href="javascript:void(0);">1</a>
+                    <a href="javascript:void(0);">2</a>
+                    <a href="javascript:void(0);">3</a>
+                    <a href="javascript:void(0);">4</a>
+                    <a href="javascript:void(0);">5</a>
+                    <a href="javascript:void(0);">6</a>
+                    <a class="nextBtn" href="javascript:void(0);">Next >></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 内容区域END -->
+    <!-- 底部区域 -->
+    <div class="footerWrapper">
+    	<div class="footer clearfix">
+        	<div class="footList clearfix">
+              <div class="foot_con">
+                  <p class="title">关于我们</p>
+                  <div class="footCon_list">
+                      <a href="javascript:void(0);">简介</a>
+                      <a href="javascript:void(0);">服务理念</a>
+                      <a href="javascript:void(0);">我们的主张</a>
+                      <a href="javascript:void(0);">文化</a>
+                  </div>
+              </div>
+              <div class="foot_con">
+                  <p class="title">案例</p>
+                  <div class="footCon_list">
+                      <a href="javascript:void(0);">简介</a>
+                      <a href="javascript:void(0);">服务理念</a>
+                      <a href="javascript:void(0);">我们的主张</a>
+                      <a href="javascript:void(0);">文化</a>
+                  </div>
+              </div>
+              <div class="foot_con">
+                  <p class="title">服务</p>
+                  <div class="footCon_list">
+                      <a href="javascript:void(0);">简介</a>
+                      <a href="javascript:void(0);">服务理念</a>
+                      <a href="javascript:void(0);">我们的主张</a>
+                      <a href="javascript:void(0);">文化</a>
+                  </div>
+              </div>
+              <div class="foot_con">
+                  <p class="title">新闻</p>
+                  <div class="footCon_list">
+                      <a href="javascript:void(0);">简介</a>
+                      <a href="javascript:void(0);">服务理念</a>
+                      <a href="javascript:void(0);">我们的主张</a>
+                      <a href="javascript:void(0);">文化</a>
+                  </div>
+              </div>
+          </div>
+          <div class="footList clearfix">
+          	<div class="foot_con join_con">
+                <p class="title">加入</p>
+                <div class="footCon_list">
+                    <a class="titleCon" href="javascript:void(0);">职位</a>
+                    <a href="javascript:void(0);">简介</a>
+                    <a href="javascript:void(0);">服务理念</a>
+                    <a href="javascript:void(0);">我们的主张</a>
+                    <a href="javascript:void(0);">文化</a>
+                </div>
+            </div>
+            <div class="foot_con">
+              <p class="title">联系我们</p>
+              <div class="footCon_list">
+                  <a class="qqLink" href="javascript:void(0);">在线QQ</a>
+                  <a class="weiboLink" href="javascript:void(0);">新浪微博</a>
+                  <a class="weixinLink" href="javascript:void(0);">微信关注</a>
+              </div>
+          	</div>
+          </div>
+          
+        </div>
+        <div class="footer">
+        <p>地址：北京市丰台区刘庄子119号A栋202</p>
+        <p>京ICP备14024474号 Copyright © NewBee Science & Technology (Beijing) Co., Ltd. 2014. All rights reserved</p>
+        </div>
+        <hr />
+    </div>
+    <!-- 底部区域END -->
+</div>
+</body>
+</html>
+<script>
+</script>
