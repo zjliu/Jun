@@ -1,0 +1,203 @@
+<html>
+<head>
+<style>
+canvas{box-shadow:rgba(0,0,0,.4) 0 0 8px;}
+input{height:40px;font-size:20px;}
+</style>
+</head>
+<body>
+<canvas width="900" height="640" id="canvas" ></canvas>
+</body>
+</html>
+<script src="../common/common.js"></script>
+<script src="../common/Sprite.js"></script>
+<script>
+var canvas = document.getElementById("canvas"),
+	context = canvas.getContext("2d"),
+	W = canvas.width,
+	H = canvas.height;
+
+var dirObj = {"left":0,"top":1,"right":2,"down":3};
+function getDirValue(key){
+	return dirObj[key];
+}
+
+var snakeGrid = function(){
+	this.top=0;
+	this.left=0;
+	this.width=0;
+	this.height=0;
+	//0: 左 1:上 2：右 3：下
+	this.dir=2;
+	this.color="black"
+}
+snakeGrid.prototype={
+	print:function(context){
+		context.save();
+		context.fillStyle=this.color;
+		context.beginPath();
+		context.rect(this.left,this.top,this.width,this.height);	
+		context.fill();
+		context.closePath();
+		context.restore();
+	},
+	update:function(){
+		var dir = this.dir;
+		switch(dir){
+			case 0:
+				this.left-=this.width;
+			break;
+			case 1:
+				this.top-=this.height;
+			break;
+			case 2:
+				this.left+=this.width;
+			break;
+			case 3:
+				this.top+=this.height;
+			break;
+		}
+	},
+	clone:function(){
+		var snake = new snakeGrid();
+		snake.left=this.left;
+		snake.top=this.top;
+		snake.width=this.width;
+		snake.height=this.height;
+		snake.dir=this.dir;
+		return snake;
+	}
+}
+
+
+var Snake=function(context,width,grids){
+	this.context=context;
+	this.canvas=this.context.canvas;
+	this.W=this.canvas.width;
+	this.H=this.canvas.height;
+	this.width=width || 10;
+	this.snakeGrids=grids || [];
+}
+Snake.prototype={
+	start:function(){
+		var self=this;
+		var last = 0;
+		
+		function loop(time){
+			var sp = time-last;
+			if(sp>200){
+				self.print(self.context);
+				drawGrid(self.context,self.W,self.H,20,20);
+				self.update();
+				last=time;
+			}
+			requestAnimationFrame(loop);
+		}
+		requestAnimationFrame(loop);
+	},
+	init:function(){
+		this.initEvent();
+	},
+	initEvent:function(){
+		var self=this;
+		document.addEventListener("keyup",function(e){
+			var keyCode = e.keyCode - 37;
+			if(keyCode>=0 && keyCode<=3){
+				var firstGrid = self.snakeGrids[0];
+				firstGrid.dir=keyCode;
+			}
+		},false);
+	},
+	print:function(context){
+		context.clearRect(0,0,context.canvas.width,context.canvas.height);
+		for(var i=0,grids=this.snakeGrids,l=grids.length;i<l;i++){
+			var grid=grids[i];
+			grid.print(context);
+		}
+	},
+	update:function(){
+		for(var grids=this.snakeGrids,l=grids.length,i=l-1;i>=0;i--){
+			var grid=grids[i];
+			grid.update();
+		}
+		for(var grids=this.snakeGrids,l=grids.length,i=l-1;i>=0;i--){
+			var grid=grids[i];
+			if(i>0){
+				grid.dir=grids[i-1].dir;
+			}
+		}
+	},
+	addGrid:function(){
+		var lastSnake=this.snakeGrids[this.snakeGrids.length-1];
+		if(lastSnake){
+			var grid = lastSnake.clone(); 
+			switch(grid.dir){
+				case 0:
+					grid.left+=grid.width;
+				break;
+				case 1:
+					grid.top+=grid.height;
+				break;
+				case 2:
+					grid.left-=grid.width;
+				break;
+				case 3:
+					grid.top-=grid.height;
+				break;
+			}
+			this.snakeGrids.push(grid);
+		}
+	}
+}
+
+var snakeHeight=20;
+var grids =[];
+var gsnake = new snakeGrid();
+gsnake.left=80;
+gsnake.top=80;
+gsnake.width=snakeHeight;
+gsnake.height=gsnake.width;
+gsnake.color="red";
+
+grids.push(gsnake);
+
+var grid2=gsnake.clone();
+grid2.left-=grid2.width;
+grids.push(grid2);
+
+
+var grid3=grid2.clone();
+grid3.left-=grid3.width;
+grids.push(grid3);
+
+var snake = new Snake(context,snakeHeight,grids);
+snake.init();
+snake.start();
+
+
+
+function drawGrid(context,W,H,w,h){
+	context.save();
+
+	context.strokeStyle="rgba(255,0,0,.5)";
+
+	var wc=W/w;
+	var hc=H/h;
+
+	//竖线
+	for(var i=1;i<wc;i++){
+		context.moveTo(i*w,0);
+		context.lineTo(i*w,H);
+	}
+	//横线
+	for(var j=1;j<hc;j++){
+		context.moveTo(0,j*h);
+		context.lineTo(W,j*h);
+	}
+
+	context.stroke();
+
+	context.restore();
+}
+
+</script>
