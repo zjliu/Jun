@@ -1,0 +1,41 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   '/home/mugeda/github/cocos2d-javascript/install.sh' ]
+2 info using npm@1.1.66
+3 info using node@v0.8.15
+4 verbose read json /usr/local/lib/package.json
+5 verbose read json /usr/local/lib/package.json
+6 verbose cache add [ '/home/mugeda/github/cocos2d-javascript/install.sh', null ]
+7 silly cache add name=undefined spec="/home/mugeda/github/cocos2d-javascript/install.sh" args=["/home/mugeda/github/cocos2d-javascript/install.sh",null]
+8 verbose parsed url { pathname: '/home/mugeda/github/cocos2d-javascript/install.sh',
+8 verbose parsed url   path: '/home/mugeda/github/cocos2d-javascript/install.sh',
+8 verbose parsed url   href: '/home/mugeda/github/cocos2d-javascript/install.sh' }
+9 silly lockFile de45d660-ub-cocos2d-javascript-install-sh /home/mugeda/github/cocos2d-javascript/install.sh
+10 verbose lock /home/mugeda/github/cocos2d-javascript/install.sh /home/mugeda/.npm/de45d660-ub-cocos2d-javascript-install-sh.lock
+11 verbose chmod /home/mugeda/tmp/npm-13627/1388461268334-0.41756179626099765/tmp.tgz 644
+12 verbose tar unpack /home/mugeda/tmp/npm-13627/1388461268334-0.41756179626099765/tmp.tgz
+13 silly lockFile ea79361e-8334-0-41756179626099765-package /home/mugeda/tmp/npm-13627/1388461268334-0.41756179626099765/package
+14 verbose lock /home/mugeda/tmp/npm-13627/1388461268334-0.41756179626099765/package /home/mugeda/.npm/ea79361e-8334-0-41756179626099765-package.lock
+15 silly gunzTarPerm modes [ '755', '644' ]
+16 verbose read json /home/mugeda/tmp/npm-13627/1388461268334-0.41756179626099765/package/package.json
+17 error not a package /home/mugeda/tmp/npm-13627/1388461268334-0.41756179626099765/tmp.tgz
+18 silly lockFile ea79361e-8334-0-41756179626099765-package /home/mugeda/tmp/npm-13627/1388461268334-0.41756179626099765/package
+19 silly lockFile de45d660-ub-cocos2d-javascript-install-sh /home/mugeda/github/cocos2d-javascript/install.sh
+20 error addLocal Could not install /home/mugeda/github/cocos2d-javascript/install.sh
+21 error Error: ENOENT, open '/home/mugeda/tmp/npm-13627/1388461268334-0.41756179626099765/package/package.json'
+22 error If you need help, you may report this log at:
+22 error     <http://github.com/isaacs/npm/issues>
+22 error or email it to:
+22 error     <npm-@googlegroups.com>
+23 error System Linux 3.8.0-33-generic
+24 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-g" "/home/mugeda/github/cocos2d-javascript/install.sh"
+25 error cwd /home/mugeda/github/cocos2d-javascript
+26 error node -v v0.8.15
+27 error npm -v 1.1.66
+28 error path /home/mugeda/tmp/npm-13627/1388461268334-0.41756179626099765/package/package.json
+29 error code ENOENT
+30 error errno 34
+31 verbose exit [ 34, true ]
