@@ -85,6 +85,10 @@ detect(navigator.userAgent);
 var body = document.body,
     target = null;
 
+var stageM = document.getElementById('stageParent');
+var MugedaStage = document.getElementsByClassName('MugedaStage')[0];
+stageM.appendChild(MugedaStage);
+
 var findStage = function (event) {
     if (event.target.className.indexOf('MugedaStage') == -1) return;
     body.removeEventListener('DOMSubtreeModified', findStage);
@@ -110,6 +114,7 @@ var processStage = function (e) {
     if (marginTop < 0) stageHeight += marginTop;
 
     if (!target) return;
+	target.style.marginLeft = 0;
     target.style.cssText += (''
       + '-webkit-transform: scale(' + scale + ');'
       + 'transform: scale(' + scale + ');'
