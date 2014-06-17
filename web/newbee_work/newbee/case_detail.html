@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新蜜蜂-案例详情</title>
+<link rel="stylesheet" type="text/css" href="styles/common.css"/>
+<script type="text/javascript" src="scripts/jquery1.42.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.tmpl.js"></script>
+<script src="main.js"></script>
+<script src='case_data.js'></script>
+</head>
+<body>
+<div class="wrapper">
+	<!-- 头部区域 -->
+	<div class="headerWrapper">
+    	<div class="headerWrap">
+          <div class="header clearfix">
+              <div class="logoWrap clearfix">
+                  <img class="fl" src="images/logo.png" width="70" height="64" />
+                  <div class="logoTitle">
+                    <p class="chineTitle">新蜜蜂</p>
+                    <p>New Bee</p>
+                  </div>
+              </div>
+              <div class="menuWrap">
+                <ul currentPage="1" class="menuList clearfix">
+                    <li><a href="index.html">首页</a></li>
+                    <li class="current"><a href="case.html">案例</a><p class="triangleIcon"></p></li>
+                    <li><a href="service.html">服务</a></li>
+                    <li style="display:none"><a href="contract.html">动态</a></li>
+                    <li><a href="company.html">关于</a></li>
+                    <li><a href="contactUs.html">联系</a></li>
+                </ul>
+				<div style='left:260px;' class="menuTarget"></div>
+              </div>
+          </div>
+        </div>
+        <div class="secMenuWrapper">
+        	<div class="secMenuWrap">
+              <ul class="secMenuList clearfix">
+                  <li class="current"><a href="javascript:void(0);">我的案例</a>|</li>
+                  <li><a href="javascript:void(0);">世纪佳明</a></li>
+              </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 头部区域END -->
+    <!-- 内容区域 -->
+    <div class="containerWrapper">
+		<script id="caseDetailTemplate" type="text/x-jquery-tmpl">
+			<div class="c_con">
+				<div class="title">
+					<span class="bigSpan2">${title}</span>
+				</div>
+				<div class="con_detail">
+					<p>${desc}</p>
+					<img src="images/${prid}/b_1.${imgtype}" width="1000" />
+					<img src="images/${prid}/b_2.${imgtype}" width="1000" />
+				</div>
+			</div>
+		</script>
+    	<div id='container' class="container"></div>
+		<script>
+			var prid = getParam('prid');
+			var data = case_data_obj[prid];
+			if(data){
+				$( "#caseDetailTemplate" ).tmpl(data)
+					.appendTo( "#container" );
+			}
+		</script>
+    </div>
+    <!-- 内容区域END -->
+    <!-- 底部区域 -->
+    <div class="footerWrapper">
+    	<div class="footer clearfix">
+        	<div class="footList clearfix">
+              <div class="foot_con">
+                  <p class="title">关于我们</p>
+                  <div class="footCon_list">
+                      <a href="javascript:void(0);">简介</a>
+                      <a href="javascript:void(0);">服务理念</a>
+                      <a href="javascript:void(0);">我们的主张</a>
+                      <a href="javascript:void(0);">文化</a>
+                  </div>
+              </div>
+              <div class="foot_con">
+                  <p class="title">案例</p>
+                  <div class="footCon_list">
+                      <a href="javascript:void(0);">简介</a>
+                      <a href="javascript:void(0);">服务理念</a>
+                      <a href="javascript:void(0);">我们的主张</a>
+                      <a href="javascript:void(0);">文化</a>
+                  </div>
+              </div>
+              <div class="foot_con">
+                  <p class="title">服务</p>
+                  <div class="footCon_list">
+                      <a href="javascript:void(0);">简介</a>
+                      <a href="javascript:void(0);">服务理念</a>
+                      <a href="javascript:void(0);">我们的主张</a>
+                      <a href="javascript:void(0);">文化</a>
+                  </div>
+              </div>
+              <div class="foot_con">
+                  <p class="title">新闻</p>
+                  <div class="footCon_list">
+                      <a href="javascript:void(0);">简介</a>
+                      <a href="javascript:void(0);">服务理念</a>
+                      <a href="javascript:void(0);">我们的主张</a>
+                      <a href="javascript:void(0);">文化</a>
+                  </div>
+              </div>
+          </div>
+          <div class="footList clearfix">
+          	<div class="foot_con join_con">
+                <p class="title">加入</p>
+                <div class="footCon_list">
+                    <a class="titleCon" href="javascript:void(0);">职位</a>
+                    <a href="javascript:void(0);">简介</a>
+                    <a href="javascript:void(0);">服务理念</a>
+                    <a href="javascript:void(0);">我们的主张</a>
+                    <a href="javascript:void(0);">文化</a>
+                </div>
+            </div>
+            <div class="foot_con">
+              <p class="title">联系我们</p>
+              <div class="footCon_list">
+                  <a class="qqLink" href="javascript:void(0);">在线QQ</a>
+                  <a class="weiboLink" href="javascript:void(0);">新浪微博</a>
+                  <a class="weixinLink" href="javascript:void(0);">微信关注</a>
+              </div>
+          	</div>
+          </div>
+          
+        </div>
+        <div class="footer">
+        <p>地址：北京市丰台区刘庄子119号18号楼202</p>
+        <p>京ICP备14024474号 Copyright © NewBee Science & Technology (Beijing) Co., Ltd. 2014. All rights reserved</p>
+        </div>
+        <hr />
+    </div>
+    <!-- 底部区域END -->
+</div>
+</body>
+</html>
