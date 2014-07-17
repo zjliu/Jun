@@ -1,0 +1,389 @@
+<!DOCTYPE htmle>
+<html>
+	<head>
+		<title></title>
+		<meta http-equiv="content-type" content="text/html" charset="utf-8">
+		<meta name="viewport" content="width=320, minimum-scale=1.0, maximum-scale=1.0"/>
+		<link ref="stylesheet" href=""></link>
+		<style>
+			* {
+				border: 0;
+				margin: 0;
+				padding: 0;
+			}
+
+
+			canvas {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas width="1600" height="900" class="canvas" id="canvas"></canvas>
+	</body>
+</html>
+<script>
+	window.requestAnimFrame = (function () {
+		return window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		function (callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+	})();                 
+	// vars
+	var canvas = document.getElementById('canvas'),
+	drag = false,
+	sortedPoints = [],
+	points = [],
+	basePoints = [],
+	radius = 2,
+	perspective = 250,
+	i = 0,
+	l = points.length,
+	x, y, z,
+	mX, mY,
+	rX, rY,
+	a, b,
+	ctx = canvas.getContext('2d'),
+	movePoint = 0,
+	distance = [],
+	// functions
+	// helpers
+	compare = function (a, b) {
+		if (a.distance < b.distance)
+		return -1;
+		if (a.distance > b.distance)
+		return 1;
+		return 0;
+	},
+	moveCloser = function (p1, p0, d) {
+		// moveCloser(points[i], [cX, cY], distance[i]);
+		var newDistance = Math.pow((p0[0] - p1[0]) * (p0[0] - p1[0]) + (p0[1] - p1[1]) * (p0[1] - p1[1]), 0.5);
+		if (newDistance > d) {
+			var v = [p0[0] - p1[0], p0[1] - p1[1]],
+			nd = newDistance - d,
+			a = Math.pow(nd * nd / (v[0] * v[0] + v[1] * v[1]), 0.5);
+			p1[0] += a * v[0];
+			p1[1] += a * v[1];
+		}
+		return p1;
+	},
+	render = function () {
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		mX = canvas.width / 2;
+		mY = canvas.height / 2;
+		for (i = 0; i < basePoints.length; i++) {
+			x = points[i][0];
+			y = points[i][1];
+			z = points[i][2];
+			// get the mod points
+			// start with y
+			rY = y / (perspective - z) * perspective;
+			rX = x / (perspective - z) * perspective;
+			ctx.beginPath();
+			ctx.fillStyle = (i === movePoint) ? "#ff0000" : "#000000";
+			ctx.arc(rX + mX, rY + mY, radius, 0, 2 * Math.PI, false);
+			ctx.fill();
+		}
+		var k, c;
+		for (k = 0; k < sortedPoints.length; k++) {
+			for (c = 0; c < sortedPoints[k].close.length; c++) {
+				var p0 = points[sortedPoints[k].point],
+				p1 = points[sortedPoints[k].close[c].p];
+				//draw the line between the points
+				// do it only if p1 is further away from the handle than p0
+				if (p1[0] * p1[0] + p1[1] * p1[1] > p0[0] * p0[0] + p0[1] * p0[1]) {
+					ctx.beginPath();
+					ctx.strokeStyle = "#ccc";
+					ctx.lineWidth = 0.5;
+					ctx.moveTo(p0[0] + mX, p0[1] + mY);
+					ctx.lineTo(p1[0] + mX, p1[1] + mY);
+					ctx.stroke();
+				}
+			}
+		}
+	},
+	compute = function () {
+		// points[Math.round(Math.random()*(points.length-1))][2]+= Math.random() * 10 - 5;
+	},
+	updatePoints = function (cX, cY) {
+		var newDistance;
+		for (i = 0; i < points.length; i++) {
+			if (i === movePoint) continue;
+			points[i] = moveCloser(points[i], [cX, cY], distance[i]);
+		}
+		// following the base distance determin if points location need to be changed
+		var k, c;
+		for (k = 0; k < sortedPoints.length; k++) {
+			for (c = 0; c < sortedPoints[k].close.length; c++) {
+				var p0 = points[sortedPoints[k].point],
+				p1 = points[sortedPoints[k].close[c].p],
+				d = sortedPoints[k].close[c].d;
+				// do it only if p1 is further away from the handle than p0
+				if (p1[0] * p1[0] + p1[1] * p1[1] > p0[0] * p0[0] + p0[1] * p0[1])
+				moveCloser(p1, p0, d);
+			}
+		}
+		points[movePoint][0] = cX;
+		points[movePoint][1] = cY;
+	},
+	sortPoints = function () {
+		// determine the order
+		sortedPoints = [];
+		for (i = 0; i < basePoints.length; i++) {
+			distance[i] = Math.pow((basePoints[movePoint][0] - basePoints[i][0]) * (basePoints[movePoint][0] - basePoints[i][0]) + (basePoints[movePoint][1] - basePoints[i][1]) * (basePoints[movePoint][1] - basePoints[i][1]), 0.5)
+			var close = [],
+			j, l = basePoints.length,
+			curDistance;
+			for (j = 0; j < l; j++) {
+				if (j === i) continue;
+				curDistance = Math.pow((basePoints[j][0] - basePoints[i][0]) * (basePoints[j][0] - basePoints[i][0]) + (basePoints[j][1] - basePoints[i][1]) * (basePoints[j][1] - basePoints[i][1]), 0.5);
+				if (curDistance < 40 * 1.43) {
+					close.push({
+						p: j,
+						d: curDistance
+					});
+				}
+			}
+			sortedPoints.push({
+				point: i,
+				baseCoords: basePoints[i],
+				close: close,
+				distance: distance[i]
+			});
+		}
+		sortedPoints.sort(compare);
+	},
+	onFrame = function () {
+		compute();
+		render();
+	},
+	init = function () {
+
+
+		// populate the points
+		var px = -200,
+		py = -200;
+		for (i = 0; i < 99; i++) {
+			points[i] = [px, py, 0];
+			basePoints[i] = [px, py, 0];
+			px += 40;
+			if (px > 200) {
+				px = -200;
+				py += 40;
+			}
+		}
+		sortPoints();
+		canvas.addEventListener("mousedown", onMouseDown);
+		canvas.addEventListener("mouseup", function () {
+			drag = false;
+		});
+		canvas.addEventListener("mousemove", function (e) {
+			if (!drag) return;
+			var cX = (e.x || e.clientX) - canvas.width / 2 - canvas.offsetLeft;
+			cY = (e.y || e.clientY) - canvas.height / 2 - canvas.offsetTop;
+			updatePoints(cX, cY);
+		});
+
+
+		canvas.addEventListener('touchstart', events, false);
+
+		// start the onFrame
+		(function doFrame() {
+			onFrame();
+			requestAnimFrame(function () {
+				doFrame();
+			});
+		})();
+	},
+
+	onMouseDown = function (e) {
+
+		// first determin the active point
+		var cX = (e.x || e.clientX) - canvas.width / 2 - canvas.offsetLeft;
+		cY = (e.y || e.clientY) - canvas.height / 2 - canvas.offsetTop,
+		closestPoint = -1,
+		closestPointDist = 9999,
+		currentPointDist = 0;
+		for (i = 0; i < points.length; i++) {
+			currentPointDist = Math.pow(Math.pow(points[i][0] - cX, 2) + Math.pow(points[i][1] - cY, 2), 0.5);
+			if (currentPointDist < closestPointDist) {
+				closestPoint = i;
+				closestPointDist = currentPointDist;
+			}
+		}
+		movePoint = closestPoint;
+		sortPoints();
+		drag = true;
+
+	};
+
+
+	// touch related functions
+
+
+	var noop = function() {}, // simple no operation function
+	offloadFn = function(fn) { setTimeout(fn || noop, 0); }, // offload a functions execution
+
+
+
+	// setup event capturing
+	events = {
+
+		handleEvent: function(event) {
+
+			switch (event.type) {
+				case 'touchstart': this.start(event); break;
+				case 'touchmove': this.move(event); break;
+				case 'touchend': offloadFn(this.end(event)); break;
+
+			}
+
+
+		},
+		start: function(event) {
+
+			var touches = event.touches[0];
+
+			// measure start values
+			start = {
+
+				// get initial touch coords
+				x: touches.pageX,
+				y: touches.pageY,
+
+				// store time to determine touch duration
+				time: +new Date()
+
+			};
+
+			// used for testing first move event
+			isScrolling = undefined;
+
+			// reset delta and end measurements
+			delta = {};
+
+			// attach touchmove and touchend listeners
+			canvas.addEventListener('touchmove', this, false);
+			canvas.addEventListener('touchend', this, false);
+
+
+			var cX = start.x - canvas.width / 2 - canvas.offsetLeft;
+			cY = start.y - canvas.height / 2 - canvas.offsetTop,
+			closestPoint = -1,
+			closestPointDist = 9999,
+			currentPointDist = 0;
+			for (i = 0; i < points.length; i++) {
+				currentPointDist = Math.pow(Math.pow(points[i][0] - cX, 2) + Math.pow(points[i][1] - cY, 2), 0.5);
+				if (currentPointDist < closestPointDist) {
+					closestPoint = i;
+					closestPointDist = currentPointDist;
+				}
+			}
+			movePoint = closestPoint;
+			sortPoints();
+			drag = true;
+
+
+		},
+		move: function(event) {
+
+
+			// ensure swiping with one touch and not pinching
+			if ( event.touches.length > 1 || event.scale && event.scale !== 1) return;
+
+
+			var touches = event.touches[0];
+
+			// measure change in x and y
+			delta = {
+				x: touches.pageX - start.x,
+				y: touches.pageY - start.y
+			};
+
+			// // determine if scrolling test has run - one time test
+			// if ( typeof isScrolling == 'undefined') {
+				//   isScrolling = !!( isScrolling || Math.abs(delta.x) > Math.abs(delta.y) );
+				// }
+
+			// if user is not trying to scroll vertically
+			// if (!isScrolling) {
+
+				// prevent native scrolling
+				event.preventDefault();
+
+
+				var cX = touches.pageX - canvas.width / 2 - canvas.offsetLeft;
+				cY = touches.pageY - canvas.height / 2 - canvas.offsetTop;
+				updatePoints(cX, cY);
+
+
+
+			},
+			end: function(event) {
+
+				drag = false;
+
+				// measure duration
+				var duration = +new Date() - start.time;
+
+
+				// determine if slide attempt triggers next/prev slide
+				var isValidSlide =
+				Number(duration) < 250 && ( Math.abs(delta.y) > 10 || Math.abs(delta.x) > 10 );  
+
+				isPastBounds = false;
+
+
+
+				// if not scrolling vertically
+				if (!isScrolling) {
+
+					if (isValidSlide && !isPastBounds) {
+
+
+
+						} else {
+
+
+						// nothing
+
+					}
+
+				}
+
+
+				var cX = touches.pageX - canvas.width / 2 - canvas.offsetLeft;
+				cY = touches.pageY - canvas.height / 2 - canvas.offsetTop;
+				updatePoints(cX, cY);
+
+				// kill touchmove and touchend event listeners until touchstart called again
+				canvas.removeEventListener('touchmove', events, false);
+				canvas.removeEventListener('touchend', events, false);
+
+			}
+
+		},
+
+		kill = function() {
+
+			if ( !canvas ) return;
+
+			canvas.removeEventListener('touchstart', events, false);
+
+
+		};
+
+
+
+
+
+		init();
+	</script>

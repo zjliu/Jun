@@ -1,0 +1,21 @@
+.containerWrapper
+	.container
+		.imgWrapper
+			.slideBox
+				.hd
+					%ul
+						- (1...4).each do |i|
+							%li
+								%div{:class=>"imgPage#{i}"}
+									%a{:href=>'javascript:void(0);'}
+				.bd
+					%ul
+						- (1...4).each do |i|
+							%li{:class=>"margin#{i}"}
+								%img{:src=>'images/p_1.jpg',:height=>'418'}
+		.content
+			.adWrap
+				%p
+					%span.bigSpan 新蜜蜂能为你做什么？
+					%span.greenSpan 咨询热线：18201620321 &nbsp; 18612513540
+				%p.ad
