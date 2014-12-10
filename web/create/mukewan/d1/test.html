@@ -1,0 +1,94 @@
+<style>
+.doraemon{position:absolute;top:50px;left:50px;}
+.face{
+	width:310px;
+	height:300px;
+	border-radius:146px;
+	background-color:#07beea;
+	position:relative;
+}
+#eye{position:relative;}
+.eye{
+	position:absolute;
+	width:72px;
+	height:86px;
+	border:2px solid #000;
+	-webkit-border-radius:35px;
+	z-index:20;
+	background:#fff;
+}
+.eye.eye_left{
+	left:120px;
+	top:42px;
+}
+.eye.eye_right{
+	left:194px;
+	top:42px;	
+}
+.black_eye{
+	width:15px;height:15px;background-color:#000;
+	-webkit-border-radius:7.5px;
+	position:absolute;
+	z-index:21;
+}
+.black_eye.black_eye_left{
+	left:167px;
+	top:97px;
+}
+.black_eye.black_eye_right{
+	left:207px;
+	top:97px;
+}
+
+#base{position:relative;}
+.base_white{
+	position:absolute;
+	width:264px;
+	height:196px;
+	background:#fff;
+	border:2px solid #000;
+	top:86px;
+	left:59px;
+	border-radius:150px;
+	z-index:1;
+}
+.nose{
+	left:177px;
+	top:117px;
+	width:32px;
+	height:32px;
+	border:2px solid #000;
+	position:absolute;
+	z-index:30;
+	border-radius:50px;
+	background-color:#c93e00;
+}
+
+.nose .nose_light{
+	position:absolute;
+	top:0;
+	left:0;
+	width:10px;
+	height:10px;
+	border-radius:5px;
+	box-shadow:19px 8px 5px #fff;
+}
+
+</style>
+
+<div class="doraemon">
+	<div class="face">
+		<div id="eye">
+			<div class="eye eye_left"></div>
+			<div class="black_eye black_eye_left"></div>
+			<div class="eye eye_right"></div>
+			<div class="black_eye black_eye_right"></div>
+		</div>
+		<div id="base">
+			<div class="base_white"></div>
+			<div class="nose">
+				<div class="nose_light"></div>
+			</div>	
+		</div>
+	</div>
+</div>

@@ -1,0 +1,46 @@
+<script>
+
+	function getNoRepeatArr(start,end,len){
+		if(start===undefined || end===undefined || len===undefined || start>end || Math.abs(end-start)<len-1) return;
+		var objA = {},
+		arr = [];
+		while(true){
+			var rand = Math.round(start + Math.random() * (end-start));
+			if(!objA[rand.toString()]){
+				objA[rand.toString()] = rand.toString();
+				arr.push(rand);
+				if(arr.length==len)
+				break;
+			}
+			count++;
+		}
+		return objA;
+	}
+	
+	function orderNoRepeat(arr){
+		var obj={};
+		for(var i=0,len=arr.length;i<len;i++){
+			var key=arr[i].toString();
+			if(!obj[key]) obj[key]=arr[i];
+		}
+		var returnArr=[];
+		for(var keyValue in obj){
+			returnArr.push(obj[keyValue]);
+		}
+		return returnArr;
+	}
+	
+	var num = new Array();
+	for(var i = 0; i < 9; i++){
+		var val =  Math.ceil(Math.random() * 9);
+		var isEqu = false;
+		for(var idx in num){
+			if(num[idx] == val){isEqu = true; break;}
+		}
+		if(isEqu)
+			i--;
+		else
+			num[num.length] = val;
+	}    
+
+</script>
