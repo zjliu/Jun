@@ -1,7 +1,7 @@
 /*网页样式重置reset*/
-html { font-size:630%;-webkit-tap-highlight-color:rgba(0,0,0,0); -webkit-tap-highlight:rgba(0,0,0,0);}
-body{font-size:0.1em;}
-label { cursor:pointer}
+html { font-size:1em;-webkit-tap-highlight-color:rgba(0,0,0,0); -webkit-tap-highlight:rgba(0,0,0,0);}
+body{font-size:0.75em;}
+label {cursor:pointer;}
 a:link, a:visited { text-decoration:none}
 input,button,select,textarea{outline:none} textarea{resize:none;}
 
@@ -23,7 +23,10 @@ table {	width:100%; border-spacing:0; border:0}
 table th, table td { border:0}
 legend, hr { overflow:hidden; position:absolute; top:0; left:0}
 legend, hr, caption { visibility:hidden; font-size:0; width:0; height:0; line-height:0}
-img{max-width:100%;height:auto;width:auto\9;/*ie8*/}
+img{max-width:100%;max-height:100%;height:auto;width:auto\9;/*ie8*/}
+
+*{box-sizing:border-box;box-sizing:border-box;box-sizing:border-box;}
+body{overflow:hidden;}
 
 .mainDiv{
 	width:320px;
@@ -37,28 +40,86 @@ img{max-width:100%;height:auto;width:auto\9;/*ie8*/}
 
 .mainDiv .textDiv{padding-left:21.5px;}
 
-.mainDiv figure{margin:75px 6px 0;padding:0;text-align:center;}
+.mainDiv figure{margin:75px 12px 0;padding:0;text-align:center;}
+.mainDiv .map{margin:0px 12px 0;}
 
-.mainDiv h1{font-size:30px;font-weight:normal;}
-.mainDiv h2{font-size:25px;font-weight:normal;margin-top:17.5px;}
+.mainDiv hr{color:gray;border-style:dashed;width:100%;visibility:visible;position:static;margin-top:33px;}
+
+.mainDiv h1{font-size:17px;font-weight:normal;}
+.mainDiv h2{font-size:30px;font-weight:normal;margin-top:17.5px;}
 .mainDiv .f1 p{font-size:13px; margin-top:119px;line-height:24px;}
 
-.mainDiv .f2 p{line-height:23.3px;}
-.mainDiv .f2_title{margin-top:65.5px;font-size:20px;}
-.mainDiv .f2 p:nth-child(2n+1){margin-top:32px; font-size:18.3px;}
-.mainDiv .f2 p:nth-child(2n){font-size:15px;line-height:}
+.mainDiv .f2{padding-left:20px;}
+.mainDiv .f2 p{line-height:21.3px;}
+.mainDiv .f2_title{margin-top:33px;font-size:20px;}
+.mainDiv .f2 p:nth-child(2n+1){margin-top:20px; font-size:15px;}
+.mainDiv .f2 p:nth-child(2n){font-size:13px;}
 
-.mainDiv .f3_title{margin-top:51.5px;font-size:20px;}
+.mainDiv .f3_title{margin-top:33px;font-size:20px;}
 .mainDiv .f3{margin-top:32px;}
 .mainDiv .f3 p{font-size:16.4px;line-height:23.3px;}
 
-.mainDiv .f4_title{margin-top:46.4px;font-size:20px;}
-.mainDiv .f4{margin-top:38.4px;}
-.mainDiv .f4{font-size:16.6px;line-height:26.6px;}
+.mainDiv .f4_title{margin-top:33px;font-size:20px;}
+.mainDiv .f4{margin-top:30px;}
+.mainDiv .f4{font-size:15px;line-height:26.6px;}
 
-.mainDiv .f5_title{margin-top:60px;font-size:20px;padding-left:22px;line-height:33px;}		
+.mainDiv .f5_title{margin-top:33px;font-size:20px;padding-left:22px;line-height:33px;}		
 .mainDiv .f5_name{font-size:17px;line-height:33px;padding-left:22px;}		
 .mainDiv .f5_img{text-align:center;margin:25px 6px 0}
 .mainDiv .f5_bottom{margin-bottom:99px;}
-		
+
+.mainDiv .f6_name{font-size:18px;padding-left:22px; line-height:60px;}
+
+.mainDiv .textDiv .f2p{font-size:18px;line-height:34px;margin:20px 0 0;}
+
+.mainDiv .logoDiv{width:100%;padding:0 12px 0;margin:30px 0 0;}
+.mainDiv .logoDiv>div{
+	display:-webkit-flex;
+	display:-moz-flex;
+	display:-ms-flex;
+	display: flex;
+
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	justify-content: center;
+
+	width:100%;
+	height:50px;
+}
+
+.mainDiv .logoDiv>div>div{
+	-webkit-flex:1; 
+	-moz-flex:1; 
+	-ms-flex:1; 
+	flex:1;
+
+	width:75px;
+	height:40px;
+	margin:2.5px;
+
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	justify-content: center;
+	
+	border:1px solid #eee;
+	vertical-align:middle;
+	text-align:center;
+	padding:3px 0;
+}
+
+.mainDiv .logoDiv .noborder{
+	border:none;
+}
 

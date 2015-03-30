@@ -1,0 +1,52 @@
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;overflow:hidden;}
+body{background-color:#000;}
+
+.snow{
+	width:5px;
+	height:5px;
+	border-radius:2.5px;
+	background-color:#fff;
+	position:absolute;
+	display:inline-block;
+	-webkit-animation:move 2s ease-in-out both infinite;
+	-moz-animation:move 2s ease-in-out both infinite;
+	-ms-animation:move 2s ease-in-out both infinite;
+	animation:move 2s ease-in-out both infinite;
+}
+
+@-webkit-keyframes move{
+	0%{
+		top:-10%;
+	}
+	100%{
+		top:100%;
+	}
+}
+
+@-moz-keyframes move{
+	0%{
+		top:-10%;
+	}
+	100%{
+		top:100%;
+	}
+}
+
+@-ms-keyframes move{
+	0%{
+		top:-10%;
+	}
+	100%{
+		top:100%;
+	}
+}
+
+@-keyframes move{
+	0%{
+		top:-10%;
+	}
+	100%{
+		top:100%;
+	}
+}

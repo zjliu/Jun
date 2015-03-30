@@ -1,0 +1,72 @@
+<style>
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;overflow:hidden;}
+body{background-color:#000;}
+.snow{
+	width:5px;
+	height:5px;
+	border-radius:2.5px;
+	background-color:#fff;
+	position:absolute;
+	-webkit-animation:move 2s ease-in-out both infinite;
+}
+
+@-webkit-keyframes move{
+	0%{
+		top:-10%;
+	}
+	100%{
+		top:100%;
+	}
+}
+
+</style>
+<script>
+
+function eRandom(m,n,isInt){
+	var max = Math.max(m,n);
+	var min = Math.min(m,n);
+	var result = min + (max-min)*Math.random();
+	return isInt ? Math.round(result) : result;
+}
+
+window.onload=function(){
+	var arr=[];
+	var W=document.body.clientWidth;
+	var H=document.body.clientHeight; 
+	var r=30;
+	var time=2;
+
+	function create(){
+		var snow=document.createElement('div'),
+			left=eRandom(0,W-r);
+		snow.className='snow';
+		snow.style.left=left;
+		document.body.appendChild(snow);
+		arr.push(snow);
+		init();
+	}
+	
+	function init(){
+		for(var i=0,l=arr.length;i<l;i++){
+			var item=arr[i];	
+			item.addEventListener('webkitAnimationIteration',function(){
+				changePosition(this);
+			});
+		}
+	}
+	function changePosition(item){
+		item.style.left=eRandom(0,W-r);
+		item.style.top=0;
+	}
+	var max=50;
+	var t=setInterval(function(){
+		if(arr.length<max){
+			create();
+		}
+		else{
+			clearInterval(t);
+		}
+	},100);
+}
+</script>

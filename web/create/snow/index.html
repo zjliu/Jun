@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ch" >
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!-- disable iPhone inital scale -->
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+	<link rel="stylesheet" href="junSnow.css" />
+	<script src="junSnow.js"></script>
+</head>
+<body>
+<div id="d1" style="width:300px;height:200px;box-shadow:0 0 3px #EF3;margin:10px;position:relative;"></div>
+<div id="d2" style="width:300px;height:200px;box-shadow:0 0 3px #EF3;margin:10px;position:relative;"></div>
+</body>
+</html>
+<script>
+
+(function(){
+	var docMove=false;
+	document.addEventListener('touchstart',function(e){
+		docMove=true;
+	},false);
+	document.addEventListener('touchmove',function(e){
+		if(docMove) e.preventDefault();
+	},false);
+	document.addEventListener('touchend',function(e){
+		docMove=false;
+	},false);
+})();
+
+var junSnow=new JunSnow({
+	maxCount:30,
+	parentEl:document.querySelector('div:nth-child(1)')
+});
+
+var junSnow2=new JunSnow({
+	maxCount:50,
+	parentEl:document.querySelector('div:nth-child(2)')
+});
+
+</script>

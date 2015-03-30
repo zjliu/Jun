@@ -1,0 +1,56 @@
+html,body,address,blockquote,div,dl,form,h1,h2,h3,h4,h5,h6,ol,p,pre,table,ul,dd,dt,li,tbody,td,tfoot,th,thead,tr,button,del,ins,map,object,a,abbr,acronym,b,bdo,big,br,cite,code,dfn,em,i,img,kbd,q,samp,small,span,strong,sub,sup,tt,var,legend,fieldset,textarea
+{
+	margin: 0;
+	padding: 0;
+}
+
+img,fieldset {
+	border: 0;
+}
+
+
+/* set html5 elements to block */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section
+	{
+	display: block;
+	-webkit-user-select:none;
+}
+ul,li,p,h3,h2,h1,samp,label,dl,dt,dd,sup,sub{ list-style:none outside none;-webkit-text-size-adjust:none;}
+html{width:100%;height:100%;}
+body{
+	margin:0 auto;
+	height:100%;
+	overflow:hidden;
+	font: 12px "microsoft yahei";
+}
+
+
+/*分享弹出层*/
+.poupGameStart{ display:block;width:100%;z-index:99999}
+.arrowCont{background:url(../img/arrowCont.png) center 0 no-repeat; background-size:auto 492px;-webkit-background-size:auto 492px;width:264px; height:492px; position:absolute;clear:both;right:84px;}
+#poupGameStart{ padding:10px 10px; text-align:center}
+.poupTxt{position:absolute;clear:both;background:url(../img/shareTxt.png) center 0 no-repeat; background-size:auto 119px; height:119px; width:640px;left:0;top:560px;}
+::-webkit-scrollbar {/*滚动条美化*/
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 5px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;
+}
+
+::-webkit-scrollbar-thumb {
+  min-height: 20px;
+  background-clip: content-box;
+  box-shadow: 0 0 0 5px rgba(0,0,0,.2) inset;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

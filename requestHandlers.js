@@ -68,11 +68,16 @@ var resourceRequest={
 				response.end();
 				return;
 			}
-			var reFun = eval('('+data.toString()+')');
-			if(typeof reFun === "function"){
-				var query = url.parse(request.url,true);
-				var reStr = reFun(query.query);
-				self.writeResponse(response,reStr);	
+			try{
+				var reFun = eval('('+data.toString()+')');
+				if(typeof reFun === "function"){
+					var query = url.parse(request.url,true);
+					var reStr = reFun(query.query);
+					self.writeResponse(response,reStr);	
+				}
+			}
+			catch(e){
+				self.writeResponse(response,'server.js error: '+e.message);	
 			}
 		});
 	},
