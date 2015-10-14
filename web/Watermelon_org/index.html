@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh_cn">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=320, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+    <title>西瓜棋</title>
+    <link href="reset.css" rel="stylesheet" />
+	<style>
+		html,body{
+			width:100%;
+			height:100%;
+			overflow:hidden;
+		}
+		body{
+			background:#000;
+			font-family: "Myriad Set Pro","Lucida Grande","Helvetica Neue","Helvetica","Arial","Verdana","sans-serif";
+			-webkit-user-select: none;
+		}
+		.game{
+			position:absolute;
+			top:0;
+			right:0;
+			bottom:0;
+			left:0;
+			width:310px;
+			height:310px;
+			margin:auto;
+			z-index:1;
+		}
+
+		.map{
+			width:100%;
+			height:100%;
+			color:rgb(115, 45, 25);
+		}
+
+		.map .pan{
+			width:100%;
+			height:100%;
+			border-radius:50%;
+			-webkit-border-radius:50%;
+			border:5px solid currentColor;
+			position:relative;
+			overflow:hidden;
+			box-sizing:border-box;
+			-webkit-box-sizing:border-box;
+		}
+
+		.map .pan:before,.map .pan:after{
+			content:'';
+			background:currentColor;
+			position:absolute;
+		}
+		.map .pan:before{
+			width:100%;
+			height:5px;
+			top:50%;
+			transform:translateY(-50%);
+			-webkit-transform:translateY(-50%);
+		}
+		.map .pan:after{
+			width:5px;
+			height:100%;
+			left:50%;
+			transform:translateX(-50%);
+			-webkit-transform:translateX(-50%);
+		}
+
+		.map .pan>div{
+			position:absolute;
+		}
+
+		.map .pan .inner{
+			width:30%;
+			height:30%;
+			border-radius:50%;
+			-webkit-border-radius:50%;
+			border:5px solid currentColor;
+			top:50%;
+			left:50%;
+			margin:0 auto;
+			-webkit-transform:translate(-50%,-50%);
+		}
+
+		.map .pan .halfPan{
+			width:30%;
+			height:30%;
+			border-radius:50%;
+			-webkit-border-radius:50%;
+			border:5px solid currentColor;
+		}
+
+		.map .pan .halfPan.left{
+			left:-15%;
+			top:50%;
+			transform:translateY(-50%);
+			-webkit-transform:translateY(-50%);
+		}
+
+		.map .pan .halfPan.right{
+			right:-15%;
+			top:50%;
+			-webkit-transform:translateY(-50%);
+		}
+
+		.map .pan .halfPan.top{
+			top:-15%;
+			left:50%;
+			-webkit-transform:translateX(-50%);
+		}
+
+		.map .pan .halfPan.bottom{
+			bottom:-15%;
+			left:50%;
+			-webkit-transform:translateX(-50%);
+		}
+
+		.pieces{
+			position:absolute;
+			top:5px;
+			left:5px;
+			right:5px;
+			bottom:5px;
+		}
+
+		.pieces .piece{
+			width:11%;
+			height:11%;
+			color:red;
+			background:currentColor;
+			position:absolute;
+			border-radius:50%;
+			-webkit-border-radius:50%;
+			cursor:pointer;
+			opacity:0.9;
+		}
+
+		.pieces .piece.red{
+			color:red;
+			background:radial-gradient(circle at right, rgb(218, 201, 8),rgb(255, 0, 0));
+			background:-webkit-radial-gradient(circle at right, rgb(218, 201, 8),rgb(255, 0, 0));
+		}
+
+		.pieces .piece.yellow{
+			color:yellow;
+			background:radial-gradient(circle at right, rgb(220, 75, 200),rgb(0, 0, 75));
+			background:-webkit-radial-gradient(circle at right, rgb(220, 75, 200),rgb(0, 0, 75));
+		}
+
+		.pieces .piece.help{
+			color:#999;
+			background:radial-gradient(circle at right,rgb(255, 255, 255),rgb(0, 0, 0));
+			background:-webkit-radial-gradient(circle at right, rgb(255, 255, 255),rgb(0, 0, 0));
+			opacity:0.4;
+		}
+
+		.pieces .piece.active{
+			box-shadow:0 0 8px #fff;
+		}
+
+		.game:before,.game:after{
+			content:'轮到你了';
+			position:absolute;
+			color:red;
+			left:50%;
+			transform:translateX(-50%);
+			-webkit-transform:translateX(-50%);
+			font-size:20px;
+			color: #000;
+			text-shadow: 0 8px 9px #c4b59d, 0px -2px 1px red;
+			font-weight: bold;
+			letter-spacing: 5px;
+			text-align: center;
+			opacity:0.7;
+			display:none;
+		}
+
+		.game:before{
+			top:-60px;
+		}
+		.game:after{
+			bottom:-60px;
+			display:block;
+		}
+
+		.game.redActive:before{
+			display:block;
+		}
+
+		.game.redActive:after{
+			display:none;
+		}
+
+		.tip,.mask{
+			position:absolute;
+			top:0;
+			left:0;
+			bottom:0;
+			right:0;
+		}
+
+		.tip{
+			width:250px;
+			height:180px;
+			z-index:3;
+			margin:auto;
+			background:#ccc;
+			font-size:14px;
+			line-height:17px;
+			border-radius:6px;
+			-webkit-border-radius:6px;
+			padding:0 10px;
+			box-shadow:0 0 8px yellow;
+		}
+
+		.tip h2{
+			text-align:center;
+			padding:10px 0;
+		}
+
+		.tip .close{
+			position:absolute;
+			top:2px;
+			right:4px;
+			font-size:40px;
+			color:red;
+			transform:rotateZ(45deg);
+			-webkit-transform:rotateZ(45deg);
+			cursor:pointer;
+			width:20px;
+			height:20px;
+		}
+
+		.mask{
+			background:#000;
+			opacity:0.6;
+			z-index:2;
+		}
+
+		.showTipBtn,.playBtn{
+			position:absolute;
+			left:0;
+			bottom:5px;
+			color:#bbb;
+			border:1px solid currentColor;
+			border-radius:5px;
+			-webkit-border-radius:5px;
+			font-size:12px;
+			padding:7px;
+			margin:5px;
+			cursor:pointer;
+			display:inline-block;
+			text-align:center;
+		}
+
+		.playBtn{
+			left:auto;
+			right:5px;
+		}
+
+		.hidden{
+			display:none;
+		}
+
+	</style>
+</head>
+<body>
+	<span class="showTipBtn">游戏规则</span>
+	<span class="playBtn">重新开始</span>
+	<div class="game" data-turn="red">
+		<div class="map">
+			<div class="pan">
+				<div class="inner"></div>
+				<div class="halfPan left"></div>
+				<div class="halfPan right"></div>
+				<div class="halfPan top"></div>
+				<div class="halfPan bottom"></div>
+			</div>
+		</div>
+		<div class="pieces"></div>
+	</div>
+	<div class="tip hidden">
+		<span class="close">+</span>
+		<h2>西瓜棋游戏规则</h2>
+		这是双人游戏，双方各执六子,每次沿连线进行走一个节点;
+		按下方提示，轮流走动，点击棋子，可出现提示的可走的灰点;
+		点击灰点，可把棋子移动到灰点的位置; 游戏规则类似围棋，
+		把对方的棋子(可多个)围死即可吃掉;当吃到对方只剩下2颗以下棋子即获胜；
+		此版本目前无人机智能对抗功能，支持在移动设备上玩。
+	</div>
+	<div class="mask hidden"></div>
+</body>
+</html>
+<script src="main.js"></script>
+<script>
+	document.addEventListener('touchstart',function(e){
+		e.preventDefault();
+	});
+	var wm = new Watermelon();
+	wm.draw();
+</script>

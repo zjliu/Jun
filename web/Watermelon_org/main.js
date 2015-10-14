@@ -7,15 +7,7 @@ var Watermelon = (function(){
 		var value = this.style[name] || getComputedStyle(this)[name]; 
 		return isFloat ? parseFloat(value) : value;  
 	}
-
-	var isMobile = navigator.userAgent.match(/Android/i) || 
-	    navigator.userAgent.match(/webOS/i) || 
-	    navigator.userAgent.match(/iPhone/i) || 
-	    navigator.userAgent.match(/iPad/i) || 
-	    navigator.userAgent.match(/iPod/i) || 
-	    navigator.userAgent.match(/BlackBerry/i) || 
-	    navigator.userAgent.match(/Windows Phone/i);
-	
+	var isMobile = 'ontouchstart' in window;
 	var click = isMobile ? "touchstart" : "click";
 	var G = function(id) { return document.getElementById(id) };
 	var Q = function(selector,dom,all) { return (dom || document)["querySelector"+(all?"All":"")](selector) }
@@ -38,10 +30,8 @@ var Watermelon = (function(){
 	var tipBtn = Q('.showTipBtn');
 	var closeBtn = Q('.close');
 	var maskEl = Q('.mask');
-	var tipBox = Q('.rule');
-	var tip = Q('.tip');
-	var playBtn = Q('.start');
-
+	var tipBox = Q('.tip');
+	var playBtn = Q('.playBtn');
 	if(!isMobile){
 		gameEl.style.width = 400+'px';
 		gameEl.style.height = 400+'px';
@@ -124,7 +114,31 @@ var Watermelon = (function(){
 				piecesEl.appendChild(el);
 			}
 			if(isPlay){
-				el.style[transitionProp] = 'all ease-in-out 0.5s';
+				/*
+				if(ox!==this.x && oy!==this.y){
+					el.style.transition = 'all ease 0.5s';
+					el.style.transformOrigin = '0px '+(-r)+'px';
+					el.style.transform='rotateZ(-90deg)';
+					setTimeout(function(){
+						el.style.transition = '';
+						el.style.transform = '';
+						el.style.left = self.x+'px';
+						el.style.top = self.y+'px';
+					},500);
+				}
+				else{
+					el.style.transition = 'all ease 0.5s';
+					el.style.transformOrigin = '';
+					el.style.transform='translate('+(this.x-ox)+'px,'+(this.y-oy)+'px)';
+					setTimeout(function(){
+						el.style.transition = '';
+						el.style.transform = '';
+						el.style.left = self.x+'px';
+						el.style.top = self.y+'px';
+					},500);
+				}
+				*/
+				el.style[transitionProp] = 'all ease 0.5s';
 				el.style[transformProp]='translate3d('+(this.x-ox)+'px,'+(this.y-oy)+'px,0px)';
 				setTimeout(function(){
 					el.style[transitionProp]='';
@@ -158,12 +172,7 @@ var Watermelon = (function(){
 		this.statusObj = {};
 		this.helpArr=[];
 		this.init();
-
-		//websocket
-		var socket = {};
-		socket.connectId = +new Date;
-		socket.host = 'ws://192.168.9.208:8080/';
-		this.socket = socket;
+		this.isRed = true;//当前是红方先手
 	}
 
 	Watermelon.prototype={
@@ -178,15 +187,7 @@ var Watermelon = (function(){
 			}
 			redPosition.forEach(add.bind({type:'red'}));
 			yellowPosition.forEach(add.bind({type:'yellow'}));
-
-			this.draw();
 			this.initEvent();
-		},
-		begin:function(){
-			var socket = this.socket;
-			var url = socket.host + '?id=' + socket.connectId;
-			this.ws = new WebSocket(url,'echo-protocol');
-			this.initSocket();
 		},
 		draw:function(){
 			this.data.forEach(function(item){item.draw()});
@@ -219,9 +220,9 @@ var Watermelon = (function(){
 			});
 			this.lastPiece = piece;
 		},
-		check:function(isRed){
+		check:function(){
 			var self = this;
-			var type = isRed ? "yellow" : "red";
+			var type = this.isRed ? "red" : "yellow";
 			//初步得到要检查的棋子,一方动后，只可能另一方的子被吃，并且只可能是不能动的子
 			var arr = self.data.filter(function(piece){
 				return piece.type===type && !self.getNearbyPieces(piece).length;
@@ -281,24 +282,23 @@ var Watermelon = (function(){
 			piecesEl.addEventListener(click,function(el){
 				var target = el.target;
 				if(!target.classList.contains('piece')) return;
-				if(target.classList.contains('yellow')) return;
-				if(!self.canMove) return;
+				//确保是轮流下棋
+				var type = target.dataset.type;
+				if(type==='help' && self.lastPiece) type=self.lastPiece.type;
+				if(self.isRed !== (type==='red')) return;
 				//移动棋子
 				if(target.classList.contains('help')){
 					var piece = self.lastPiece;
 					self.removeHelp();
-					var opx = piece.px;
-					var opy = piece.py;
-					var px = parseInt(target.dataset.px);
-					var py = parseInt(target.dataset.py);
-					delete self.statusObj[self.getIndex(opx,opy)];
+					var px = target.dataset.px;
+					var py = target.dataset.py;
+					delete self.statusObj[self.getIndex(piece.px,piece.py)];
 					piece.update(px,py);
 					piece.el.classList.toggle('active');
-					self.statusObj[self.getIndex(px,py)]=piece;
-					self.showRule();
-					self.check(true);//检查是否要去子
-					self.sendPlay(opx,opy,px,py);
-					self.canMove = false;
+					self.statusObj[self.getIndex(piece.px,piece.py)]=piece;
+					self.isRed = !self.isRed;
+					self.showTip();
+					self.check();//检查是否要去子
 					return;
 				}
 				//显示走子的路线
@@ -307,81 +307,10 @@ var Watermelon = (function(){
 				self.removeHelp();
 				if(!isActive) self.showPath(self.findPiece(target));
 			});
+
 			tipBtn.addEventListener(click,this.showBox);
 			closeBtn.addEventListener(click,this.showBox);
-			playBtn.addEventListener(click,this.begin.bind(this));
-		},
-		initSocket:function(){
-			var self = this;
-			var hasPlay = false;
-			var actionEvent={
-				wait:function(data){
-					self.showTip();
-					self.showRoomId(data.roomId);
-				},
-				prePlay:function(data){
-					self.showTip('已匹配对手，开始游戏',true);
-					self.showRoomId(data.roomId);
-					setTimeout(function(){ 
-						self.showTip(); 
-						self.showPlay(); 
-						hasPlay = true; 
-					},1000);
-				},
-				play:function(mdata){
-					if(!hasPlay){
-						self.showTip();
-						self.showPlay();
-						hasPlay = true;
-					}
-					var data = mdata.data;
-					data && self.playMove(data.opx,data.opy,data.tpx,data.tpy);
-					self.canMove = true;
-				},
-				over:function(){
-					self.showTip('对手已经逃跑，请重新游戏',true);
-					setTimeout(function(){ self.showTip(); },1000);
-				}
-			}
-			var wsEvent={
-				open:function(e){
-
-				},
-				message:function(e){
-					if(!e.data) return;
-					var data = JSON.parse(e.data);
-					if(typeof data === 'string') data = JSON.parse(data);
-					var fun = actionEvent[data.action];
-					fun && fun(data);
-				},
-				close:function(e){
-					//self.showTip('游戏结束',false);
-				},
-				error:function(e){
-					self.showTip('socket连接失败',false);
-					setTimeout(function(){ self.showTip();},2000);
-				}
-			}
-
-			for(var key in wsEvent) this.ws['on'+key] = wsEvent[key];
-		},
-		sendPlay:function(opx,opy,px,py){
-			var data = {action:'play',data:{opx:opx,opy:opy,tpx:px,tpy:py}};
-			this.ws.send(JSON.stringify(data));
-		},
-		playMove:function(opx,opy,tpx,tpy){
-			oIndex = this.exChangeIndex(opx,opy);
-			tIndex = this.exChangeIndex(tpx,tpy);
-			var piece = this.statusObj[oIndex];	
-			delete this.statusObj[oIndex];
-			var obj = this.getPxPy(tIndex);
-			piece.update(obj.px,obj.py);
-			this.statusObj[tIndex]=piece;
-			this.check();
-		},
-		exChangeIndex:function(px,py){
-			var exArr = [0,3,4,1,2,13,14,15,16,17,18,19,20,5,6,7,8,9,10,11,12];	
-			return exArr[this.getIndex(px,py)];
+			playBtn.addEventListener(click,this.playAgain);
 		},
 		removeHelp:function(){
 			this.helpArr.forEach(function(el){
@@ -402,25 +331,8 @@ var Watermelon = (function(){
 			maskEl.classList.toggle('hidden');
 			tipBox.classList.toggle('hidden');
 		},
-		showRule:function(){
-			//gameEl.classList.toggle('redActive');
-		},
-		showTip:function(msg,showLoad){
-			if(msg){
-				Q('span',tip).innerText = msg;
-				Q('svg',tip).classList.toggle(showLoad);
-			}
-			tip.classList.toggle('hidden');
-			maskEl.classList.toggle('hidden');
-		},
-		showPlay:function(isplay){
-			var s1 = isplay ? '.page2' : '.page1';
-			var s2 = isplay ? '.page1' : '.page2';
-			Q(s1).classList.remove('active');
-			Q(s2).classList.add('active');
-		},
-		showRoomId:function(id){
-			Q('.roomId').innerText = '房间编号：'+ id;
+		showTip:function(){
+			gameEl.classList.toggle('redActive');
 		},
 		playAgain:function(){
 			window.location.reload();
@@ -428,3 +340,25 @@ var Watermelon = (function(){
 	}
 	return Watermelon;
 })();
+
+var connectId = +new Date;
+var orgUrl = 'ws://localhost:8080/?id='+connectId;
+
+var ws = new WebSocket(orgUrl,'echo-protocol');
+
+ws.onopen = function(evt){
+	//ws.send('Test!');
+};
+
+ws.onmessage = function(evt){
+	console.log(evt.data);
+	//ws.close();
+};
+
+ws.onclose = function(evt){
+	console.log('WebSocketClosed!');
+};
+
+ws.onerror = function(evt){
+	console.log('WebSocketError!');
+};
