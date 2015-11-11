@@ -1,0 +1,101 @@
+<html>
+	<head><title></title>
+	<body>
+	</body>
+</html>
+<script>
+	function Fn(obj,callback){
+		var newObj = {};
+		for(var key in obj){
+			newObj[key] = callback(obj[key]);
+		}
+		return newObj;
+	}
+
+	function myf(x){
+		return Math.pow(x,2);
+	}
+
+	var obj = {x:2,y:3,z:20};
+
+	function CB(A,B,C,D){
+		return function(X){
+			 return Fn({x:X},function(x){
+				//return Math.pow(1-x,3)*A + 3*Math.pow(1-x,2)*B + 3*Math.pow(1-x,2)*C + Math.pow(x,3)*D;
+				var ta = Fn(A,function(t){
+					return Math.pow(1-x,3)*t;
+				});
+				var tb = Fn(B,function(t){
+					return 3*Math.pow(1-x,2)*t;
+				});
+				var tc = Fn(C,function(t){
+					return 3*Math.pow(1-x,2)*t;
+				});
+				var td = Fn(D,function(t){
+					return Math.pow(x,3)*t;
+				});
+				return (function(arr){
+					var obj = {x:0,y:0};
+					for(var i=0,l=arr.length;i<l;i++){
+						obj.x = arr[i].x + obj.x;	
+						obj.y = arr[i].y + obj.y;	
+					}
+					return obj;
+				})([ta,tb,tc,td]);
+			});
+		}
+	}
+
+	var _p0 = {x:1,y:2},
+		_p1 = {x:2,y:3},
+		_p2 = {x:3,y:4},
+		_p3 = {x:4,y:5};
+
+	var newf = CB(_p0,_p1,_p2,_p3);
+
+	var r = Fn({x:0.2,y:0.5},newf);
+
+	console.log(r);
+
+//	console.log(Fn(obj,myf));
+
+
+	var _p0 = {x:1,y:2},
+		_p1 = {x:2,y:3},
+		_p2 = {x:3,y:4},
+		_p3 = {x:4,y:5};
+
+
+	function cb(A,B,C,D,X){
+		var a1 = F({x:A.x,y:A.y},function (x){
+			return Math.pow(1-X,3)*x;	
+		});
+		
+		var a2 = F({x:B.x,y:B.y},function (x){
+			return 3*Math.pow(1-X,2)*x;	
+		});
+
+		var a3 = F({x:C.x,y:C.y},function (x){
+			return 3*Math.pow(1-X,2)*x;	
+		});
+
+		var a4 = F({x:D.x,y:D.y},function (x){
+			return Math.pow(1-X,3)*x;	
+		});
+
+		return {x:a1.x+a2.x+a3.x+a4.x,y:a1.y+a2.y+a3.y+a4.y};
+	}
+	
+	function aab(x){
+		return cb(_p0,_p1,_p2,_p3,x);
+	}
+
+	var t=0.5;
+	var result = F({x:0.5},function(x){
+		return aab(x);
+	});
+
+	console.log(result);
+
+
+</script>
