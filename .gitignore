@@ -1,6 +1,7 @@
 #ignore these files
-/web/work/*
-/web/mugedawork
-/web/mugedawork_old
-/web/outer/*
+.gitignore
+web/work/*
+web/mugedawork
+web/mugedawork_old
+web/outer/*
 
